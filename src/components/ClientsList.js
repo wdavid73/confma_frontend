@@ -1,8 +1,8 @@
 import React from 'react'
-import { Row, Col, Typography, Table, Form, Input, Card, Button } from 'antd';
+import { Row, Col, Typography, Table, Form, Input, Card, Button, InputNumber } from 'antd';
 
 
-import { getClients } from './js/ClientFuncions'
+import { getClients, createClient } from './js/ClientFuncions'
 
 export default class Clients extends React.Component {
 
@@ -17,6 +17,8 @@ export default class Clients extends React.Component {
             cellphone: '',
             clients: []
         }
+        this.onSubmit = this.onSubmit.bind(this)
+
     }
 
     componentDidMount() {
@@ -42,73 +44,82 @@ export default class Clients extends React.Component {
         })
     }
 
+    onSubmit = (values) => {
+        console.log(values)
+        createClient(
+            values.name,
+            values.last_name,
+            values.address,
+            values.phone,
+            values.cellphone
+        ).then(() => {
+            this.getAll()
+        })
+        this.setState({
+            name: '',
+            last_name: '',
+            address: '',
+            phone: '',
+            cellphone: '',
+        })
+
+
+    }
+
     render() {
-        const columns = [
-            {
-                title: 'Nombre',
-                dataIndex: 'name',
-                key: 'name',
-            },
-            {
-                title: 'Apellido',
-                dataIndex: 'last_name',
-                key: 'last_name',
-            },
-            {
-                title: 'Direccion',
-                dataIndex: 'address',
-                key: 'address',
-            },
-            {
-                title: 'Telefono',
-                dataIndex: 'phone',
-                key: 'phone',
-            },
-            {
-                title: 'Celular',
-                dataIndex: 'cellphone',
-                key: 'cellphone',
-            },
-        ];
         const { Text } = Typography;
+        const { Column } = Table;
         return (
             <div>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={12}>
                         <Card title="Registrar Cliente" style={{ marginRight: 10 }}>
-                            <Form layout="vertical">
-                                <Form.Item label='Nombre'>
+                            <Form layout="vertical" onFinish={this.onSubmit}>
+
+                                <Form.Item name="name"
+                                    label='Nombre'
+                                    rules={[{ required: true, message: 'Porfavor Ingrese el Nombre del Cliente' }]} >
                                     <Input placeholder="Ingrese su Nombre" />
                                 </Form.Item>
-                                <Form.Item label='Apellido'>
+
+                                <Form.Item name="last_name"
+                                    label='Apellido'
+                                    rules={[{ required: true, message: 'Porfavor Ingrese el Apellido del Cliente' }]}>
                                     <Input placeholder="Ingrese su Apellido" />
                                 </Form.Item>
-                                <Form.Item label='Direccion'>
+
+                                <Form.Item name="address" label='Direccion'>
                                     <Input placeholder="Ingrese su Direccion (Opcional)" />
                                 </Form.Item>
-                                <Form.Item label='Telefono'>
-                                    <Input placeholder="Ingrese su Telefono (Opcional)" />
+
+                                <Form.Item name="phone" label='Telefono'>
+                                    <InputNumber size='large' placeholder="Ingrese su Telefono (Opcional)" style={{ width: '100%' }} />
                                 </Form.Item>
-                                <Form.Item label='Celular'>
-                                    <Input placeholder="Ingrese su Celular" />
+
+                                <Form.Item name="cellphone"
+                                    label='Celular'
+                                    rules={[{ required: true, message: 'Porfavor Ingrese Numero Celular del Cliente' }]}>
+                                    <InputNumber size='large' placeholder="Ingrese su Celular" style={{ width: '100%' }} />
                                 </Form.Item>
-                                <Button type="primary" block>
+
+                                <Button type="primary" htmlType="submit" block>
                                     Registrar Cliente
                                 </Button>
                             </Form>
                         </Card>
                     </Col>
                     <Col className="gutter-row" span={12}>
-                        <Table
-                            columns={columns}
-                            dataSource={this.state.clients}
-                            size="middle"
-                            bordered
-                            footer={() => <Text type="secondary">Confecciones Marible</Text>}
-                        />
+                        <Table dataSource={this.state.clients} size="middle" bordered footer={() => <Text type="secondary">Confecciones Marible</Text>} >
+                            <Column title='Nombre' dataIndex='name' key='name' />
+                            <Column title='Apellido' dataIndex='last_name' key='last_name' />
+                            <Column title='Direccion' dataIndex='address' key='address' />
+                            <Column title='Telefono' dataIndex='phone' key='phone' />
+                            <Column title='Celular' dataIndex='cellphone' key='cellphone' />
+                        </Table>
+
                     </Col>
                 </Row>
-            </div>
+            </div >
         )
     }
 }

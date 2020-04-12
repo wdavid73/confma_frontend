@@ -2,8 +2,6 @@ import React from 'react'
 import '../css/basic.css'
 import { Layout, Menu } from 'antd';
 import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
     UserOutlined,
     ProfileOutlined,
     SkinOutlined,
@@ -12,7 +10,8 @@ import {
 
 import ClientList from './ClientsList'
 
-const { Header, Content, Sider, Footer } = Layout;
+const { Content, Sider, Footer } = Layout;
+
 
 export default class Ant_Component extends React.Component {
     state = {
@@ -63,7 +62,7 @@ export default class Ant_Component extends React.Component {
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
-                    <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
+
                     <Content style={{ margin: '24px 16px 0' }}>
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                             <ClientList />
