@@ -1,7 +1,6 @@
 import React from 'react'
+import 'antd/dist/antd.css'
 import { Row, Col, Typography, Table, Form, Input, Card, Button, InputNumber } from 'antd';
-
-
 import { getClients, createClient } from './js/ClientFuncions'
 
 export default class Clients extends React.Component {
@@ -46,7 +45,8 @@ export default class Clients extends React.Component {
 
     onSubmit = (values) => {
         console.log(values)
-        createClient(
+        console.log(this.state.name)
+        /*createClient(
             values.name,
             values.last_name,
             values.address,
@@ -54,17 +54,12 @@ export default class Clients extends React.Component {
             values.cellphone
         ).then(() => {
             this.getAll()
-        })
-        this.setState({
-            name: '',
-            last_name: '',
-            address: '',
-            phone: '',
-            cellphone: '',
-        })
-
-
+        })*/
     }
+    onClear = (e) => {
+        console.log(this.props)
+    }
+
 
     render() {
         const { Text } = Typography;
@@ -78,7 +73,7 @@ export default class Clients extends React.Component {
 
                                 <Form.Item name="name"
                                     label='Nombre'
-                                    rules={[{ required: true, message: 'Porfavor Ingrese el Nombre del Cliente' }]} >
+                                    rules={[{ required: true, message: 'Porfavor Ingrese el Nombre del Cliente' }]}>
                                     <Input placeholder="Ingrese su Nombre" />
                                 </Form.Item>
 
@@ -102,7 +97,7 @@ export default class Clients extends React.Component {
                                     <InputNumber size='large' placeholder="Ingrese su Celular" style={{ width: '100%' }} />
                                 </Form.Item>
 
-                                <Button type="primary" htmlType="submit" block>
+                                <Button type="primary" htmlType="submit" block onClick={this.onClear}>
                                     Registrar Cliente
                                 </Button>
                             </Form>

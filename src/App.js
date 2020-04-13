@@ -1,10 +1,23 @@
 import React from 'react';
-import 'antd/dist/antd.css'
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route } from "react-router-dom";
+
+import 'antd/dist/antd.dark.css'
 import Menu from './components/Menu'
+import Client from './components/ClientsList'
+import Welcome from './components/Welcome'
+
 function App() {
   return (
     <div className="App">
-      <Menu />
+      <Router>
+        <Menu>
+          <div>
+            <Route exact path='/' component={Welcome} />{" "}
+            <Route exact path='/clients' component={Client} />{" "}
+          </div>
+        </Menu>
+      </Router>
     </div>
   );
 }
