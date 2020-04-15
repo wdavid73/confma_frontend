@@ -48,9 +48,8 @@ export const updateClient = (name, last_name, address, phone, cellphone, id) => 
     })
 }
 
-export const deleteClient = (name, last_name, address, phone, cellphone, id) => {
-    let _id = id.toString
-    return axios.delete('http://127.0.0.1:8000/api/clients/' + _id + '/', {
+export const deleteClient = (id) => {
+    return axios.post('http://127.0.0.1:8000/api/clients/delete/' + id + '/', {
         headers: { 'Content-Type': 'application/json' }
     }).then(res => {
         console.log(res)

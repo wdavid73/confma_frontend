@@ -1,5 +1,5 @@
 import React from 'react'
-import { getClients, createClient } from './js/ClientFuncions'
+import { getClients, createClient, updateClient, deleteClient } from './js/ClientFuncions'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 
@@ -14,11 +14,12 @@ export default class Clients extends React.Component {
             address: '',
             phone: '',
             cellphone: '',
+            editDisable: false,
             clients: []
         }
 
         this.onSubmit = this.onSubmit.bind(this)
-
+        this.onChange = this.onChange.bind(this)
     }
 
     componentDidMount() {
@@ -63,11 +64,67 @@ export default class Clients extends React.Component {
         })
     }
 
+    onEdit = (clientId, e) => {
+        e.preventDefault()
+        let data = [...this.state.clients]
+        data.forEach((client, index) => {
+            if (client.id === clientId) {
+                this.setState({
+                    id: client.id,
+                    name: client.name,
+                    last_name: client.last_name,
+                    address: client.address,
+                    phone: client.phone,
+                    cellphone: client.cellphone,
+                    editDisable: true
+                })
+            }
+        })
+
+    }
+
+    onUpdate = e => {
+        e.preventDefault()
+        updateClient(
+            this.state.name,
+            this.state.last_name,
+            this.state.address,
+            this.state.phone,
+            this.state.cellphone,
+            this.state.id
+        ).then(
+            () => {
+                this.getAll()
+            }
+        )
+        this.setState({
+            name: '',
+            last_name: '',
+            address: '',
+            phone: '',
+            cellphone: '',
+            editDisable: ''
+        })
+        this.getAll()
+    }
+
+    onDelete = (val, e) => {
+        e.preventDefault()
+        deleteClient(val)
+
+        var data = [...this.state.clients]
+        data.filter(function (client, index) {
+            if (client.id === val) {
+                data.splice(index, 1)
+            }
+            return true
+        })
+        this.setState({ clients: [...data] })
+    }
+
+
 
     render() {
-
-
-
         return (
             <div className="row">
                 <div className="col-lg-4">
@@ -136,7 +193,25 @@ export default class Clients extends React.Component {
                                         />
                                     </div>
                                 </div>
-                                <input type='submit' className="btn btn-primary btn-block mt-4" value="Registar Cliente" />
+                                {!this.state.editDisable ? (
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary btn-block mt-4"
+                                        onClick={this.onSubmit.bind(this)}>
+                                        Registrar Cliente
+                                    </button>
+                                ) : ("")
+                                }
+                                {this.state.editDisable ? (
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success btn-block mt-4"
+                                        onClick={this.onUpdate.bind(this)}>
+                                        Actualizar Cliente
+                                    </button>
+                                ) : ("")
+                                }
+
                             </form>
                             <footer className="blockquote-footer">Confecciones Maribel</footer>
                         </div>
@@ -164,12 +239,22 @@ export default class Clients extends React.Component {
                                     <th>
                                         <div className="row">
                                             <div className="col-6">
-                                                <button href="" className="btn btn-info btn-block btn-sm">
+                                                <button href="" className="btn btn-info btn-block btn-sm"
+                                                    disabled={this.state.editDisable}
+                                                    onClick={this.onEdit.bind(
+                                                        this,
+                                                        client.id
+                                                    )}>
                                                     <EditOutlined style={{ fontSize: '24px' }} />
                                                 </button>
                                             </div>
                                             <div className="col-6">
-                                                <button href="" className="btn btn-danger btn-block btn-sm">
+                                                <button href="" className="btn btn-danger btn-block btn-sm"
+                                                    disabled={this.state.editDisable}
+                                                    onClick={this.onDelete.bind(
+                                                        this,
+                                                        client.id
+                                                    )}>
                                                     <DeleteOutlined style={{ fontSize: '24px' }} />
                                                 </button>
                                             </div>
