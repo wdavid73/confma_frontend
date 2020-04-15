@@ -1,13 +1,35 @@
-#components-layout-demo-responsive .logo {
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
 
-.site-layout-sub-header-background {
+.site-layout .site-layout-background {
   background: #fff;
 }
 
-.site-layout-background {
-  background: #fff;
+#btn-edit{
+  background-color: #73d13d;
+  border-color:  #237804;
+  width: 75px;
+  margin: 2px 2px 2px 2px;
+}
+
+#btn-delete{
+  background-color: #ff4d4f;
+  border-color: #a8071a;
+  margin: 2px 2px 2px 2px;
+  width: 75px;
 }

@@ -28,3 +28,35 @@ export const createClient = (name, last_name, address, phone, cellphone) => {
             }
         )
 }
+
+export const updateClient = (name, last_name, address, phone, cellphone, id) => {
+    let _id = id.toString()
+    return axios.put('http://127.0.0.1:8000/api/clients/' + _id + '/', {
+        name: name,
+        last_name: last_name,
+        address: address,
+        phone: phone,
+        cellphone: cellphone
+    },
+        {
+            headers: { 'Content-Type': 'application/json' }
+        }
+    ).then(res => {
+        console.log(res)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+export const deleteClient = (name, last_name, address, phone, cellphone, id) => {
+    let _id = id.toString
+    return axios.delete('http://127.0.0.1:8000/api/clients/' + _id + '/', {
+        headers: { 'Content-Type': 'application/json' }
+    }).then(res => {
+        console.log(res)
+    }).catch(err => {
+        console.log(err)
+    })
+
+
+}

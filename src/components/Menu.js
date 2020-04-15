@@ -12,32 +12,36 @@ import {
 
 const { Content, Sider, Footer } = Layout;
 
-const info = () => {
+const info_client = () => {
     message.info('Bienvenido al Registro y Listado de Clientes', 5);
 };
 
 const MenuCustom = (props) => {
+
     return (
         <Layout>
-            <Sider breakpoint="lg" collapsedWidth="0"
-                onBreakpoint={broken => { console.log(broken); }} onCollapse={(collapsed, type) => { console.log(collapsed, type); }}>
+            <Sider trigger={null} collapsible collapsed={false}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
                     <Menu.Item key="1">
-                        <AppstoreOutlined />
-                        <Link to='/' >Inicio</Link>
+                        <Link to='/' >
+                            <AppstoreOutlined />
+                            <span> Inicio </span>
+                        </Link>
                     </Menu.Item>
                     <Menu.Item key="2">
-                        <UserOutlined />
-                        <Link to='/clients' onClick={info}>Clientes</Link>
+                        <Link to='/clients' onClick={info_client}>
+                            <UserOutlined />
+                            <span> Clientes </span>
+                        </Link>
                     </Menu.Item>
                     <Menu.Item key="3">
                         <SkinOutlined />
-                        <span> Prendas </span>
+                        <span > Prendas  </span>
                     </Menu.Item>
                     <Menu.Item key="4">
                         <ProfileOutlined />
-                        <span> Alquileres </span>
+                        <span>  Alquileres </span>
                     </Menu.Item>
                     <Menu.Item key="5">
                         <ProfileOutlined />
@@ -46,7 +50,6 @@ const MenuCustom = (props) => {
                 </Menu>
             </Sider>
             <Layout className="site-layout">
-
                 <Content style={{ margin: '24px 16px 0' }}>
                     <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                         {props.children}
@@ -54,15 +57,16 @@ const MenuCustom = (props) => {
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
             </Layout>
-        </Layout>
+        </Layout >
     )
 }
 
 export default MenuCustom
 
 /*export default class Ant_Component extends React.Component {
+
     state = {
-        collapsed: false,
+        collapsed: true,
     };
 
     toggle = () => {
@@ -72,47 +76,46 @@ export default MenuCustom
     };
 
     render() {
+        const info = () => {
+            message.info('Bienvenido al Registro y Listado de Clientes', 5);
+        };
         return (
             <Layout>
-                <Sider
-                    breakpoint="lg"
-                    collapsedWidth="0"
-                    onBreakpoint={broken => {
-                        console.log(broken);
-                    }}
-                    onCollapse={(collapsed, type) => {
-                        console.log(collapsed, type);
-                    }}
-                >
+                <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
                         <Menu.Item key="1">
-                            <AppstoreOutlined />
-                            <span> Inicio </span>
+
+                            <Link to='/' ><AppstoreOutlined /></Link>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <UserOutlined />
-                            <span> Clientes </span>
+
+                            <Link to='/clients' onClick={info}><UserOutlined /></Link>
                         </Menu.Item>
                         <Menu.Item key="3">
-                            <SkinOutlined />
-                            <span> Prendas </span>
+
+                            <span> <SkinOutlined /> </span>
                         </Menu.Item>
                         <Menu.Item key="4">
-                            <ProfileOutlined />
-                            <span> Alquileres </span>
+
+                            <span> <ProfileOutlined /> </span>
                         </Menu.Item>
                         <Menu.Item key="5">
-                            <ProfileOutlined />
-                            <span> Cotizaciones </span>
+
+                            <span> <ProfileOutlined /> </span>
                         </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
-
+                    <Header className="site-layout-background" style={{ padding: 0 }}>
+                        {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                            className: 'trigger',
+                            onClick: this.toggle,
+                        })}
+                    </Header>
                     <Content style={{ margin: '24px 16px 0' }}>
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                            <ClientList />
+
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
