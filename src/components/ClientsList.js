@@ -217,7 +217,7 @@ export default class Clients extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-8">
+                <div className="col-lg-8 mt-2">
                     <table className="table table-hover table-bordered">
                         <caption>Lista de Clientes</caption>
                         <thead className="thead-dark">
@@ -259,15 +259,10 @@ export default class Clients extends React.Component {
                                                 </button>
                                             </div>
                                         </div>
-
-
-
                                     </th>
                                 </tr>
                             ))}
-
                         </tbody>
-
                     </table>
                 </div>
             </div>

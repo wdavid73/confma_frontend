@@ -7,67 +7,32 @@ import {
     UserOutlined,
     ProfileOutlined,
     SkinOutlined,
-    AppstoreOutlined
+    AppstoreOutlined,
+    MenuUnfoldOutlined,
+    MenuFoldOutlined
 } from '@ant-design/icons';
 
-const { Content, Sider, Footer } = Layout;
+const { Content, Sider, Footer, Header } = Layout;
+const { SubMenu } = Menu;
 
-const info_client = () => {
-    message.info('Bienvenido al Registro y Listado de Clientes', 5);
+
+const crud_client = () => {
+    message.info('Bienvenido al Registro y Listado de Clientes', 3);
 };
 
-const MenuCustom = (props) => {
+const find_client = () => {
+    message.info('Bienvenido al Buscar Cliente', 3);
+};
 
-    return (
-        <Layout>
-            <Sider trigger={null} collapsible collapsed={false}>
-                <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-                    <Menu.Item key="1">
-                        <Link to='/' >
-                            <AppstoreOutlined />
-                            <span> Inicio </span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Link to='/clients' onClick={info_client}>
-                            <UserOutlined />
-                            <span> Clientes </span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <SkinOutlined />
-                        <span > Prendas  </span>
-                    </Menu.Item>
-                    <Menu.Item key="4">
-                        <ProfileOutlined />
-                        <span>  Alquileres </span>
-                    </Menu.Item>
-                    <Menu.Item key="5">
-                        <ProfileOutlined />
-                        <span> Cotizaciones </span>
-                    </Menu.Item>
-                </Menu>
-            </Sider>
-            <Layout className="site-layout">
-                <Content style={{ margin: '24px 16px 0' }}>
-                    <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                        {props.children}
-                    </div>
-                </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-            </Layout>
-        </Layout >
-    )
-}
+export default class MenuCustom extends React.Component {
 
-export default MenuCustom
+    constructor(props) {
+        super(props)
+        this.state = {
+            collapsed: false,
+        };
+    }
 
-/*export default class Ant_Component extends React.Component {
-
-    state = {
-        collapsed: true,
-    };
 
     toggle = () => {
         this.setState({
@@ -76,33 +41,58 @@ export default MenuCustom
     };
 
     render() {
-        const info = () => {
-            message.info('Bienvenido al Registro y Listado de Clientes', 5);
-        };
         return (
             <Layout>
-                <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+                <Sider
+                    trigger={null}
+                    collapsible
+                    collapsed={this.state.collapsed}
+                    breakpoint="lg"
+                    collapsedWidth="0"
+                    onBreakpoint={broken => {
+                        console.log(broken);
+                    }}
+                    onCollapse={(collapsed, type) => {
+                        this.setState({ collapsed });
+                    }}
+                    style={{
+                        overflow: 'auto',
+                        height: '100vh',
+                        left: 0,
+                    }}
+                >
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
                         <Menu.Item key="1">
-
-                            <Link to='/' ><AppstoreOutlined /></Link>
+                            <Link to='/' >
+                                <AppstoreOutlined />
+                                <span> Inicio </span>
+                            </Link>
                         </Menu.Item>
-                        <Menu.Item key="2">
+                        <SubMenu key="sub1" title={<span><UserOutlined /><span>Clientes</span></span>}>
+                            <Menu.Item key="3">
+                                <Link to='/clients' onClick={crud_client}>
+                                    <span> Registro y Listado </span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="4">
+                                <Link to='/clients/find' onClick={find_client}>
+                                    <span> Buscar </span>
+                                </Link>
+                            </Menu.Item>
 
-                            <Link to='/clients' onClick={info}><UserOutlined /></Link>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-
-                            <span> <SkinOutlined /> </span>
-                        </Menu.Item>
-                        <Menu.Item key="4">
-
-                            <span> <ProfileOutlined /> </span>
-                        </Menu.Item>
+                        </SubMenu>
                         <Menu.Item key="5">
-
-                            <span> <ProfileOutlined /> </span>
+                            <SkinOutlined />
+                            <span > Prendas  </span>
+                        </Menu.Item>
+                        <Menu.Item key="6">
+                            <ProfileOutlined />
+                            <span>  Alquileres </span>
+                        </Menu.Item>
+                        <Menu.Item key="7">
+                            <ProfileOutlined />
+                            <span> Cotizaciones </span>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -110,20 +100,19 @@ export default MenuCustom
                     <Header className="site-layout-background" style={{ padding: 0 }}>
                         {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
+                            style: { width: '30px', fontSize: '24px' },
                             onClick: this.toggle,
                         })}
                     </Header>
-                    <Content style={{ margin: '24px 16px 0' }}>
-                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-
+                    <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                        <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
+                            {this.props.children}
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
-
-
             </Layout>
-
         )
     }
-}*/
+
+}

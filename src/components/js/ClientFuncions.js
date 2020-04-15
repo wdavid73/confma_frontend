@@ -52,10 +52,21 @@ export const deleteClient = (id) => {
     return axios.post('http://127.0.0.1:8000/api/clients/delete/' + id + '/', {
         headers: { 'Content-Type': 'application/json' }
     }).then(res => {
-        console.log(res)
+        console.log(res.data)
+        return res.data
     }).catch(err => {
         console.log(err)
     })
 
 
+}
+
+export const findClient = (id) => {
+    return axios.post('http://127.0.0.1:8000/api/clients/find/' + id + '/', {
+        headers: { 'Content-Type': 'application/json' }
+    }).then(res => {
+        return res.data
+    }).catch(err => {
+        console.log(err)
+    })
 }

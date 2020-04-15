@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 import 'antd/dist/antd.css'
 import Menu from './components/Menu'
 import Client from './components/ClientsList'
+import ClientFind from './components/ClientFind'
 import Welcome from './components/Welcome'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Menu>
           <Route exact path='/' component={Welcome} />{" "}
           <Route exact path='/clients' component={Client} />{" "}
+          <Route exact path='/clients/find' component={ClientFind} />{" "}
         </Menu>
       </Router>
     </div>
