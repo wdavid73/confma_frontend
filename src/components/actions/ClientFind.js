@@ -1,5 +1,5 @@
 import React from 'react'
-import { getClients, findClient } from './js/ClientFuncions'
+import { getClients, findClient } from '../js/ClientFuncions'
 
 export default class ClientFind extends React.Component {
     constructor(props) {

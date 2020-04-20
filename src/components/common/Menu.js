@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import '../css/basic.css'
-import { Layout, Menu, message } from 'antd';
+import '../../css/basic.css'
+import { Layout, Menu } from 'antd';
 import {
     UserOutlined,
     ProfileOutlined,
@@ -11,18 +11,13 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined
 } from '@ant-design/icons';
+import { crud_client, find_client, crud_cloth } from './messages'
 
 const { Content, Sider, Footer, Header } = Layout;
 const { SubMenu } = Menu;
 
 
-const crud_client = () => {
-    message.info('Bienvenido al Registro y Listado de Clientes', 3);
-};
 
-const find_client = () => {
-    message.info('Bienvenido al Buscar Cliente', 3);
-};
 
 export default class MenuCustom extends React.Component {
 
@@ -32,7 +27,6 @@ export default class MenuCustom extends React.Component {
             collapsed: false,
         };
     }
-
 
     toggle = () => {
         this.setState({
@@ -84,7 +78,10 @@ export default class MenuCustom extends React.Component {
                         </SubMenu>
                         <Menu.Item key="5">
                             <SkinOutlined />
-                            <span > Prendas  </span>
+                            <Link to='/cloth' onClick={crud_cloth}>
+                                <span > Prendas  </span>
+                            </Link>
+
                         </Menu.Item>
                         <Menu.Item key="6">
                             <ProfileOutlined />

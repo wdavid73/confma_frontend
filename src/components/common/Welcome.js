@@ -1,5 +1,5 @@
 import React from 'react'
-import background from '../resources/logo.png'
+import background from '../../resources/logo.png'
 const Welcome = () => {
     return (
         <div>

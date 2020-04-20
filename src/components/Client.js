@@ -127,7 +127,7 @@ export default class Clients extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="col-lg-4">
+                <div className="col-lg-4 col-md-12 col-sm-12">
                     <div className="card bg-dark text-white">
                         <div className="card-header">
                             <h3 className="card-title text-white">Cliente</h3>
@@ -144,6 +144,7 @@ export default class Clients extends React.Component {
                                             className="form-control"
                                             value={this.state.name || ''}
                                             onChange={this.onChange.bind(this)}
+                                            required
                                         />
                                     </div>
                                     <div className="col">
@@ -155,6 +156,7 @@ export default class Clients extends React.Component {
                                             className="form-control"
                                             value={this.state.last_name || ''}
                                             onChange={this.onChange.bind(this)}
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -179,6 +181,7 @@ export default class Clients extends React.Component {
                                             className="form-control"
                                             value={this.state.cellphone || ''}
                                             onChange={this.onChange.bind(this)}
+                                            required
                                         />
                                     </div>
                                     <div className="col">
@@ -217,8 +220,8 @@ export default class Clients extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-8 mt-2">
-                    <table className="table table-hover table-bordered">
+                <div className="col-lg-8 col-md-12 col-sm-12 mt-2 table-responsive">
+                    <table className="table table-hover table-bordered table-sm">
                         <caption>Lista de Clientes</caption>
                         <thead className="thead-dark">
                             <tr>
@@ -226,7 +229,7 @@ export default class Clients extends React.Component {
                                 <th scope='col'>Direccion</th>
                                 <th scope='col'>Telefono</th>
                                 <th scope='col'>Celular</th>
-                                <th scope='col'>Actiones</th>
+                                <th scope='col'>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -238,7 +241,7 @@ export default class Clients extends React.Component {
                                     <th className="text-left">{client.cellphone}</th>
                                     <th>
                                         <div className="row">
-                                            <div className="col-6">
+                                            <div className="col-lg-6 col-md-6 col-sm-12">
                                                 <button href="" className="btn btn-info btn-block btn-sm"
                                                     disabled={this.state.editDisable}
                                                     onClick={this.onEdit.bind(
@@ -248,7 +251,7 @@ export default class Clients extends React.Component {
                                                     <EditOutlined style={{ fontSize: '24px' }} />
                                                 </button>
                                             </div>
-                                            <div className="col-6">
+                                            <div className="col-lg-6 col-md-6 col-sm-12">
                                                 <button href="" className="btn btn-danger btn-block btn-sm"
                                                     disabled={this.state.editDisable}
                                                     onClick={this.onDelete.bind(
