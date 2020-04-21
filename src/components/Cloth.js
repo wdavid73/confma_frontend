@@ -1,6 +1,5 @@
 import React from 'react'
-import { Drawer, Button } from 'antd';
-import { List } from 'antd';
+import { Drawer, Button, message, List } from 'antd';
 import { getCloth, createCloth } from './js/ClothFuntions'
 
 export default class Cloth extends React.Component {
@@ -73,15 +72,22 @@ export default class Cloth extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-        createCloth(
-            this.state.name,
-            this.state.color,
-            this.state.size,
-            this.state.fashion,
-            this.state.image
-        ).then(() => {
-            this.getAll()
-        })
+        message
+            .loading('Registro en Proceso..', 2.5)
+            .then(
+                createCloth(
+                    this.state.name,
+                    this.state.color,
+                    this.state.size,
+                    this.state.fashion,
+                    this.state.image
+                )
+            )
+            .then(() => {
+                this.getAll()
+            })
+            .then(() => message.success('Registro Completado', 2.5))
+
         this.setState({
             name: '',
             color: '',
@@ -92,6 +98,7 @@ export default class Cloth extends React.Component {
         this.onClose()
 
     }
+
 
     render() {
         return (

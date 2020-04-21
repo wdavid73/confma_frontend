@@ -1,6 +1,8 @@
 import React from 'react'
+import { message } from 'antd';
 import { getClients, createClient, updateClient, deleteClient } from './js/ClientFuncions'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+
 
 
 export default class Clients extends React.Component {
@@ -46,15 +48,20 @@ export default class Clients extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-        createClient(
-            this.state.name,
-            this.state.last_name,
-            this.state.address,
-            this.state.phone,
-            this.state.cellphone
-        ).then(() => {
-            this.getAll()
-        })
+        message.loading('Registro en Proceso..', 2.5)
+            .then(
+                createClient(
+                    this.state.name,
+                    this.state.last_name,
+                    this.state.address,
+                    this.state.phone,
+                    this.state.cellphone
+                )
+            )
+            .then(() => {
+                this.getAll()
+            }).then(() => message.success('Registro Completado', 2.5))
+
         this.setState({
             name: '',
             last_name: '',
@@ -85,18 +92,23 @@ export default class Clients extends React.Component {
 
     onUpdate = e => {
         e.preventDefault()
-        updateClient(
-            this.state.name,
-            this.state.last_name,
-            this.state.address,
-            this.state.phone,
-            this.state.cellphone,
-            this.state.id
-        ).then(
-            () => {
-                this.getAll()
-            }
-        )
+        message
+            .loading('Actualizacion en Proceso..', 2.5)
+            .then(
+                updateClient(
+                    this.state.name,
+                    this.state.last_name,
+                    this.state.address,
+                    this.state.phone,
+                    this.state.cellphone,
+                    this.state.id
+                )
+            )
+            .then(() => { this.getAll() }
+            ).then(() => {
+                message.success('Actualizacion Completada.', 2.5)
+            })
+
         this.setState({
             name: '',
             last_name: '',
@@ -110,16 +122,22 @@ export default class Clients extends React.Component {
 
     onDelete = (val, e) => {
         e.preventDefault()
-        deleteClient(val)
-
-        var data = [...this.state.clients]
-        data.filter(function (client, index) {
-            if (client.id === val) {
-                data.splice(index, 1)
-            }
-            return true
-        })
-        this.setState({ clients: [...data] })
+        message.loading('Elimando Cliente....', 2.5)
+            .then(
+                deleteClient(val)
+            ).then(() => {
+                var data = [...this.state.clients]
+                data.filter(function (client, index) {
+                    if (client.id === val) {
+                        data.splice(index, 1)
+                    }
+                    return true
+                })
+                this.setState({ clients: [...data] })
+            })
+            .then(() => {
+                message.warning('Cliente Eliminado Satisfactoriamente');
+            })
     }
 
 
