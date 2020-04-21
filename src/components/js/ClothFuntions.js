@@ -11,19 +11,19 @@ export const getCloth = () => {
 }
 
 export const createCloth = (name, color, size, fashion, image) => {
-    console.log(image)
-    return axios.post('http://127.0.0.1:8000/api/cloths/', {
-        name: name,
-        color: color,
-        size: size,
-        fashion: fashion,
-        image: image
-    }, {
-        headers: { 'Content-Type': 'application/json' }
-    }).then(
-        res => {
-            console.log(res)
-        }
-    )
+    let data = new FormData()
+    data.append('name', name)
+    data.append('color', color)
+    data.append('size', size)
+    data.append('fashion', fashion)
+    data.append('image', image, image.name)
 
+    return axios.post('http://127.0.0.1:8000/api/cloths/', data,
+        {
+            headers: { 'Content-Type': 'application/json' }
+        }).then(
+            res => {
+                console.log(res)
+            }
+        )
 }

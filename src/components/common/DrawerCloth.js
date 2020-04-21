@@ -45,7 +45,6 @@ export default class DrawerCloth extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-
         createCloth(
             this.state.name,
             this.state.color,
@@ -60,6 +59,8 @@ export default class DrawerCloth extends React.Component {
             fashion: '',
             image: null,
         })
+        this.onClose()
+
     }
 
     render() {
@@ -68,7 +69,7 @@ export default class DrawerCloth extends React.Component {
                 <button className="btn btn-primary m-2" onClick={this.showDrawer}>AGREGAR PRENDA</button>
                 <Drawer
                     title="Registar Prenda"
-                    width={720}
+                    width={'50%'}
                     onClose={this.onClose}
                     visible={this.state.visible}
                     bodyStyle={{ paddingBottom: 80 }}
@@ -111,7 +112,7 @@ export default class DrawerCloth extends React.Component {
                             </div>
                             <div className='form-group'>
                                 <label>Talla : </label>
-                                <select class="custom-select"
+                                <select className="custom-select"
                                     required
                                     id='size'
                                     name='size'
@@ -128,7 +129,7 @@ export default class DrawerCloth extends React.Component {
                             </div>
                             <div className='form-group'>
                                 <label>Moda : </label>
-                                <select class="custom-select"
+                                <select className="custom-select"
                                     required
                                     id='fashion'
                                     name='fashion'
@@ -146,6 +147,7 @@ export default class DrawerCloth extends React.Component {
                                     required
                                     name='image'
                                     id='image'
+                                    accept="image/*"
                                     className="form-control"
                                     onChange={this.fileSelecterhandler}
                                 />
