@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { API_CONSTANT_MAP } from './api/index'
 
 
 export const getClients = () => {
-    return axios.get('http://127.0.0.1:8000/api/clients/', {
+    return axios.get(API_CONSTANT_MAP.client, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -13,7 +14,7 @@ export const getClients = () => {
 }
 
 export const createClient = (name, last_name, address, phone, cellphone) => {
-    return axios.post('http://127.0.0.1:8000/api/clients/', {
+    return axios.post(API_CONSTANT_MAP.client, {
         name: name,
         last_name: last_name,
         address: address,
@@ -31,7 +32,7 @@ export const createClient = (name, last_name, address, phone, cellphone) => {
 
 export const updateClient = (name, last_name, address, phone, cellphone, id) => {
     let _id = id.toString()
-    return axios.put('http://127.0.0.1:8000/api/clients/' + _id + '/', {
+    return axios.put(API_CONSTANT_MAP.client + _id + '/', {
         name: name,
         last_name: last_name,
         address: address,
@@ -49,7 +50,7 @@ export const updateClient = (name, last_name, address, phone, cellphone, id) => 
 }
 
 export const deleteClient = (id) => {
-    return axios.post('http://127.0.0.1:8000/api/clients/delete/' + id + '/', {
+    return axios.post(API_CONSTANT_MAP.client + 'delete/' + id + '/', {
         headers: { 'Content-Type': 'application/json' }
     }).then(res => {
         console.log(res.data)

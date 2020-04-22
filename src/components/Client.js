@@ -115,7 +115,7 @@ export default class Clients extends React.Component {
             address: '',
             phone: '',
             cellphone: '',
-            editDisable: ''
+            editDisable: false
         })
         this.getAll()
     }

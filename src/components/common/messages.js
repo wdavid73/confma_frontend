@@ -11,3 +11,12 @@ export const find_client = () => {
 export const crud_cloth = () => {
     message.info('Bienvenido al Registro y Listado de la Prendas Hechas', 2);
 };
+
+export const crud_rental = () => {
+    message.info('Bienvenido al Registro', 2);
+};
+
+export const list_rental = () => {
+    message.info('Bienvenido al Listado de los Alquileres', 2);
+};
+

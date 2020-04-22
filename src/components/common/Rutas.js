@@ -5,6 +5,8 @@ import Menu from './Menu'
 import Welcome from './Welcome'
 import Client from '../Client'
 import Cloth from '../Cloth'
+import Rental from '../Rental'
+import RentalList from '../RentalList'
 import ClientFind from '../actions/ClientFind'
 
 
@@ -16,6 +18,8 @@ const Rutas = () => {
                 <Route exact path='/clients' component={Client} />{" "}
                 <Route exact path='/clients/find' component={ClientFind} />{" "}
                 <Route exact path='/cloth' component={Cloth} />{" "}
+                <Route exact path='/rental' component={Rental} />{" "}
+                <Route exact path='/rental/list' component={RentalList} />{" "}
             </div>
         </Menu>
     )

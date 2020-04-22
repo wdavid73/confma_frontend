@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { API_CONSTANT_MAP } from './api/index'
 
 export const getCloth = () => {
-    return axios.get('http://127.0.0.1:8000/api/cloths/', {
+    return axios.get(API_CONSTANT_MAP.cloth, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -18,7 +19,7 @@ export const createCloth = (name, color, size, fashion, image) => {
     data.append('fashion', fashion)
     data.append('image', image, image.name)
 
-    return axios.post('http://127.0.0.1:8000/api/cloths/', data,
+    return axios.post(API_CONSTANT_MAP.cloth, data,
         {
             headers: { 'Content-Type': 'application/json' }
         }).then(

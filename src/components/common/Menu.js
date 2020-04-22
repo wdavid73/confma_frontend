@@ -11,7 +11,13 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined
 } from '@ant-design/icons';
-import { crud_client, find_client, crud_cloth } from './messages'
+import {
+    crud_client,
+    find_client,
+    crud_cloth,
+    crud_rental,
+    list_rental
+} from './messages'
 
 const { Content, Sider, Footer, Header } = Layout;
 const { SubMenu } = Menu;
@@ -83,11 +89,23 @@ export default class MenuCustom extends React.Component {
                             </Link>
 
                         </Menu.Item>
-                        <Menu.Item key="6">
-                            <ProfileOutlined />
-                            <span>  Alquileres </span>
-                        </Menu.Item>
-                        <Menu.Item key="7">
+
+                        <SubMenu key='sub2' title={<span><ProfileOutlined /><span>Alquileres</span></span>}>
+                            <Menu.Item key="6">
+                                <Link to='/rental' onClick={crud_rental}>
+                                    <span>  Registro de Alquileres </span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="7">
+                                <Link to='/rental/list' onClick={list_rental}>
+                                    <span>  Listado de Alquileres </span>
+                                </Link>
+                            </Menu.Item>
+                        </SubMenu>
+
+
+
+                        <Menu.Item key="8">
                             <ProfileOutlined />
                             <span> Cotizaciones </span>
                         </Menu.Item>
