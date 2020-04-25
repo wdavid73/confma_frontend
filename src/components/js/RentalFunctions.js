@@ -20,3 +20,31 @@ export const refundRental = (rentalId) => {
         console.log(res)
     })
 }
+
+
+export const getClothWithOutRental = () => {
+    return axios.get(API_CONSTANT_MAP.rental_cloth, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.data
+    })
+
+}
+
+export const createRental = (date_return, price, cloth, client) => {
+    return axios.post(API_CONSTANT_MAP.rental, {
+        date_return: date_return,
+        price: price,
+        clothId: cloth,
+        clientId: client,
+    },
+        {
+            headers: { 'Content-Type': 'application/json' }
+        }
+    ).then(res => {
+        console.log(res)
+    })
+
+}
