@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer, Button, message, List } from 'antd';
+import { Drawer, Button, message, List,Empty } from 'antd';
 import { getCloth, createCloth } from './js/ClothFuntions'
 
 export default class Cloth extends React.Component {
@@ -198,7 +198,21 @@ export default class Cloth extends React.Component {
                         </div>
                     </Drawer>
                 </div>
-                <List
+                
+                <Empty
+                    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                     imageStyle={{
+                        height: 60,
+                    }}
+                    description={
+                        <span>
+                        No hay Prendas Registrados
+                        </span>
+                    }
+                    >              
+                    </Empty>
+                    
+                    <List
                     grid={{
                         gutter: 16,
                         xs: 2,

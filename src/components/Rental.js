@@ -171,7 +171,7 @@ export default class Rental extends React.Component {
                                     className="btn btn-primary btn-block mt-4"
                                     onClick={this.onSubmit.bind(this)}>
                                     Registrar Alquiler
-                        </button>
+                                </button>
                             </form>
                         </div>
                     </div>

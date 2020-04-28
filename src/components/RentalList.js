@@ -1,8 +1,10 @@
 import React from 'react'
-import { List, Avatar, message } from 'antd';
+import { Link } from 'react-router-dom';
+import { List, Avatar, message ,Skeleton, Empty, Button } from 'antd';
 import { getRental, refundRental } from './js/RentalFunctions'
 import { RedoOutlined } from '@ant-design/icons';
 import Logo from '../resources/logo_size_invert.jpg'
+import {crud_client} from './common/messages'
 
 
 export default class Rental extends React.Component {
@@ -18,7 +20,8 @@ export default class Rental extends React.Component {
             ifrental: 0,
             rentals: [],
             visible: false,
-            editDisable: false
+            editDisable: false,
+            loading : false
         }
     }
 
@@ -52,44 +55,76 @@ export default class Rental extends React.Component {
         })
     }
 
+    disableButton = () => {
+        this.setState({
+            editDisable: true
+        })
+    }
+
     RefundRental = (id, e) => {
         e.preventDefault()
+        this.disableButton()
         message.loading('Devolucion del Alquiler en Proceso..', 2.5)
-            .then(refundRental(id))
-            .then(() => { this.getAll() })
-            .then(() => { message.success('Devolucion del Alquiler Satisfactoria') })
+            .then(
+                refundRental(id)
+            )
+            .then( () => {
+                let data = [...this.state.rentals]
+                data.filter((rental , index) => {
+                    if (rental.id === id){
+                        data.splice(index,1)
+                    }
+                    return true
+                })
+                this.setState({rentals : [...data] , editDisable : false})
+            })
+            .then(() => { 
+                message.success('Devolucion del Alquiler Satisfactoria') 
+            })
     }
 
     render() {
         return (
             <div>
-                <List
+            {
+                this.state.rentals.length <= 0 ? (
+                    <Empty
+                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                        imageStyle={{
+                        height: 60,
+                        }}
+                        description={
+                        <span>
+                           No hay Alquileres Registrados
+                        </span>
+                        }
+                    >
+                    <Link to='/rental' onClick={crud_client}>
+                        <Button type="primary">Registre un Alquiler Ahora</Button>
+                    </Link>
+                        
+                    </Empty>
+                )
+                : (
+                    <List
                     size="small"
                     itemLayout="vertical"
                     pagination={{
-                        onChange: page => {
-                            console.log(page);
-                        },
                         pageSize: 3,
                     }}
                     dataSource={this.state.rentals}
-                    footer={
-                        <div>
-                            <b>ant design</b> footer part
-                        </div>
-                    }
                     renderItem={rental => (
                         <List.Item
                             key={rental.id}
 
                             extra={
-                                <img
+                                !this.state.loading && <img
                                     width={150}
                                     alt={rental.cloth.name}
                                     src={rental.cloth.image}
                                 />
                             }
-                            actions={[
+                            actions={!this.state.loading && [
                                 <button
                                     className="btn btn-success btn-sm text-center"
                                     disabled={this.state.editDisable}
@@ -102,8 +137,9 @@ export default class Rental extends React.Component {
 
                             ]}
                         >
+                        <Skeleton loading={this.state.loading} active avatar>
                             <List.Item.Meta
-
+                            
                                 avatar={
                                     <Avatar src={Logo} />
                                 }
@@ -123,10 +159,13 @@ export default class Rental extends React.Component {
                                     </div>
                                 }
                             />
-
+                            </Skeleton>
                         </List.Item>
                     )}
                 />
+                )
+            }
+                
             </div>
         )
     }

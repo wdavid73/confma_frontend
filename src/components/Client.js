@@ -1,8 +1,8 @@
 import React from 'react'
-import { message } from 'antd';
+import { message , Table, Empty } from 'antd';
 import { getClients, createClient, updateClient, deleteClient } from './js/ClientFuncions'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-
+const { Column, ColumnGroup } = Table;
 
 
 export default class Clients extends React.Component {
@@ -145,7 +145,7 @@ export default class Clients extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="col-lg-4 col-md-12 col-sm-12">
+                <div className="col-lg-5 col-md-12 col-sm-12">
                     <div className="card bg-dark text-white">
                         <div className="card-header">
                             <h3 className="card-title text-white">Cliente</h3>
@@ -238,53 +238,61 @@ export default class Clients extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-8 col-md-12 col-sm-12 mt-2 table-responsive">
-                    <table className="table table-hover table-bordered table-sm">
-                        <caption>Lista de Clientes</caption>
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope='col'>Nombre</th>
-                                <th scope='col'>Direccion</th>
-                                <th scope='col'>Telefono</th>
-                                <th scope='col'>Celular</th>
-                                <th scope='col'>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.clients.map((client, index) => (
-                                <tr key={index}>
-                                    <th className="text-left">{client.name} {client.last_name}</th>
-                                    <th className="text-left">{client.address}</th>
-                                    <th className="text-left">{client.phone}</th>
-                                    <th className="text-left">{client.cellphone}</th>
-                                    <th>
-                                        <div className="row">
-                                            <div className="col-lg-6 col-md-6 col-sm-12">
-                                                <button href="" className="btn btn-info btn-block btn-sm"
-                                                    disabled={this.state.editDisable}
-                                                    onClick={this.onEdit.bind(
-                                                        this,
-                                                        client.id
-                                                    )}>
-                                                    <EditOutlined style={{ fontSize: '24px' }} />
-                                                </button>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6 col-sm-12">
-                                                <button href="" className="btn btn-danger btn-block btn-sm"
-                                                    disabled={this.state.editDisable}
-                                                    onClick={this.onDelete.bind(
-                                                        this,
-                                                        client.id
-                                                    )}>
-                                                    <DeleteOutlined style={{ fontSize: '24px' }} />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </th>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="col-lg-7 col-md-12 col-sm-12 mt-2 table-responsive">
+                {this.state.clients.length <= 0 ? (
+                    <Empty
+                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                        imageStyle={{
+                        height: 60,
+                        }}
+                        description={
+                            <span>
+                            No hay Clientes Registrados
+                            </span>
+                        }
+                    >              
+                    </Empty>
+                ) : 
+                (
+                    <Table dataSource={this.state.clients} pagination={{ pageSize: 10 }} scroll={{ y: 350 }}>
+                    <ColumnGroup title="Nombre Completo">
+                        <Column title="Nombre/s" dataIndex="name" key="name" />
+                        <Column title="Apellido/s" dataIndex="last_name" key="last_name" />
+                    </ColumnGroup>
+                    <Column title="Direcion" dataIndex="address" key="address" />
+                    <Column title="Telefono" dataIndex="phone" key="phone" />
+                    <Column title="Celular" dataIndex="cellphone" key="cellphone" />
+                    <Column
+                        title="Acciones"
+                        key="action"
+                        render={(client, record) => (
+                            <div className="row">
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <button href="" className="btn btn-info btn-block btn-sm"
+                                        disabled={this.state.editDisable}
+                                        onClick={this.onEdit.bind(
+                                            this,
+                                            client.id
+                                        )}>
+                                        <EditOutlined style={{ fontSize: '24px' }} />
+                                    </button>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-12">
+                                    <button href="" className="btn btn-danger btn-block btn-sm"
+                                        disabled={this.state.editDisable}
+                                        onClick={this.onDelete.bind(
+                                            this,
+                                            client.id
+                                        )}>
+                                        <DeleteOutlined style={{ fontSize: '24px' }} />
+                                     </button>
+                                </div>
+                            </div>
+                        )}
+                    />
+                </Table>
+                )}
+                
                 </div>
             </div>
         )
