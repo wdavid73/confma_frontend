@@ -104,11 +104,21 @@ export default class MenuCustom extends React.Component {
                         </SubMenu>
 
 
-
-                        <Menu.Item key="8">
-                            <ProfileOutlined />
-                            <span> Cotizaciones </span>
-                        </Menu.Item>
+                        <SubMenu key='sub3' 
+                                title={<span>
+                                    <ProfileOutlined /> <span>Cotizaciones</span>
+                                </span>}>
+                            <Menu.Item key="8">
+                                <Link to='/quotation'>
+                                    <span> Registar Cotizaciones </span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="9">
+                                <Link to='/quotation/list'>
+                                    <span> Lista de Cotizaciones </span>
+                                </Link>
+                            </Menu.Item>
+                        </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">

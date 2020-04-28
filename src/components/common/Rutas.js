@@ -8,6 +8,7 @@ import Cloth from '../Cloth'
 import Rental from '../Rental'
 import RentalList from '../RentalList'
 import ClientFind from '../actions/ClientFind'
+import Quotation from '../quotation/quotation'
 
 
 const Rutas = () => {
@@ -20,6 +21,7 @@ const Rutas = () => {
                 <Route exact path='/cloth' component={Cloth} />{" "}
                 <Route exact path='/rental' component={Rental} />{" "}
                 <Route exact path='/rental/list' component={RentalList} />{" "}
+                <Route exact path='/quotation' component={Quotation}/>
             </div>
         </Menu>
     )
