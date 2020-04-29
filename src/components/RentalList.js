@@ -100,7 +100,7 @@ export default class Rental extends React.Component {
                         }
                     >
                     <Link to='/rental' onClick={crud_client}>
-                        <Button type="primary">Registre un Alquiler Ahora</Button>
+                        <Button id="btn-form" type="primary">Registre un Alquiler Ahora</Button>
                     </Link>
                         
                     </Empty>

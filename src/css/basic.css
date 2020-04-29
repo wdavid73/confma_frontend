@@ -23,15 +23,64 @@
 #btn-edit{
   background-color: #73d13d;
   border-color:  #237804;
-  width: 75px;
-  margin: 2px 2px 2px 2px;
+  margin:0 auto;
+  display:block;
+  margin-top: 2%;
+  width: 80%;
+  max-width: 100%;
 }
 
 #btn-delete{
   background-color: #ff4d4f;
   border-color: #a8071a;
-  margin: 2px 2px 2px 2px;
-  width: 75px;
+  color: #fff;
+  margin:0 auto;
+  display:block;
+  margin-top: 2%;
+  width: 30%;
+  max-width: 100%;
+}
+
+#btn-submit {
+  background-color: #ffc53d;
+  border-color: #d48806;
+  color: #fff;
+  margin:0 auto;
+  display:block;
+  margin-top: 2%;
+  width: 80%;
+  max-width: 100%;
+}
+
+#btn-form{
+  background-color: #40a9ff;
+  border-color: #096dd9;
+  color: #fff;
+  margin:0 auto;
+  display:block;
+  margin-top: 2%;
+  width: 80%;
+  max-width: 100%;
+
+}
+#btn-form:hover{
+  background-color: #fff;
+  color : #096dd9;
+}
+
+#btn-edit:hover{
+  background-color: #fff;
+  color : #237804;
+}
+
+#btn-delete:hover{
+  background-color: #fff;
+  color : #a8071a;
+}
+
+#btn-submit:hover{
+  background-color: #fff;
+  color : #ffc53d ;
 }
 
 #components-layout-demo-fixed-sider .logo {
@@ -42,3 +91,4 @@
 .site-layout .site-layout-background {
   background: #fff;
 }
+

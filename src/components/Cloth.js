@@ -104,7 +104,7 @@ export default class Cloth extends React.Component {
         return (
             <div>
                 <div>
-                    <button className="btn btn-primary btn-sm mb-2 " onClick={this.showDrawer}>Agregar Prenda</button>
+                    <button id="btn-form" className="btn btn-primary btn-sm mb-2 " onClick={this.showDrawer}>Agregar Prenda</button>
                     <Drawer
                         title="Registar Prenda"
                         width={'50%'}
@@ -114,6 +114,7 @@ export default class Cloth extends React.Component {
                         footer={
                             <div style={{ textAlign: "right" }}>
                                 <Button
+                                    id="btn-delete"
                                     onClick={this.onClose}
                                     style={{ marginRight: 8 }}>
                                     Cancel
@@ -191,6 +192,7 @@ export default class Cloth extends React.Component {
                                     />
                                 </div>
                                 <Button
+                                    id="btn-submit"
                                     onClick={this.onSubmit.bind(this)} type='primary'>
                                     Submit
                             </Button>
@@ -198,8 +200,8 @@ export default class Cloth extends React.Component {
                         </div>
                     </Drawer>
                 </div>
-                
-                <Empty
+                {this.state.cloths.length <= 0 ? (
+                    <Empty
                     image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                      imageStyle={{
                         height: 60,
@@ -211,7 +213,7 @@ export default class Cloth extends React.Component {
                     }
                     >              
                     </Empty>
-                    
+                ):(
                     <List
                     grid={{
                         gutter: 16,
@@ -252,7 +254,9 @@ export default class Cloth extends React.Component {
                         </List.Item>
                     )}
                 />
-            </div>
+ 
+                )}
+                               </div>
         )
     }
 }

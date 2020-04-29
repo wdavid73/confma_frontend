@@ -217,6 +217,7 @@ export default class Clients extends React.Component {
                                 {!this.state.editDisable ? (
                                     <button
                                         type="submit"
+                                        id = "btn-submit"
                                         className="btn btn-primary btn-block mt-4"
                                         onClick={this.onSubmit.bind(this)}>
                                         Registrar Cliente
@@ -226,6 +227,7 @@ export default class Clients extends React.Component {
                                 {this.state.editDisable ? (
                                     <button
                                         type="submit"
+                                        id="btn-edit"
                                         className="btn btn-success btn-block mt-4"
                                         onClick={this.onUpdate.bind(this)}>
                                         Actualizar Cliente
