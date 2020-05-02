@@ -21,6 +21,17 @@ export const getQuotations = () => {
     })
 }
 
+export const getClientNotDuplicated = (quotationId) => {
+    return axios.get(API_CONSTANT_MAP.quoation_client_not_duplicated + quotationId+'/',{
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }).then(res => {
+        console.log(res)
+        return res.data
+    })
+}
+
 export const createQuotation = (value_cloth, value_work, value_buttons, value_embroidery, value_necks, value_prints, value_threads, cloth_id) => {
     return axios.post(API_CONSTANT_MAP.quotation, {
         value_cloth      : value_cloth      ,
@@ -30,7 +41,8 @@ export const createQuotation = (value_cloth, value_work, value_buttons, value_em
         value_necks      : value_necks      ,
         value_prints     : value_prints     ,
         value_threads    : value_threads    ,
-        clothId         : cloth_id         
+        clothId         : cloth_id          ,
+        total : 0
     },
         {
             headers : {
@@ -39,5 +51,17 @@ export const createQuotation = (value_cloth, value_work, value_buttons, value_em
         }
     ).then(res => {
         console.log(res)
+    })
+}
+
+export const createQuotationClient = (quotationId ,clientId) => {
+    return axios.post(API_CONSTANT_MAP.quoation_client,{
+        quotationId : quotationId,
+        clientId : clientId
+    },
+    {
+        headers : {
+            'Content-Type' : 'application/json'
+        }
     })
 }

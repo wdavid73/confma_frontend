@@ -176,10 +176,6 @@ export default class Rental extends React.Component {
                             </form>
                         </div>
                     </div>
-
-                </div>
-                <div className='col'>
-
                 </div>
             </div>
         )

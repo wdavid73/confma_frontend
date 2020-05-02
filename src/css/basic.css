@@ -52,6 +52,7 @@
   max-width: 100%;
 }
 
+
 #btn-form{
   background-color: #40a9ff;
   border-color: #096dd9;
@@ -61,7 +62,6 @@
   margin-top: 2%;
   width: 80%;
   max-width: 100%;
-
 }
 #btn-form:hover{
   background-color: #fff;
@@ -92,3 +92,46 @@
   background: #fff;
 }
 
+#btn-submit-icon {
+  background-color: #ffc53d;
+  border-color: #d48806;
+  color: #fff;
+  display:block;
+  margin-right: 2%;
+}
+
+#btn-form-icon{
+  background-color: #40a9ff;
+  border-color: #096dd9;
+  color: #fff;
+  display:block;
+}
+
+#btn-delete-icon{
+  background-color: #ff4d4f;
+  border-color: #a8071a;
+  color: #fff;
+  display:block;
+}
+
+
+#btn-submit-icon:hover {
+  background-color: #ffc53d;
+  
+  color: #fff;
+
+}
+
+#btn-form-icon:hover{
+  background-color: #40a9ff;
+  
+  color: #fff;
+
+}
+
+#btn-delete-icon:hover{
+  background-color: #ff4d4f;
+ 
+  color: #fff;
+  
+}
