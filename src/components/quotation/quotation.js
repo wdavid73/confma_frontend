@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Drawer, Button, message, Table, Empty, Card, List, Popover, Modal, Descriptions } from 'antd';
 import { EditOutlined, DeleteOutlined, UserAddOutlined } from '@ant-design/icons'
-import { getClothWithOutQuotation, getQuotations, createQuotation, createQuotationClient, getClientNotDuplicated } from '../js/QuotationFunctions.js'
+import { getClothWithOutQuotation, getQuotations, createQuotation, createQuotationClient, getClientNotDuplicated, deleteQuotation } from '../js/QuotationFunctions.js'
 import {
     popover_edit_quotation,
     popover_add_client_quotation,
@@ -88,7 +88,7 @@ export default class Quotation extends Component {
             })
         })
 
-        
+
 
     }
 
@@ -150,6 +150,7 @@ export default class Quotation extends Component {
 
     onDelete = (quotationId, e) => {
         e.preventDefault()
+        deleteQuotation(quotationId)
         let data = [...this.state.quotations]
         data.filter((quotation, index) => {
             if (quotationId === quotation.id) {
@@ -161,7 +162,6 @@ export default class Quotation extends Component {
     }
 
     showModal = (quotationId) => {
-
         getClientNotDuplicated(quotationId).then(data => {
             this.setState({
                 clients: [...data.clients]
@@ -172,6 +172,8 @@ export default class Quotation extends Component {
             visibleModal: true,
             quotation_id_modal: quotationId
         });
+
+
     };
 
     handleOk = (quotationId, e) => {
@@ -179,7 +181,8 @@ export default class Quotation extends Component {
         createQuotationClient(quotationId, this.state.client_id)
         this.setState({
             client_id: '',
-            loading: true 
+            loading: true,
+            clients: []
         });
         setTimeout(() => {
             this.setState({ loading: false, visibleModal: false });

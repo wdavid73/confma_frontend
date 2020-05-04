@@ -7,8 +7,8 @@ export const API_CONSTANT_MAP = {
     "refundRental": BASE_API + '/rentals/refund/',
     "rental_cloth": BASE_API + '/rentals_cloth/',
     "quotation": BASE_API + '/quotations/',
-    "quoation_client": BASE_API + '/quotations_clients/',
+    "quotation_client": BASE_API + '/quotations_clients/',
     "quotation_cloth" : BASE_API + '/quotations_cloth/',
-    "quoation_client_not_duplicated" : BASE_API + '/quotations_clients/clientnotduplicated/'
+    "quotation_client_not_duplicated" : BASE_API + '/quotations_clients/clientnotduplicated/'
 }
 
