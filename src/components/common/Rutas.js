@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import Menu from './Menu'
 import Welcome from './Welcome'
 import Client from '../Client'
+
 import Cloth from '../Cloth'
 import Rental from '../Rental'
 import RentalList from '../RentalList'

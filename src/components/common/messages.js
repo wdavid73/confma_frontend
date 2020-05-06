@@ -44,3 +44,14 @@ export const popover_title_add_client = () => {
     return "Opcion : Dar un Cliente"
 }
 
+export const validateMessages = {
+    required: '${label} es obligatorio!',
+    types: {
+      email: '${label} no es un Email valido!',
+      number: '${label} no es un Numero Valido!',
+    },
+    number: {
+      range: '${label} must be between ${min} and ${max}',
+    },
+};
+

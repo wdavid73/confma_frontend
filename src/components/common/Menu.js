@@ -49,9 +49,7 @@ export default class MenuCustom extends React.Component {
                     collapsed={this.state.collapsed}
                     breakpoint="lg"
                     collapsedWidth="0"
-                    onBreakpoint={broken => {
-                        console.log(broken);
-                    }}
+                    
                     onCollapse={(collapsed, type) => {
                         this.setState({ collapsed });
                     }}
@@ -122,7 +120,7 @@ export default class MenuCustom extends React.Component {
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
-                    <Header className="site-layout-background" style={{ padding: 0 }}>
+                    <Header  style={{ padding: 0 }}>
                         {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
                             style: { width: '30px', fontSize: '24px' },
@@ -130,7 +128,7 @@ export default class MenuCustom extends React.Component {
                         })}
                     </Header>
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                        <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
+                        <div style={{ padding: 24, textAlign: 'center' }}>
                             {this.props.children}
                         </div>
                     </Content>
