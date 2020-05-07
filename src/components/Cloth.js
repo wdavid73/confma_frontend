@@ -25,6 +25,8 @@ export default class Cloth extends React.Component {
     }
     numEachPage = 4
 
+    formRef = React.createRef();
+
     componentDidMount() {
         this.getAll()
     }
@@ -62,21 +64,18 @@ export default class Cloth extends React.Component {
     }
 
     onChange = e => {
-        console.log(e.target.name)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
     handlerChangeSelectSize = (value) =>{
-        console.log("tallas " , value)
         this.setState({
           size : value
         })
       }
     
       handlerChangeSelectFashion = (value) =>{
-        console.log("moda " , value)
         this.setState({
           fashion : value
         })
@@ -84,7 +83,7 @@ export default class Cloth extends React.Component {
 
     fileSelecterhandler = e => {
         this.setState({
-            image: e.fileList
+            image: e.fileList[0]
         })
         if (Array.isArray(e)) {
             return e;
@@ -96,7 +95,14 @@ export default class Cloth extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state.image)
+        createCloth(
+            this.state.name,
+            this.state.color,
+            this.state.size,
+            this.state.fashion,
+            this.state.image
+        )
+        this.getAll()
        /*message
             .loading('Registro en Proceso..', 2.5)
             .then(
@@ -119,8 +125,8 @@ export default class Cloth extends React.Component {
             size: '',
             fashion: '',
             image: null,
-        })*/
-        this.onClose()
+        })
+        this.onClose()*/
 
     }
 
@@ -148,10 +154,10 @@ export default class Cloth extends React.Component {
                             </div>
                         }
                     >
-                    <Form onSubmitCapture={this.onSubmit} validateMessages={validateMessages}>
+                    <Form ref={this.formRef} onSubmitCapture={this.onSubmit} validateMessages={validateMessages}>
                         <Item label="Nombre de la Prenda"
                             name="name"
-                            rule={[{ required : true}]}
+                            rules={[{ required: true }]}
                             >
                                 <Input name="name" placeholder="Ingrese un Nombre para la Prenda" 
                                     disable={this.state.inputDisable}
@@ -162,8 +168,7 @@ export default class Cloth extends React.Component {
 
                         <Item label="Color de la Prenda"
                             name="color"
-                            rule={[{ required : true}]}
-                            >
+                            rules={[{ required: true }]}                            >
                                 <Input name="color" placeholder="Ingrese el color de la Prenda" 
                                     disable={this.state.inputDisable}
                                     value={this.state.color || ''}
@@ -173,7 +178,7 @@ export default class Cloth extends React.Component {
 
                         <Item label="Talla de la Prenda"
                             name="size"
-                            rule={[{ required : true}]}>
+                            rules={[{ required: true }]}>
                                 <Select
                                     value={this.state.size || ''}
                                     onChange={this.handlerChangeSelectSize}
@@ -186,9 +191,9 @@ export default class Cloth extends React.Component {
                                 </Select>
                         </Item>
 
-                        <Item label="Estilo Moda de la Prenda"
+                        <Item label="Moda de la Prenda"
                             name="Moda"
-                            rule={[{ required : true}]}
+                            rules={[{ required: true }]}
                             >
                                  <Select 
                                     value={this.state.fashion || ''}
@@ -202,10 +207,10 @@ export default class Cloth extends React.Component {
                         
                         <Form.Item
                             name="image"
-                            label="Upload"
+                            label="Subir Imagen"
                             valuePropName="fileList"
                             getValueFromEvent={this.fileSelecterhandler}
-                            extra="longgggggggggggggggggggggggggggggggggg"
+                            rules={[{ required: true }]}
                         >
                             <Upload name="image" beforeUpload={() => false} listType="picture">
                             <Button>
