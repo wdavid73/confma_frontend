@@ -9,6 +9,7 @@ import {
   Card,
   Row,
   Col,
+  Popover,
 } from "antd";
 import {
   getClients,
@@ -78,6 +79,8 @@ export default class Clients extends React.Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  
 
   onSubmit = (e) => {
     //e.preventDefault()
@@ -350,7 +353,7 @@ export default class Clients extends React.Component {
             <Table
               dataSource={this.state.clients}
               pagination={{ pageSize: 10 }}
-              scroll={{ y: 400 }}
+              scroll={{ y: 420 }}
             >
               <ColumnGroup title="Nombre Completo">
                 <Column title="Nombre/s" dataIndex="name" key="name" />
@@ -367,28 +370,41 @@ export default class Clients extends React.Component {
                 title="Acciones"
                 key="action"
                 render={(client, record) => (
-                  <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-12">
-                      <button
-                        href=""
-                        className="btn btn-info btn-block btn-sm"
-                        disabled={this.state.buttonDisable}
-                        onClick={this.onEdit.bind(this, client.id)}
+                  <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                      <Popover
+                        placement="topLeft"
+                        content="Editar Cliente"
+                        title="Opcion : Editar"
                       >
-                        <EditOutlined style={{ fontSize: "24px" }} />
-                      </button>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-12">
-                      <button
-                        href=""
-                        className="btn btn-danger btn-block btn-sm"
-                        disabled={this.state.buttonDisable}
-                        onClick={this.onDelete.bind(this, client.id)}
+                        <Button
+                          type="link"
+                          id="btn-form-icon-link"
+                          htmlType="submit"
+                          disabled={this.state.buttonDisable}
+                          onClick={this.onEdit.bind(this, client.id)}
+                        >
+                          <EditOutlined style={{ fontSize: "24px" }} />
+                        </Button>
+                      </Popover>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                      <Popover
+                        placement="topLeft"
+                        content="Eliminar Cliente"
+                        title="Opcion : Eliminar"
                       >
-                        <DeleteOutlined style={{ fontSize: "24px" }} />
-                      </button>
-                    </div>
-                  </div>
+                        <Button
+                          type="link"
+                          id="btn-delete-icon-link"
+                          disabled={this.state.buttonDisable}
+                          onClick={this.onDelete.bind(this, client.id)}
+                        >
+                          <DeleteOutlined style={{ fontSize: "24px" }} />
+                        </Button>
+                      </Popover>
+                    </Col>
+                  </Row>
                 )}
               />
             </Table>
