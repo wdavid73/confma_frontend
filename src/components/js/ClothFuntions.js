@@ -19,6 +19,9 @@ export const createCloth = (name, color, size, fashion, image) => {
     data.append('fashion', fashion)
     data.append('image', image, image.name)
 
+    console.log(image)
+    console.log(image.name)
+
     return axios.post(API_CONSTANT_MAP.cloth, data,
         {
             headers: { 'Content-Type': 'application/json' }
