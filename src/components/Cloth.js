@@ -1,262 +1,341 @@
-import React from 'react'
-import { Drawer, Button, message, List,Empty } from 'antd';
-import { getCloth, createCloth } from './js/ClothFuntions'
+import React from "react";
+import {
+  Drawer,
+  Button,
+  message,
+  List,
+  Empty,
+  Card,
+  Row,
+  Col,
+  Descriptions,
+  Form,
+  Input,
+  Select,
+  Upload,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { getCloth, createCloth } from "./js/ClothFuntions";
+import { validateMessages } from "./common/messages";
+import { isEmptyOrBlank } from "./actions/Validations";
 
+const { Meta } = Card;
+const { Item } = Form;
+const { Option } = Select;
 export default class Cloth extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            id: '',
-            name: '',
-            color: '',
-            size: '',
-            fashion: '',
-            image: null,
-            cloths: [],
-            minValue: 0,
-            maxValue: 1,
-            visible: false
-        }
-        this.onSubmit = this.onSubmit.bind(this)
-    }
-    numEachPage = 4
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: "",
+      name: "",
+      color: "",
+      size: "",
+      fashion: "",
+      image: null,
+      cloths: [],
+      minValue: 0,
+      maxValue: 1,
+      visible: false,
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  numEachPage = 4;
 
-    componentDidMount() {
-        this.getAll()
-    }
+  formRef = React.createRef();
 
-    handleChange = value => {
-        this.setState({
-            minValue: (value - 1) * this.numEachPage,
-            maxValue: value * this.numEachPage
-        })
-    }
+  componentDidMount() {
+    this.getAll();
+  }
 
-    getAll = () => {
-        getCloth().then(data => {
-            this.setState({
-                name: '',
-                color: '',
-                size: '',
-                fashion: '',
-                image: '',
-                cloths: [...data.cloths]
-            })
-        })
-    }
+  handleChange = (value) => {
+    this.setState({
+      minValue: (value - 1) * this.numEachPage,
+      maxValue: value * this.numEachPage,
+    });
+  };
 
-    showDrawer = () => {
-        this.setState({
-            visible: true
-        })
-    }
+  getAll = () => {
+    getCloth().then((data) => {
+      this.setState({
+        name: "",
+        color: "",
+        size: "",
+        fashion: "",
+        image: "",
+        cloths: [...data.cloths],
+      });
+    });
+  };
 
-    onClose = () => {
-        this.setState({
-            visible: false
-        })
-    }
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
 
-    onChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
 
-    fileSelecterhandler = e => {
-        this.setState({
-            image: e.target.files[0]
-        })
-    }
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  handlerChangeSelectSize = (value) => {
+    this.setState({
+      size: value,
+    });
+  };
 
-    onSubmit = (e) => {
-        e.preventDefault()
-        message
-            .loading('Registro en Proceso..', 2.5)
-            .then(
-                createCloth(
-                    this.state.name,
-                    this.state.color,
-                    this.state.size,
-                    this.state.fashion,
-                    this.state.image
-                )
-            )
-            .then(() => {
-                this.getAll()
-            })
-            .then(() => message.success('Registro Completado', 2.5))
+  handlerChangeSelectFashion = (value) => {
+    this.setState({
+      fashion: value,
+    });
+  };
 
-        this.setState({
-            name: '',
-            color: '',
-            size: '',
-            fashion: '',
-            image: null,
-        })
-        this.onClose()
-
+  fileSelecterhandler = (e) => {
+    this.setState({
+      image: e.file,
+    });
+    if (Array.isArray(e)) {
+      return e;
     }
 
+    return e && e.fileList;
+  };
 
-    render() {
-        return (
-            <div>
-                <div>
-                    <button id="btn-form" className="btn btn-primary btn-sm mb-2 " onClick={this.showDrawer}>Agregar Prenda</button>
-                    <Drawer
-                        title="Registar Prenda"
-                        width={'50%'}
-                        onClose={this.onClose}
-                        visible={this.state.visible}
-                        bodyStyle={{ paddingBottom: 80 }}
-                        footer={
-                            <div style={{ textAlign: "right" }}>
-                                <Button
-                                    id="btn-delete"
-                                    onClick={this.onClose}
-                                    style={{ marginRight: 8 }}>
-                                    Cancel
-                            </Button>
-
-                            </div>
-                        }
-                    >
-                        <div className='container'>
-                            <form onSubmit={this.onSubmit}>
-                                <div className='form-group'>
-                                    <label>Nombre : </label>
-                                    <input type='text'
-                                        placeholder='Nombre de la Prenda'
-                                        id='name'
-                                        name='name'
-                                        className='form-control'
-                                        value={this.state.name || ''}
-                                        onChange={this.onChange.bind(this)}
-                                        required
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label>Color : </label>
-                                    <input type='text'
-                                        placeholder='Color de la Prenda'
-                                        id='color'
-                                        name='color'
-                                        className='form-control'
-                                        required
-                                        value={this.state.color || ''}
-                                        onChange={this.onChange.bind(this)}
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label>Talla : </label>
-                                    <select className="custom-select"
-                                        required
-                                        id='size'
-                                        name='size'
-                                        value={this.state.size || ''}
-                                        onChange={this.onChange.bind(this)}
-                                    >
-                                        <option selected disabled value="">Elige...</option>
-                                        <option value='XS'>XS</option>
-                                        <option value='S'>S</option>
-                                        <option value='M'>M</option>
-                                        <option value='L'>L</option>
-                                        <option value='XL'>XL</option>
-                                    </select>
-                                </div>
-                                <div className='form-group'>
-                                    <label>Moda : </label>
-                                    <select className="custom-select"
-                                        required
-                                        id='fashion'
-                                        name='fashion'
-                                        value={this.state.fashion || ''}
-                                        onChange={this.onChange.bind(this)}
-                                    >
-                                        <option selected disabled value="">Elige...</option>
-                                        <option value='General'>General</option>
-                                        <option value='A Medida'>A Medida</option>
-                                    </select>
-                                </div>
-                                <div className='form-group'>
-                                    <label>Foto de la Moda : </label>
-                                    <input type="file"
-                                        required
-                                        name='image'
-                                        id='image'
-                                        accept="image/*"
-                                        className="form-control"
-                                        onChange={this.fileSelecterhandler}
-                                    />
-                                </div>
-                                <Button
-                                    id="btn-submit"
-                                    onClick={this.onSubmit.bind(this)} type='primary'>
-                                    Submit
-                            </Button>
-                            </form>
-                        </div>
-                    </Drawer>
-                </div>
-                {this.state.cloths.length <= 0 ? (
-                    <Empty
-                    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                     imageStyle={{
-                        height: 60,
-                    }}
-                    description={
-                        <span>
-                        No hay Prendas Registrados
-                        </span>
-                    }
-                    >              
-                    </Empty>
-                ):(
-                    <List
-                    grid={{
-                        gutter: 16,
-                        xs: 2,
-                        sm: 3,
-                        md: 3,
-                        lg: 3,
-                    }}
-
-                    pagination={{
-                        onChange: page => {
-                            console.log(page);
-                        },
-                        pageSize: 6,
-                    }}
-
-                    dataSource={this.state.cloths}
-                    renderItem={cloth => (
-                        <List.Item>
-                            <div className='card'>
-                                <div className='row no-gutters'>
-                                    <div className="col-md-5 p-2 d-flex align-items-center justify-content-center">
-                                        <img src={cloth.image} className="card-img-top" alt="moda de referencia" />
-                                    </div>
-                                    <div className="col-md-7">
-                                        <div className='card-body'>
-                                            <h5 className="card-title text-center"> Prenda : {cloth.name}</h5>
-                                            <ul className="list-group">
-                                                <li className="list-group-item list-group-item-dark">Talla : {cloth.size}</li>
-                                                <li className="list-group-item list-group-item-dark">Moda : {cloth.fashion}</li>
-                                                <li className="list-group-item list-group-item-dark">Color : {cloth.color}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </List.Item>
-                    )}
-                />
- 
-                )}
-                               </div>
+  onSubmit = (e) => {
+    e.preventDefault();
+    if (
+      isEmptyOrBlank(this.state.name) &&
+      isEmptyOrBlank(this.state.color) &&
+      isEmptyOrBlank(this.state.size) &&
+      isEmptyOrBlank(this.state.fashion)
+    ) {
+      message
+        .loading("Registro en Proceso..", 2.5)
+        .then(
+          createCloth(
+            this.state.name,
+            this.state.color,
+            this.state.size,
+            this.state.fashion,
+            this.state.image
+          )
         )
+        .then(() => {
+          this.getAll();
+        })
+        .then(() => message.success("Registro Completado", 2.5));
+      this.setState({
+        name: "",
+        color: "",
+        size: "",
+        fashion: "",
+        image: null,
+      });
+      this.formRef.current.resetFields();
+      this.onClose();
+    } else {
+      message.warning("Porfavor Diligencie Todos los Campos", 2.5);
     }
+  };
+
+  render() {
+    return (
+      <div>
+        <div>
+          <Button
+            id="btn-form"
+            onClick={this.showDrawer}
+            style={{ marginBottom: "15px" }}
+          >
+            Agregar Prenda
+          </Button>
+          <Drawer
+            title="Registar Prenda"
+            width={"75%"}
+            onClose={this.onClose}
+            visible={this.state.visible}
+            bodyStyle={{ paddingBottom: 80 }}
+            footer={
+              <div style={{ textAlign: "right" }}>
+                <Button
+                  id="btn-delete"
+                  onClick={this.onClose}
+                  style={{ marginRight: 8 }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            }
+          >
+            <Form
+              ref={this.formRef}
+              onSubmitCapture={this.onSubmit}
+              validateMessages={validateMessages}
+            >
+              <Item
+                label="Nombre de la Prenda"
+                name="name"
+                rules={[{ required: true }]}
+              >
+                <Input
+                  name="name"
+                  placeholder="Ingrese un Nombre para la Prenda"
+                  disable={this.state.inputDisable}
+                  value={this.state.name || ""}
+                  onChange={this.onChange.bind(this)}
+                />
+              </Item>
+
+              <Item
+                label="Color de la Prenda"
+                name="color"
+                rules={[{ required: true }]}
+              >
+                <Input
+                  name="color"
+                  placeholder="Ingrese el color de la Prenda"
+                  disable={this.state.inputDisable}
+                  value={this.state.color || ""}
+                  onChange={this.onChange.bind(this)}
+                />
+              </Item>
+
+              <Item
+                label="Talla de la Prenda"
+                name="size"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  value={this.state.size || ""}
+                  onChange={this.handlerChangeSelectSize}
+                  placeholder="Seleccione una Talla"
+                >
+                  <Option value="XS">XS</Option>
+                  <Option value="S">S</Option>
+                  <Option value="M">M</Option>
+                  <Option value="L">L</Option>
+                  <Option value="XL">XL</Option>
+                </Select>
+              </Item>
+
+              <Item
+                label="Moda de la Prenda"
+                name="Moda"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  value={this.state.fashion || ""}
+                  onChange={this.handlerChangeSelectFashion}
+                  placeholder="Seleccione un estilo de Moda"
+                >
+                  <Option value="General">General</Option>
+                  <Option value="A Medida">A Medida</Option>
+                </Select>
+              </Item>
+
+              <Form.Item
+                name="image"
+                label="Subir Imagen"
+                valuePropName="fileList"
+                getValueFromEvent={this.fileSelecterhandler}
+                rules={[{ required: true }]}
+              >
+                <Upload
+                  name="image"
+                  beforeUpload={() => false}
+                  listType="picture"
+                >
+                  <Button>
+                    <UploadOutlined /> Click to upload
+                  </Button>
+                </Upload>
+              </Form.Item>
+
+              <Button
+                id="btn-submit"
+                htmlType="submit"
+                disabled={this.state.buttonDisable}
+              >
+                Registrar Prenda
+              </Button>
+            </Form>
+          </Drawer>
+        </div>
+        {this.state.cloths.length <= 0 ? (
+          <Empty
+            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            imageStyle={{
+              height: 60,
+            }}
+            description={<span>No hay Prendas Registradas</span>}
+          ></Empty>
+        ) : (
+          <List
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 1,
+              md: 2,
+              lg: 3,
+              xl: 3,
+              xxl: 4,
+            }}
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 8,
+            }}
+            dataSource={this.state.cloths}
+            renderItem={(cloth) => (
+              <List.Item>
+                <Card hoverable style={{ padding: "-20px" }}>
+                  <Row gutter={[16, 8]}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                      <img
+                        src={cloth.image}
+                        className="card-img-top mb-2"
+                        alt="moda de referencia"
+                      />
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                      <div>
+                        <Descriptions
+                          title="Detalles de la Prenda"
+                          bordered
+                          column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
+                          style={{ width: "105%" }}
+                        >
+                          <Descriptions.Item label="Talla">
+                            {cloth.size}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Color">
+                            {cloth.color}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Moda">
+                            {cloth.fashion}
+                          </Descriptions.Item>
+                        </Descriptions>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Meta
+                    title={cloth.name}
+                    description="www.confeccionesmaribel.com"
+                  />
+                </Card>
+              </List.Item>
+            )}
+          />
+        )}
+      </div>
+    );
+  }
 }
