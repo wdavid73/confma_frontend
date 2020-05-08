@@ -131,18 +131,31 @@
 }
 
 #btn-form-icon-link {
-  color : #40a9ff
+  color: #40a9ff;
 }
 
 #btn-delete-icon-link {
-  color : #ff4d4f
+  color: #ff4d4f;
 }
 
 #btn-form-icon-link:hover {
-  color : #1890ff
+  color: #1890ff;
 }
 
 #btn-delete-icon-link:hover {
-  color : #f5222d
+  color: #f5222d;
 }
 
+#btn-refund {
+  background: #52c41a;
+  border-color: #135200;
+  color: #135200;
+}
+
+#btn-refund:hover {
+  background: #fff;
+  color: #135200;
+}
+#menufold {
+  color: #fff;
+}

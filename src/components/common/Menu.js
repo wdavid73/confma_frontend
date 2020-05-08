@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "../../css/basic.css";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Form } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
@@ -139,6 +139,7 @@ export default class MenuCustom extends React.Component {
                 className: "trigger",
                 style: { width: "30px", fontSize: "24px" },
                 onClick: this.toggle,
+                id: "menufold",
               }
             )}
           </Header>
