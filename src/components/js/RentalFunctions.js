@@ -37,18 +37,22 @@ export const getClothWithOutRental = () => {
 export const createRental = (date_return, price, cloth, client) => {
   let return_date = new Date(date_return);
   if (date_now < return_date && parseInt(price) >= 5000) {
-    return axios.post(
-      API_CONSTANT_MAP.rental,
-      {
-        date_return: date_return,
-        price: price,
-        clothId: cloth,
-        clientId: client,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return axios
+      .post(
+        API_CONSTANT_MAP.rental,
+        {
+          date_return: date_return,
+          price: price,
+          clothId: cloth,
+          clientId: client,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
   } else {
     console.log("Fecha mal ingresada o precio menor a 5000");
   }

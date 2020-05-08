@@ -38,7 +38,6 @@ export default class Clients extends React.Component {
       inputDisable: false,
       clients: [],
     };
-
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -80,8 +79,6 @@ export default class Clients extends React.Component {
     });
   };
 
-  
-
   onSubmit = (e) => {
     //e.preventDefault()
     if (
@@ -117,6 +114,13 @@ export default class Clients extends React.Component {
     } else {
       message.warning("Porfavor Diligencie Todos los Campos", 2.5);
     }
+  };
+
+  onFinishFail = () => {
+    message.warning(
+      "Ah ocurrido un Error Porfavor espere un Momento o Actualize la Pagina",
+      2.5
+    );
   };
 
   onEdit = (clientId, e) => {
@@ -220,8 +224,9 @@ export default class Clients extends React.Component {
           <Card title="Registro de Clientes" id="card_client">
             <Form
               ref={this.formRef}
-              onSubmitCapture={this.onSubmit}
+              onFinish={this.onSubmit.bind(this)}
               validateMessages={validateMessages}
+              onFinishFailed={this.onFinishFail}
             >
               <Row>
                 <Col xs={24} sm={24} md={24} lg={12} xl={12}>
