@@ -106,39 +106,39 @@ export default class Rental extends React.Component {
             </Link>
           </Empty>
         ) : (
-          <Card>
-            <List
-              size="small"
-              itemLayout="vertical"
-              pagination={{
-                pageSize: 3,
-              }}
-              dataSource={this.state.rentals}
-              renderItem={(rental) => (
-                <List.Item
-                  key={rental.id}
-                  extra={
-                    !this.state.loading && (
-                      <img
-                        width={150}
-                        alt={rental.cloth.name}
-                        src={rental.cloth.image}
-                      />
-                    )
-                  }
-                  actions={
-                    !this.state.loading && [
-                      <Button
-                        id="btn-refund"
-                        disable={this.state.editDisable}
-                        onClick={this.RefundRental.bind(this, rental.id)}
-                      >
-                        <RedoOutlined /> Devolver Alquiler
-                      </Button>,
-                    ]
-                  }
-                >
-                  <Skeleton loading={this.state.loading} active avatar>
+          <List
+            size="small"
+            itemLayout="vertical"
+            pagination={{
+              pageSize: 3,
+            }}
+            dataSource={this.state.rentals}
+            renderItem={(rental) => (
+              <List.Item
+                key={rental.id}
+                extra={
+                  !this.state.loading && (
+                    <img
+                      width={150}
+                      alt={rental.cloth.name}
+                      src={rental.cloth.image}
+                    />
+                  )
+                }
+                actions={
+                  !this.state.loading && [
+                    <Button
+                      id="btn-refund"
+                      disable={this.state.editDisable}
+                      onClick={this.RefundRental.bind(this, rental.id)}
+                    >
+                      <RedoOutlined /> Devolver Alquiler
+                    </Button>,
+                  ]
+                }
+              >
+                <Skeleton loading={this.state.loading} active avatar>
+                  <Card>
                     <List.Item.Meta
                       avatar={<Avatar src={Logo} />}
                       title={
@@ -204,11 +204,11 @@ export default class Rental extends React.Component {
                         </div>
                       }
                     />
-                  </Skeleton>
-                </List.Item>
-              )}
-            />
-          </Card>
+                  </Card>
+                </Skeleton>
+              </List.Item>
+            )}
+          />
         )}
       </div>
     );

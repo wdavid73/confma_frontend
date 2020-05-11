@@ -39,7 +39,6 @@ import {
   popover_title_add_client,
   popover_title_delete,
   popover_title_edit,
-  validateMessages,
 } from "../common/messages";
 const { Meta } = Card;
 const { Item } = Form;
@@ -308,13 +307,14 @@ export default class Quotation extends Component {
                 layout="vertical"
                 onFinish={this.onSubmit}
                 ref={this.formRef}
-                validateMessages={validateMessages}
               >
                 <Row gutter={[16, 8]}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                     <Item
                       label="Valor del Trabajo"
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
                     >
                       <InputNumber
                         id="inputNumber"
@@ -331,7 +331,12 @@ export default class Quotation extends Component {
                     </Item>
                   </Col>
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                    <Item label="Valor de la Tela" rules={[{ required: true }]}>
+                    <Item
+                      label="Valor de la Tela"
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
+                    >
                       <InputNumber
                         formatter={(value) =>
                           `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -350,7 +355,9 @@ export default class Quotation extends Component {
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                     <Item
                       label="Valor de los Botones"
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
                     >
                       <InputNumber
                         formatter={(value) =>
@@ -368,7 +375,9 @@ export default class Quotation extends Component {
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                     <Item
                       label="Valor de los Cuellos"
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
                     >
                       <InputNumber
                         formatter={(value) =>
@@ -388,7 +397,9 @@ export default class Quotation extends Component {
                   <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                     <Item
                       label="Valor de los Hilos"
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
                     >
                       <InputNumber
                         formatter={(value) =>
@@ -406,7 +417,9 @@ export default class Quotation extends Component {
                   <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                     <Item
                       label="Valor del Bordado"
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
                     >
                       <InputNumber
                         formatter={(value) =>
@@ -424,7 +437,9 @@ export default class Quotation extends Component {
                   <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                     <Item
                       label="Valor del Estampado"
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Porfavor Llene el Campo" },
+                      ]}
                     >
                       <InputNumber
                         formatter={(value) =>
@@ -472,7 +487,12 @@ export default class Quotation extends Component {
                                   name="cloth_id"
                                   onChange={this.onChangeRadio.bind(this)}
                                   value={this.state.cloth_id}
-                                  rules={[{ required: true }]}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Porfavor Llene el Campo",
+                                    },
+                                  ]}
                                 >
                                   <Radio value={cloth.id}>{cloth.name}</Radio>
                                 </Radio.Group>
@@ -571,7 +591,7 @@ export default class Quotation extends Component {
                 <Table
                   dataSource={this.state.quotations}
                   pagination={{ pageSize: 10 }}
-                  scroll={{ x: 1500, y: 500 }}
+                  scroll={{ y: 500 }}
                   size="small"
                   bordered
                 >
@@ -579,50 +599,15 @@ export default class Quotation extends Component {
                     <Table.Column
                       title="Index"
                       dataIndex="id"
-                      fixed="left"
                       responsive={"md"}
+                      key="id"
                     />
-                    <Table.Column
-                      title="Valor de la Tela"
-                      dataIndex="value_cloth"
-                      fixed="left"
-                      responsive={"md"}
-                    />
-                    <Table.Column
-                      title="Valor del Trabajo"
-                      dataIndex="value_work"
-                      responsive={"md"}
-                    />
-                    <Table.Column
-                      title="Valor de los Botones"
-                      dataIndex="value_buttons"
-                      responsive={"md"}
-                    />
-                    <Table.Column
-                      title="Valor de los Hilos"
-                      dataIndex="value_threads"
-                      responsive={"sm"}
-                    />
-                    <Table.Column
-                      title="Valor del Cuello"
-                      dataIndex="value_necks"
-                      responsive={"sm"}
-                    />
-                    <Table.Column
-                      title="Valor del Bordado"
-                      dataIndex="value_embroidery"
-                      responsive={"lg"}
-                    />
-                    <Table.Column
-                      title="Valor del Estampado"
-                      dataIndex="value_prints"
-                      responsive={"lg"}
-                    />
-                    <Table.Column title="Total" dataIndex="total" />
+
+                    <Table.Column title="Total" dataIndex="total" key="total" />
                   </Table.ColumnGroup>
-                  <Table.ColumnGroup title="Prenda">
+                  <Table.ColumnGroup title="Prenda" key="cloth">
                     <Table.Column
-                      title="Nombre"
+                      title="Prenda"
                       dataIndex="cloth"
                       key="cloth_name"
                       render={(cloth) => <p>{cloth.name}</p>}
@@ -650,7 +635,6 @@ export default class Quotation extends Component {
                   <Table.Column
                     title="Acciones"
                     key="action"
-                    fixed="right"
                     render={(quotation) => (
                       <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={8}>

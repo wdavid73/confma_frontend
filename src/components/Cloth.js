@@ -12,8 +12,6 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import ListCloth from "../components/ListCloth";
 import { getCloth, createCloth } from "./js/ClothFuntions";
-import { validateMessages } from "./common/messages";
-import { isEmptyOrBlank } from "./actions/Validations";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -104,46 +102,36 @@ export default class Cloth extends React.Component {
   };
 
   onSubmit = (e) => {
-    e.preventDefault();
-    if (
-      isEmptyOrBlank(this.state.name) &&
-      isEmptyOrBlank(this.state.color) &&
-      isEmptyOrBlank(this.state.size) &&
-      isEmptyOrBlank(this.state.fashion)
-    ) {
-      message
-        .loading("Registro en Proceso..", 2.5)
-        .then(
-          createCloth(
-            this.state.name,
-            this.state.color,
-            this.state.size,
-            this.state.fashion,
-            this.state.image
-          )
+    //e.preventDefault();
+    message
+      .loading("Registro en Proceso..", 2.5)
+      .then(
+        createCloth(
+          this.state.name,
+          this.state.color,
+          this.state.size,
+          this.state.fashion,
+          this.state.image
         )
-        .then(() => {
-          this.getAll();
-        })
-        .then(() => message.success("Registro Completado", 2.5));
-      this.setState({
-        name: "",
-        color: "",
-        size: "",
-        fashion: "",
-        image: null,
-      });
-      this.formRef.current.resetFields();
-      this.onClose();
-    } else {
-      message.warning("Porfavor Diligencie Todos los Campos", 2.5);
-    }
+      )
+      .then(() => {
+        this.getAll();
+      })
+      .then(() => message.success("Registro Completado", 2.5));
+    this.setState({
+      name: "",
+      color: "",
+      size: "",
+      fashion: "",
+      image: null,
+    });
+    this.formRef.current.resetFields();
+    this.onClose();
   };
 
-  onFinishFail = () => {
-    message.warning(
-      "Ah ocurrido un Error Porfavor espere un Momento o Actualize la Pagina",
-      2.5
+  onFinishFail = (values) => {
+    values.errorFields.forEach((error, index) =>
+      message.warning("Porfavor " + error.errors, 2.5)
     );
   };
 
@@ -179,13 +167,12 @@ export default class Cloth extends React.Component {
             <Form
               ref={this.formRef}
               onFinish={this.onSubmit}
-              validateMessages={validateMessages}
               onFinishFailed={this.onFinishFail}
             >
               <Item
                 label="Nombre de la Prenda"
                 name="name"
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <Input
                   name="name"
@@ -199,7 +186,7 @@ export default class Cloth extends React.Component {
               <Item
                 label="Color de la Prenda"
                 name="color"
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <Input
                   name="color"
@@ -213,7 +200,7 @@ export default class Cloth extends React.Component {
               <Item
                 label="Talla de la Prenda"
                 name="size"
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <Select
                   value={this.state.size || ""}
@@ -231,7 +218,7 @@ export default class Cloth extends React.Component {
               <Item
                 label="Moda de la Prenda"
                 name="Moda"
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <Select
                   value={this.state.fashion || ""}
@@ -248,7 +235,7 @@ export default class Cloth extends React.Component {
                 label="Subir Imagen"
                 valuePropName="fileList"
                 getValueFromEvent={this.fileSelecterhandler}
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <Upload
                   name="image"

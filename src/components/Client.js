@@ -18,7 +18,6 @@ import {
   deleteClient,
 } from "./js/ClientFuncions";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { validateMessages } from "./common/messages";
 import { isEmptyOrBlank, isNumber } from "./actions/Validations";
 const { Column, ColumnGroup } = Table;
 const { Item } = Form;
@@ -81,45 +80,35 @@ export default class Clients extends React.Component {
 
   onSubmit = (e) => {
     //e.preventDefault()
-    if (
-      isEmptyOrBlank(this.state.name) &&
-      isEmptyOrBlank(this.state.last_name) &&
-      isEmptyOrBlank(this.state.address) &&
-      isNumber(this.state.cellphone) &&
-      isNumber(this.state.phone)
-    ) {
-      message
-        .loading("Registro en Proceso..", 2.5)
-        .then(
-          createClient(
-            this.state.name,
-            this.state.last_name,
-            this.state.address,
-            this.state.phone,
-            this.state.cellphone
-          )
+
+    message
+      .loading("Registro en Proceso..", 2.5)
+      .then(
+        createClient(
+          this.state.name,
+          this.state.last_name,
+          this.state.address,
+          this.state.phone,
+          this.state.cellphone
         )
-        .then(() => {
-          this.getAll();
-        })
-        .then(() => message.success("Registro Completado", 2.5));
-      this.setState({
-        name: "",
-        last_name: "",
-        address: "",
-        phone: "",
-        cellphone: "",
-      });
-      this.formRef.current.resetFields();
-    } else {
-      message.warning("Porfavor Diligencie Todos los Campos", 2.5);
-    }
+      )
+      .then(() => {
+        this.getAll();
+      })
+      .then(() => message.success("Registro Completado", 2.5));
+    this.setState({
+      name: "",
+      last_name: "",
+      address: "",
+      phone: "",
+      cellphone: "",
+    });
+    this.formRef.current.resetFields();
   };
 
-  onFinishFail = () => {
-    message.warning(
-      "Ah ocurrido un Error Porfavor espere un Momento o Actualize la Pagina",
-      2.5
+  onFinishFail = (values) => {
+    values.errorFields.forEach((error, index) =>
+      message.warning("Porfavor " + error.errors, 2.5)
     );
   };
 
@@ -225,7 +214,6 @@ export default class Clients extends React.Component {
             <Form
               ref={this.formRef}
               onFinish={this.onSubmit.bind(this)}
-              validateMessages={validateMessages}
               onFinishFailed={this.onFinishFail}
             >
               <Row>
@@ -233,7 +221,9 @@ export default class Clients extends React.Component {
                   <Item
                     label="Nombre"
                     name="name"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                     style={{ margin: 2 }}
                   >
                     <Input
@@ -249,7 +239,9 @@ export default class Clients extends React.Component {
                   <Item
                     label="Apellido"
                     name="last_name"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                     style={{ margin: 2 }}
                   >
                     <Input
@@ -267,7 +259,9 @@ export default class Clients extends React.Component {
                   <Item
                     label="Direccion"
                     name="address"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                     style={{ marginTop: 10 }}
                   >
                     <Input
@@ -285,7 +279,9 @@ export default class Clients extends React.Component {
                   <Item
                     name="phone"
                     label="Numero de Telefono"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                   >
                     <Input
                       type="number"
@@ -301,7 +297,9 @@ export default class Clients extends React.Component {
                   <Item
                     label="Numero de Celular"
                     name="cellphone"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                   >
                     <Input
                       type="number"

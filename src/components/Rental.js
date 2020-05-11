@@ -15,8 +15,6 @@ import {
 } from "antd";
 import { getClients } from "./js/ClientFuncions";
 import { getClothWithOutRental, createRental } from "./js/RentalFunctions";
-import { isNumber, isValidDate, isEmptyOrBlank } from "./actions/Validations";
-import { validateMessages } from "./common/messages";
 const { Item } = Form;
 const { Option } = Select;
 const { Meta } = Card;
@@ -86,46 +84,33 @@ export default class Rental extends React.Component {
 
   onSubmit = () => {
     //e.preventDefault();
-    if (
-      isNumber(this.state.price) &&
-      isValidDate(this.state.date_return) &&
-      isEmptyOrBlank(this.state.client_id) &&
-      isEmptyOrBlank(this.state.cloth_id)
-    ) {
-      console.log(
-        this.state.date_return,
-        this.state.price,
-        this.state.cloth_id,
-        this.state.client_id
-      );
-      message
-        .loading("Registro en Proceso..", 2.5)
-        .then(
-          createRental(
-            this.state.date_return,
-            this.state.price,
-            this.state.cloth_id,
-            this.state.client_id
-          )
+
+    message
+      .loading("Registro en Proceso..", 2.5)
+      .then(
+        createRental(
+          this.state.date_return,
+          this.state.price,
+          this.state.cloth_id,
+          this.state.client_id
         )
-        .then(() => {
-          this.getAll();
-        })
-        .then(() => message.success("Registro Completado", 2.5));
-      this.formRef.current.resetFields();
-      this.setState({
-        date_return: "",
-        price: 0,
-        cloth_id: "",
-        client_id: "",
-      });
-    } else {
-      message.warning("Porfavor Diligencie Todos los Campos", 2.5);
-    }
+      )
+      .then(() => {
+        this.getAll();
+      })
+      .then(() => message.success("Registro Completado", 2.5));
+    this.formRef.current.resetFields();
+    this.setState({
+      date_return: "",
+      price: 0,
+      cloth_id: "",
+      client_id: "",
+    });
   };
-  onFinishFail = () => {
-    message.warning(
-      "Ah ocurrido un Error porfavor Vuelva a Intentar o Actualize la pagina"
+
+  onFinishFail = (values) => {
+    values.errorFields.forEach((error, index) =>
+      message.warning("Porfavor " + error.errors, 2.5)
     );
   };
 
@@ -137,7 +122,6 @@ export default class Rental extends React.Component {
             <Form
               ref={this.formRef}
               onFinish={this.onSubmit}
-              validateMessages={validateMessages}
               onFinishFailed={this.onFinishFail}
             >
               <Row gutter={[8, 8]}>
@@ -145,7 +129,9 @@ export default class Rental extends React.Component {
                   <Item
                     label="Fecha de Devolucion"
                     name="date_return"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                   >
                     <DatePicker
                       onChange={this.onChangeDate.bind(this)}
@@ -160,7 +146,9 @@ export default class Rental extends React.Component {
                   <Item
                     label="Valor del Alquiler"
                     name="price"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Porfavor Llene el Campo" },
+                    ]}
                   >
                     <InputNumber
                       formatter={(value) =>
@@ -170,14 +158,20 @@ export default class Rental extends React.Component {
                       placeholder="Ingrese el valor del alquiler"
                       name="price"
                       value={this.state.price || 0}
-                      onChange={this.handleChangeNumber.bind(this)}
+                      onChange={this.handleChangeNumber("price")}
                       style={{ width: "100%" }}
                     />
                   </Item>
                 </Col>
               </Row>
 
-              <Item label="Clientes" name="client" rules={[{ required: true }]}>
+              <Item
+                label="Clientes"
+                name="client"
+                rules={[
+                  { required: true, message: "Porfavor Seleccione un Cliente" },
+                ]}
+              >
                 <Select
                   placeholder="Seleccione un Cliente"
                   name="client_id"
