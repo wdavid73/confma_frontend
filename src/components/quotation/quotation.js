@@ -10,6 +10,12 @@ import {
   Popover,
   Modal,
   Descriptions,
+  Row,
+  Col,
+  Radio,
+  Form,
+  InputNumber,
+  Select,
 } from "antd";
 import {
   EditOutlined,
@@ -23,7 +29,9 @@ import {
   createQuotationClient,
   getClientNotDuplicated,
   deleteQuotation,
+  updateQuotation,
 } from "../js/QuotationFunctions.js";
+import { isNumber } from "../actions/Validations";
 import {
   popover_edit_quotation,
   popover_add_client_quotation,
@@ -31,8 +39,11 @@ import {
   popover_title_add_client,
   popover_title_delete,
   popover_title_edit,
+  validateMessages,
 } from "../common/messages";
 const { Meta } = Card;
+const { Item } = Form;
+const { Option } = Select;
 
 export default class Quotation extends Component {
   constructor(props) {
@@ -69,6 +80,8 @@ export default class Quotation extends Component {
     this.getAll();
   }
 
+  formRef = React.createRef();
+
   showDrawer = () => {
     this.setState({
       visibleDrawer: true,
@@ -81,7 +94,14 @@ export default class Quotation extends Component {
     });
   };
 
-  onChange = (e) => {
+  onChange = (name) => (value) => {
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  onChangeRadio = (e) => {
+    console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -109,37 +129,50 @@ export default class Quotation extends Component {
     });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    message
-      .loading("Registro en Proceso..", 2.5)
-      .then(
-        createQuotation(
-          this.state.value_cloth,
-          this.state.value_work,
-          this.state.value_buttons,
-          this.state.value_embroidery,
-          this.state.value_necks,
-          this.state.value_prints,
-          this.state.value_threads,
-          this.state.cloth_id
+  onSubmit = () => {
+    //e.preventDefault();
+    if (
+      isNumber(this.state.value_cloth) &&
+      isNumber(this.state.value_work) &&
+      isNumber(this.state.value_buttons) &&
+      isNumber(this.state.value_embroidery) &&
+      isNumber(this.state.value_necks) &&
+      isNumber(this.state.value_prints) &&
+      isNumber(this.state.value_threads)
+    ) {
+      message
+        .loading("Registro en Proceso..", 2.5)
+        .then(
+          createQuotation(
+            this.state.value_cloth,
+            this.state.value_work,
+            this.state.value_buttons,
+            this.state.value_embroidery,
+            this.state.value_necks,
+            this.state.value_prints,
+            this.state.value_threads,
+            this.state.cloth_id
+          )
         )
-      )
-      .then(() => {
-        this.getAll();
-      })
-      .then(() => message.success("Registro Completado", 2.5));
-    this.setState({
-      value_cloth: 0,
-      value_work: 0,
-      value_threads: 0,
-      value_buttons: 0,
-      value_necks: 0,
-      value_embroidery: 0,
-      value_prints: 0,
-      cloth_id: "",
-    });
-    this.onClose();
+        .then(() => {
+          this.getAll();
+        })
+        .then(() => message.success("Registro Completado", 2.5));
+      this.setState({
+        value_cloth: 0,
+        value_work: 0,
+        value_threads: 0,
+        value_buttons: 0,
+        value_necks: 0,
+        value_embroidery: 0,
+        value_prints: 0,
+        cloth_id: "",
+      });
+      this.formRef.current.resetFields();
+      this.onClose();
+    } else {
+      message.warning("Porfavor Diligencie todos los Campos", 2.5);
+    }
   };
 
   onEdit = (quotationId, e) => {
@@ -157,10 +190,42 @@ export default class Quotation extends Component {
           value_necks: quotation.value_necks,
           value_prints: quotation.value_prints,
           value_threads: quotation.value_threads,
+          editDisable: true,
           showCard: false,
         });
       }
     });
+  };
+
+  onUpdate = (e) => {
+    e.preventDefault();
+    if (
+      isNumber(this.state.value_cloth) &&
+      isNumber(this.state.value_work) &&
+      isNumber(this.state.value_buttons) &&
+      isNumber(this.state.value_embroidery) &&
+      isNumber(this.state.value_necks) &&
+      isNumber(this.state.value_prints) &&
+      isNumber(this.state.value_threads)
+    ) {
+      message
+        .loading("Actualizacion en Proceso...", 2.5)
+        .then()
+        .then(
+          updateQuotation(
+            this.state.value_cloth,
+            this.state.value_work,
+            this.state.value_buttons,
+            this.state.value_embroidery,
+            this.state.value_threads,
+            this.state.value_necks,
+            this.state.value_prints,
+            this.state.id
+          )
+        );
+    } else {
+      console.log(false);
+    }
   };
 
   onDelete = (quotationId, e) => {
@@ -174,6 +239,7 @@ export default class Quotation extends Component {
       return true;
     });
     this.setState({ quotations: [...data] });
+    message.error("Cotizacion #" + quotationId + " Eliminadada", 2);
   };
 
   showModal = (quotationId) => {
@@ -191,15 +257,22 @@ export default class Quotation extends Component {
 
   handleOk = (quotationId, e) => {
     e.preventDefault();
-    createQuotationClient(quotationId, this.state.client_id);
-    this.setState({
-      client_id: "",
-      loading: true,
-      clients: [],
-    });
-    setTimeout(() => {
-      this.setState({ loading: false, visibleModal: false });
-    }, 3000);
+    message
+      .loading("Guardando Client .....", 2.5)
+      .then(
+        createQuotationClient(quotationId, this.state.client_id),
+        this.setState({
+          client_id: "",
+          loading: true,
+          clients: [],
+        }),
+        setTimeout(() => {
+          this.setState({ loading: false, visibleModal: false });
+        }, 3000)
+      )
+      .then(() => {
+        message.success("Cliente Guardado Correctamente", 2.5);
+      });
   };
 
   handleCancel = () => {
@@ -212,7 +285,7 @@ export default class Quotation extends Component {
         <div>
           <Drawer
             title="Registrar Cotizacion"
-            width={"50%"}
+            width={"75%"}
             onClose={this.onClose}
             visible={this.state.visibleDrawer}
             footer={
@@ -229,164 +302,250 @@ export default class Quotation extends Component {
             }
           >
             <div>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-row">
-                  <div className="col">
-                    <label>Valor de la Tela : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_cloth"
-                      name="value_cloth"
-                      value={this.state.value_cloth || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor de la Tela"
-                      required
-                    />
-                  </div>
-                  <div className="col">
-                    <label>Valor del Trabajo : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_work"
-                      name="value_work"
-                      value={this.state.value_work || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor del Trabajo"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="form-row mt-2">
-                  <div className="col">
-                    <label>Valor de los Botones : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_buttons"
-                      name="value_buttons"
-                      value={this.state.value_buttons || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor de los Botones"
-                      required
-                    />
-                  </div>
-                  <div className="col">
-                    <label>Valor del Cuello : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_necks"
-                      name="value_necks"
-                      value={this.state.value_necks || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor de los Cuellos"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="form-row mt-2 mb-2">
-                  <div className="col">
-                    <label>Valor de los Hilos : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_threads"
-                      name="value_threads"
-                      value={this.state.value_threads || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor de los Hilos"
-                      required
-                    />
-                  </div>
-                  <div className="col">
-                    <label>Valor del Bordado : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_embroidery"
-                      name="value_embroidery"
-                      value={this.state.value_embroidery || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor del Bordado"
-                      required
-                    />
-                  </div>
-                  <div className="col">
-                    <label>Valor del Estampado : </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="value_prints"
-                      name="value_prints"
-                      value={this.state.value_prints || ""}
-                      onChange={this.onChange.bind(this)}
-                      placeholder="Ingrese el Valor del Estampado"
-                      required
-                    />
-                  </div>
-                </div>
+              <Form
+                //labelCol={{ span: 12 }}
+                //wrapperCol={{ span: 22 }}
+                layout="vertical"
+                onFinish={this.onSubmit}
+                ref={this.formRef}
+                validateMessages={validateMessages}
+              >
+                <Row gutter={[16, 8]}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <Item
+                      label="Valor del Trabajo"
+                      rules={[{ required: true }]}
+                    >
+                      <InputNumber
+                        id="inputNumber"
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor del Trabajo"
+                        value={this.state.value_work || ""}
+                        max={100000}
+                        onChange={this.onChange("value_work")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <Item label="Valor de la Tela" rules={[{ required: true }]}>
+                      <InputNumber
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor de la Tela"
+                        value={this.state.value_cloth || ""}
+                        max={100000}
+                        onChange={this.onChange("value_cloth")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                </Row>
+                <Row gutter={[16, 8]}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <Item
+                      label="Valor de los Botones"
+                      rules={[{ required: true }]}
+                    >
+                      <InputNumber
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor de los Botones"
+                        value={this.state.value_buttons || ""}
+                        max={100000}
+                        onChange={this.onChange("value_buttons")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <Item
+                      label="Valor de los Cuellos"
+                      rules={[{ required: true }]}
+                    >
+                      <InputNumber
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor de los Cuellos"
+                        value={this.state.value_necks || ""}
+                        max={100000}
+                        onChange={this.onChange("value_necks")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                </Row>
+                <Row gutter={[16, 8]}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                    <Item
+                      label="Valor de los Hilos"
+                      rules={[{ required: true }]}
+                    >
+                      <InputNumber
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor de los Hilos"
+                        value={this.state.value_threads || ""}
+                        max={100000}
+                        onChange={this.onChange("value_threads")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                    <Item
+                      label="Valor del Bordado"
+                      rules={[{ required: true }]}
+                    >
+                      <InputNumber
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor del Bordado"
+                        value={this.state.value_embroidery || ""}
+                        max={100000}
+                        onChange={this.onChange("value_embroidery")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                    <Item
+                      label="Valor del Estampado"
+                      rules={[{ required: true }]}
+                    >
+                      <InputNumber
+                        formatter={(value) =>
+                          `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                        placelholder="Ingrese el Valor del Estampado"
+                        value={this.state.value_prints || ""}
+                        max={100000}
+                        onChange={this.onChange("value_prints")}
+                        style={{ width: "100%" }}
+                      />
+                    </Item>
+                  </Col>
+                </Row>
                 {this.state.showCard ? (
-                  <div>
+                  <Item label="Prendas" name="cloth">
                     <List
-                      grid={{ gutter: 16, xs: 2, sm: 3, md: 3, lg: 3 }}
-                      pagination={{ pageSize: 3 }}
+                      grid={{
+                        gutter: 16,
+                        xs: 2,
+                        sm: 3,
+                        md: 3,
+                        lg: 2,
+                      }}
+                      pagination={{
+                        pageSize: 2,
+                      }}
                       dataSource={this.state.cloth}
-                      renderItem={(cloth, index) => (
+                      renderItem={(cloth) => (
                         <List.Item>
                           <Card
-                            key={index}
                             hoverable
-                            style={{ width: 280 }}
-                            cover={<img alt="cloth" src={cloth.image} />}
+                            actions={[
+                              <Item
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Porfavor Seleccione una Prenda",
+                                  },
+                                ]}
+                                name="cloth_id"
+                              >
+                                <Radio.Group
+                                  name="cloth_id"
+                                  onChange={this.onChangeRadio.bind(this)}
+                                  value={this.state.cloth_id}
+                                  rules={[{ required: true }]}
+                                >
+                                  <Radio value={cloth.id}>{cloth.name}</Radio>
+                                </Radio.Group>
+                              </Item>,
+                            ]}
                           >
-                            <Meta
-                              title={
-                                <div className="custom-control custom-radio">
-                                  <input
-                                    type="radio"
-                                    id={cloth.id}
-                                    name="cloth_id"
-                                    class="custom-control-input"
-                                    value={cloth.id}
-                                    onChange={this.onChange.bind(this)}
-                                  />
-                                  <label
-                                    class="custom-control-label"
-                                    htmlFor={cloth.id}
-                                  >
-                                    {cloth.name}
-                                  </label>
-                                </div>
-                              }
-                              description={
+                            <Row gutter={[16, 8]}>
+                              <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                <img
+                                  src={cloth.image}
+                                  className="card-img-top mb-2"
+                                  alt="moda de referencia"
+                                />
+                              </Col>
+                              <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                                 <div>
-                                  <p> Talla : {cloth.size} </p>
-                                  <p> Color : {cloth.color} </p>
-                                  <p> Moda : {cloth.fashion} </p>
+                                  <Descriptions
+                                    title="Detalles de la Prenda"
+                                    bordered
+                                    column={{
+                                      xxl: 1,
+                                      xl: 1,
+                                      lg: 1,
+                                      md: 1,
+                                      sm: 1,
+                                      xs: 1,
+                                    }}
+                                    style={{ width: "105%" }}
+                                  >
+                                    <Descriptions.Item label="Talla">
+                                      {cloth.size}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Color">
+                                      {cloth.color}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Moda">
+                                      {cloth.fashion}
+                                    </Descriptions.Item>
+                                  </Descriptions>
                                 </div>
-                              }
+                              </Col>
+                            </Row>
+                            <Meta
+                              title={cloth.name}
+                              description="www.confeccionesmaribel.com"
                             />
                           </Card>
                         </List.Item>
                       )}
                     />
-                  </div>
+                  </Item>
                 ) : (
                   ""
                 )}
-
                 {!this.state.editDisable ? (
-                  <Button id="btn-submit" onClick={this.onSubmit.bind(this)}>
+                  <Button id="btn-submit" htmlType="submit">
                     Registrar
                   </Button>
                 ) : (
-                  <Button id="btn-submit" onClick={this.onUpdate.bind(this)}>
+                  ""
+                )}
+                {this.state.editDisable ? (
+                  <Button
+                    id="btn-edit"
+                    htmlType="submit"
+                    onClick={this.onUpdate.bind(this)}
+                  >
                     Actualizar
                   </Button>
+                ) : (
+                  ""
                 )}
-              </form>
+              </Form>
             </div>
           </Drawer>
         </div>
@@ -493,56 +652,56 @@ export default class Quotation extends Component {
                     key="action"
                     fixed="right"
                     render={(quotation) => (
-                      <div className="row">
-                        <div className="col-lg-4 col-md-4 col-sm-12">
+                      <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                           <Popover
                             placement="topLeft"
                             content={popover_edit_quotation}
                             title={popover_title_edit}
                           >
-                            <button
-                              href=""
-                              id="btn-form-icon"
-                              className="btn btn-sm"
-                              disabled={this.state.editDisable}
+                            <Button
+                              type="link"
+                              id="btn-edit-icon-link"
+                              htmlType="submit"
                               onClick={this.onEdit.bind(this, quotation.id)}
                             >
                               <EditOutlined style={{ fontSize: "24px" }} />
-                            </button>
+                            </Button>
                           </Popover>
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-12">
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                           <Popover
                             placement="topLeft"
                             content={popover_delete_quotation}
                             title={popover_title_delete}
                           >
-                            <button
-                              href=""
-                              id="btn-delete-icon"
-                              className="btn btn-sm"
-                              disabled={this.state.editDisable}
+                            <Button
+                              type="link"
+                              id="btn-delete-icon-link"
+                              htmlType="submit"
                               onClick={this.onDelete.bind(this, quotation.id)}
                             >
                               <DeleteOutlined style={{ fontSize: "24px" }} />
-                            </button>
+                            </Button>
                           </Popover>
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-12">
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                           <Popover
                             placement="topLeft"
                             content={popover_add_client_quotation}
                             title={popover_title_add_client}
                           >
                             <Button
-                              id="btn-submit-icon"
+                              type="link"
+                              id="btn-submit-icon-link"
+                              htmlType="submit"
                               onClick={this.showModal.bind(this, quotation.id)}
                             >
                               <UserAddOutlined style={{ fontSize: "24px" }} />
                             </Button>
                           </Popover>
-                        </div>
-                      </div>
+                        </Col>
+                      </Row>
                     )}
                   />
                 </Table>
@@ -598,35 +757,32 @@ export default class Quotation extends Component {
                           {quotation.total}
                         </Descriptions.Item>
                       </Descriptions>
-                      <form>
-                        <label>Clientes : </label>
-                        <select
-                          className="custom-select mt-2 mb-3"
-                          required
-                          id="client_id"
-                          name="client_id"
-                          value={this.state.client_id || ""}
-                          onChange={this.onChange.bind(this)}
-                        >
-                          <option disabled value="">
-                            Elige...
-                          </option>
-                          {this.state.clients.map((client, index) => (
-                            <option key={index} value={client.id}>
-                              {client.name} {client.last_name} -{" "}
-                              {client.address} - {client.cellphone}
-                            </option>
-                          ))}
-                        </select>
+                      <Form>
+                        <Item label="Clientes" name="client">
+                          <Select
+                            placeholder="Seleccione un Cliente.."
+                            name="client_id"
+                            onChange={this.onChange.bind(this)}
+                            value={this.state.client_id || ""}
+                          >
+                            {this.state.clients.map((client, index) => (
+                              <Option value={client.id} key={index}>
+                                {client.name} {client.last_name} -{" "}
+                                {client.address} - {client.cellphone}
+                              </Option>
+                            ))}
+                          </Select>
+                        </Item>
                         <Button
                           key="submit"
                           type="primary"
+                          id="btn-submit"
                           loading={this.state.loading}
                           onClick={this.handleOk.bind(this, quotation.id)}
                         >
-                          Submit
+                          Guardar Cliente
                         </Button>
-                      </form>
+                      </Form>
                     </div>
                   </div>
                 ) : (

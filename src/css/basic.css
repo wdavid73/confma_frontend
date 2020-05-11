@@ -134,12 +134,20 @@
   color: #40a9ff;
 }
 
+#btn-edit-icon-link {
+  color: #52c41a;
+}
+
 #btn-delete-icon-link {
   color: #ff4d4f;
 }
 
 #btn-form-icon-link:hover {
   color: #1890ff;
+}
+
+#btn-edit-icon-link:hover {
+  color: #135200;
 }
 
 #btn-delete-icon-link:hover {

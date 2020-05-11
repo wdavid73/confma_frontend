@@ -1,3 +1,6 @@
+import axios from "axios";
+import { API_CONSTANT_MAP } from "../js/api/index";
+
 export const isEmptyOrBlank = (str) => {
   return !str || 0 === str.length || /^\s*$/.test(str) ? false : true;
 };
@@ -43,4 +46,20 @@ export const isValidDate = (str) => {
   }
 
   return ret;
+};
+
+export const isValidCloth = (cloth_id) => {
+  return axios
+    .get(API_CONSTANT_MAP.isvalidcloth + cloth_id + "/", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.data.valid === true) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 };

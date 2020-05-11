@@ -72,9 +72,9 @@ export default class Rental extends React.Component {
     });
   };
 
-  handleChangeNumber = (value) => {
+  handleChangeNumber = (name) => (value) => {
     this.setState({
-      price: value,
+      [name]: value,
     });
   };
 

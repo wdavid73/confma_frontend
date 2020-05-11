@@ -98,3 +98,38 @@ export const deleteQuotation = (id) => {
       console.log(res.data);
     });
 };
+
+export const updateQuotation = (
+  value_cloth,
+  value_work,
+  value_buttons,
+  value_embroidery,
+  value_necks,
+  value_prints,
+  value_threads,
+  id
+) => {
+  let _id = id.toString();
+  return axios
+    .put(
+      API_CONSTANT_MAP.quotation + _id + "/",
+      {
+        value_cloth: value_cloth,
+        value_work: value_work,
+        value_buttons: value_buttons,
+        value_embroidery: value_embroidery,
+        value_necks: value_necks,
+        value_prints: value_prints,
+        value_threads: value_threads,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
