@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_CONSTANT_MAP } from "./api/index";
+import { API_CONSTANT_MAP } from "../../js/api/endpoints";
 
 export const getClients = () => {
   return axios
@@ -71,19 +71,6 @@ export const deleteClient = (id) => {
     })
     .then((res) => {
       console.log(res.data);
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const findClient = (id) => {
-  return axios
-    .post("http://127.0.0.1:8000/api/clients/find/" + id + "/", {
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
       return res.data;
     })
     .catch((err) => {

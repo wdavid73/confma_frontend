@@ -10,10 +10,10 @@ import {
   Descriptions,
   Card,
 } from "antd";
-import { getRental, refundRental } from "./js/RentalFunctions";
+import { getRental, refundRental } from "./functions/RentalFunctions";
 import { RedoOutlined } from "@ant-design/icons";
-import Logo from "../resources/logo_size_invert.jpg";
-import { crud_client } from "./common/messages";
+import Logo from "../../resources/logo_size_invert.jpg";
+import { crud_client } from "../common/messages";
 
 export default class Rental extends React.Component {
   constructor(props) {

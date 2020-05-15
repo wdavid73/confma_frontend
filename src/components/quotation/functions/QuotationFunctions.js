@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_CONSTANT_MAP } from "./api/index";
+import { API_CONSTANT_MAP } from "../../js/api/endpoints";
 
 export const getClothWithOutQuotation = () => {
   return axios

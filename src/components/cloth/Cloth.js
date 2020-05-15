@@ -10,8 +10,8 @@ import {
   Upload,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import ListCloth from "../components/ListCloth";
-import { getCloth, createCloth } from "./js/ClothFuntions";
+import ListCloth from "./ListCloth";
+import { getCloth, createCloth } from "./functions/ClothFuntions";
 
 const { Item } = Form;
 const { Option } = Select;

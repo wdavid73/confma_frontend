@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_CONSTANT_MAP } from "../js/api/index";
+import { API_CONSTANT_MAP } from "../js/api/endpoints";
 
 export const isEmptyOrBlank = (str) => {
   return !str || 0 === str.length || /^\s*$/.test(str) ? false : true;

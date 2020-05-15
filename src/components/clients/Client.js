@@ -16,9 +16,9 @@ import {
   createClient,
   updateClient,
   deleteClient,
-} from "./js/ClientFuncions";
+} from "./functions/ClientFuncions";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { isEmptyOrBlank, isNumber } from "./actions/Validations";
+import { isEmptyOrBlank, isNumber } from "../common/Validations";
 const { Column, ColumnGroup } = Table;
 const { Item } = Form;
 

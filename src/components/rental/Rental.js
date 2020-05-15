@@ -13,8 +13,11 @@ import {
   Select,
   Descriptions,
 } from "antd";
-import { getClients } from "./js/ClientFuncions";
-import { getClothWithOutRental, createRental } from "./js/RentalFunctions";
+import {
+  getClients,
+  getClothWithOutRental,
+  createRental,
+} from "./functions/RentalFunctions";
 const { Item } = Form;
 const { Option } = Select;
 const { Meta } = Card;

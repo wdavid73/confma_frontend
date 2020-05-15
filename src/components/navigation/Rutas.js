@@ -2,13 +2,12 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import Menu from "./Menu";
-import Welcome from "./Welcome";
-import Client from "../Client";
+import Welcome from "../Welcome";
+import Client from "../clients/Client";
 
-import Cloth from "../Cloth";
-import Rental from "../Rental";
-import RentalList from "../RentalList";
-import ClientFind from "../actions/ClientFind";
+import Cloth from "../cloth/Cloth";
+import Rental from "../rental/Rental";
+import RentalList from "../rental/RentalList";
 import Quotation from "../quotation/quotation";
 
 const Rutas = () => {
@@ -17,7 +16,6 @@ const Rutas = () => {
       <div>
         <Route exact path="/" component={Welcome} />{" "}
         <Route exact path="/clients" component={Client} />{" "}
-        <Route exact path="/clients/find" component={ClientFind} />{" "}
         <Route exact path="/cloth" component={Cloth} />{" "}
         <Route exact path="/rental" component={Rental} />{" "}
         <Route exact path="/rental/list" component={RentalList} />{" "}

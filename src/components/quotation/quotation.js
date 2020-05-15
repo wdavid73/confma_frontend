@@ -30,8 +30,8 @@ import {
   getClientNotDuplicated,
   deleteQuotation,
   updateQuotation,
-} from "../js/QuotationFunctions.js";
-import { isNumber } from "../actions/Validations";
+} from "./functions/QuotationFunctions.js";
+import { isNumber } from "../common/Validations";
 import {
   popover_edit_quotation,
   popover_add_client_quotation,
@@ -276,6 +276,12 @@ export default class Quotation extends Component {
 
   handleCancel = () => {
     this.setState({ visibleModal: false });
+  };
+
+  detailsQuotation = (id, e) => {
+    e.preventDefault();
+    console.log("DETAILS");
+    console.log(id);
   };
 
   render() {
@@ -601,6 +607,7 @@ export default class Quotation extends Component {
                       dataIndex="id"
                       responsive={"md"}
                       key="id"
+                      render={(id) => <p>{id}</p>}
                     />
 
                     <Table.Column title="Total" dataIndex="total" key="total" />
@@ -618,7 +625,6 @@ export default class Quotation extends Component {
                       key="cloth_color"
                       render={(cloth) => <p>{cloth.color}</p>}
                     />
-                    Esta opcion es para Editar la Cotizacion
                     <Table.Column
                       title="Talla"
                       dataIndex="cloth"
@@ -652,8 +658,7 @@ export default class Quotation extends Component {
                               <EditOutlined style={{ fontSize: "24px" }} />
                             </Button>
                           </Popover>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                          <Col xs={24} sm={24} md={24} lg={24} xl={8}></Col>
                           <Popover
                             placement="topLeft"
                             content={popover_delete_quotation}

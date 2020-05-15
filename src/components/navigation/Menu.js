@@ -17,7 +17,7 @@ import {
   crud_cloth,
   crud_rental,
   list_rental,
-} from "./messages";
+} from "../common/messages";
 
 const { Content, Sider, Footer, Header } = Layout;
 const { SubMenu } = Menu;
