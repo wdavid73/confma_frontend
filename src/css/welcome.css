@@ -1,0 +1,26 @@
+hr {
+    width: 40%;
+    margin: 0 auto;
+    border-color: white;
+}
+
+#color_i {
+    color: #f6b93b
+}
+
+.logo {
+    color: white;
+    margin-top: 10%;
+}
+
+.logo_p1 {
+    font-family: "Merienda", cursive;
+    padding-top: -20px;
+    margin: 0 auto;
+    font-size: 250px
+}
+
+.logo_p2 {
+    font-family: "Playfair Display", serif;
+    font-size: 70px
+}

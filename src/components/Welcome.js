@@ -1,9 +1,17 @@
 import React from "react";
-import background from "../resources/logo.png";
+import "../css/welcome.css";
 const Welcome = () => {
   return (
-    <div>
-      <img alt="welcome" src={background} width="100%" />
+    <div className="logo">
+      <div className="text-center">
+        <p className="logo_p1 display-1">
+          mar<span id="color_i">i</span>bel
+        </p>
+        <hr />
+        <p className="logo_p2 display-4">
+          <span className="logo_p2">CONFECCIONES</span>
+        </p>
+      </div>
     </div>
   );
 };

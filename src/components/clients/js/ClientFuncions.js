@@ -13,44 +13,47 @@ export const getClients = () => {
     });
 };
 
-export const createClient = (name, last_name, address, phone, cellphone) => {
+export const createClient = (client) => {
   return axios
     .post(
       API_CONSTANT_MAP.client,
       {
-        name: name,
-        last_name: last_name,
-        address: address,
-        phone: phone,
-        cellphone: cellphone,
+        name: client.name,
+        last_name: client.last_name,
+        address: client.address,
+        phone: client.phone,
+        cellphone: client.cellphone,
       },
       {
         headers: { "Content-Type": "application/json" },
       }
     )
     .then((res) => {
-      console.log(res);
+      console.log(res.data);
     });
 };
 
-export const updateClient = (
-  name,
-  last_name,
-  address,
-  phone,
-  cellphone,
-  id
-) => {
+export const detailsOneClient = (id) => {
   let _id = id.toString();
   return axios
+    .get(API_CONSTANT_MAP.detail_one_client + _id + "/", {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const updateClient = (client) => {
+  return axios
     .put(
-      API_CONSTANT_MAP.client + _id + "/",
+      API_CONSTANT_MAP.client + client.id.toString() + "/",
       {
-        name: name,
-        last_name: last_name,
-        address: address,
-        phone: phone,
-        cellphone: cellphone,
+        name: client.name,
+        last_name: client.last_name,
+        address: client.address,
+        phone: client.phone,
+        cellphone: client.cellphone,
       },
       {
         headers: { "Content-Type": "application/json" },
@@ -70,7 +73,6 @@ export const deleteClient = (id) => {
       headers: { "Content-Type": "application/json" },
     })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((err) => {

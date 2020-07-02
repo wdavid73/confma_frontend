@@ -103,6 +103,7 @@ export default class Cloth extends React.Component {
 
   onSubmit = (e) => {
     //e.preventDefault();
+    console.log(this.state.image);
     message
       .loading("Registro en Proceso..", 2.5)
       .then(

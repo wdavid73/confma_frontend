@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import "antd/dist/antd.css";
+import "antd/dist/antd.dark.css";
 import Rutas from "./components/navigation/Rutas";
 
 function App() {

@@ -1,75 +1,52 @@
 import React from "react";
-import {
-  message,
-  Table,
-  Empty,
-  Form,
-  Input,
-  Button,
-  Card,
-  Row,
-  Col,
-  Popover,
-} from "antd";
+import { message, Card, Row, Col, Modal, Button, Spin } from "antd";
 import {
   getClients,
   createClient,
   updateClient,
   deleteClient,
-} from "./functions/ClientFuncions";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { isEmptyOrBlank, isNumber } from "../common/Validations";
-const { Column, ColumnGroup } = Table;
-const { Item } = Form;
+} from "./js/ClientFuncions";
+import AddClientForm from "./AddClientFrom";
+import TableListClient from "./TableListClient";
+import UpdateClientForm from "./UpdateClientForm";
+import "../../css/basic.css";
+
+message.config({
+  top: 20,
+  duration: 2.5,
+  maxCount: 3,
+  rtl: true,
+});
 
 export default class Clients extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
-      name: "",
-      last_name: "",
-      address: "",
-      phone: "",
-      cellphone: "",
-      editDisable: false,
-      buttonDisable: false,
-      inputDisable: false,
+      client_id: "",
+      activeModal: false,
+      disable: false,
+      loading: false,
       clients: [],
     };
-    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  formRef = React.createRef();
-
   componentDidMount() {
     this.getAll();
+    this.showSpin();
   }
-
-  disableButton = () => {
-    this.setState({
-      buttonDisable: true,
-    });
-  };
-
-  disableInput = () => {
-    this.setState({
-      inputDisable: true,
-    });
-  };
 
   getAll = () => {
     getClients().then((data) => {
-      this.setState({
-        name: "",
-        last_name: "",
-        address: "",
-        phone: "",
-        cellphone: "",
-        clients: [...data.clients],
-      });
+      this.setState({ clients: [...data.clients] });
     });
+  };
+
+  showSpin = () => {
+    this.setState({ loading: true, disable: true });
+    setTimeout(() => {
+      this.setState({ loading: false, disable: false });
+    }, 5000);
   };
 
   onChange = (e) => {
@@ -78,340 +55,125 @@ export default class Clients extends React.Component {
     });
   };
 
-  onSubmit = (e) => {
-    //e.preventDefault()
-
-    message
-      .loading("Registro en Proceso..", 2.5)
-      .then(
-        createClient(
-          this.state.name,
-          this.state.last_name,
-          this.state.address,
-          this.state.phone,
-          this.state.cellphone
-        )
-      )
-      .then(() => {
-        this.getAll();
-      })
-      .then(() => message.success("Registro Completado", 2.5));
+  handleCancel = () => {
     this.setState({
-      name: "",
-      last_name: "",
-      address: "",
-      phone: "",
-      cellphone: "",
-    });
-    this.formRef.current.resetFields();
-  };
-
-  onFinishFail = (values) => {
-    values.errorFields.forEach((error, index) =>
-      message.warning("Porfavor " + error.errors, 2.5)
-    );
-  };
-
-  onEdit = (clientId, e) => {
-    e.preventDefault();
-    let data = [...this.state.clients];
-    data.forEach((client, index) => {
-      if (client.id === clientId) {
-        this.setState({
-          id: client.id,
-          name: client.name,
-          last_name: client.last_name,
-          address: client.address,
-          phone: client.phone,
-          cellphone: client.cellphone,
-          editDisable: true,
-          buttonDisable: true,
-        });
-        this.formRef.current.setFieldsValue({
-          name: client.name,
-          last_name: client.last_name,
-          address: client.address,
-          phone: client.phone,
-          cellphone: client.cellphone,
-        });
-      }
+      activeModal: false,
     });
   };
 
-  onUpdate = (e) => {
-    e.preventDefault();
-    if (
-      isEmptyOrBlank(this.state.name) &&
-      isEmptyOrBlank(this.state.last_name) &&
-      isEmptyOrBlank(this.state.address) &&
-      isNumber(this.state.cellphone) &&
-      isNumber(this.state.phone)
-    ) {
-      message
-        .loading("Actualizacion en Proceso..", 2.5)
-        .then(
-          updateClient(
-            this.state.name,
-            this.state.last_name,
-            this.state.address,
-            this.state.phone,
-            this.state.cellphone,
-            this.state.id
-          )
-        )
-        .then(() => {
-          this.getAll();
-        })
-        .then(() => {
-          message.success("Actualizacion Completada.", 2.5);
-        });
-      this.setState({
-        name: "",
-        last_name: "",
-        address: "",
-        phone: "",
-        cellphone: "",
-        editDisable: false,
-        buttonDisable: false,
-      });
-      this.formRef.current.resetFields();
-    } else {
-      message.warning("Porfavor Diligencie Todos los Campos", 2.5);
-    }
-  };
-
-  onDelete = (val, e) => {
-    e.preventDefault();
-    this.disableButton();
-    this.disableInput();
+  handleSubmit = (formState) => {
+    this.showSpin();
     message
-      .loading("Elimando Cliente....", 2.5)
-      .then(deleteClient(val))
-      .then(() => {
-        var data = [...this.state.clients];
-        data.filter(function (client, index) {
-          if (client.id === val) {
-            data.splice(index, 1);
-          }
-          return true;
-        });
-        this.setState({
-          clients: [...data],
-          buttonDisable: false,
-          inputDisable: false,
-        });
+      .loading({
+        content: "Registro en Proceso...",
+        onClose: createClient(formState) /* Cuando termine ejercutara esto*/,
+      })
+      .then(() =>
+        message.success({
+          content: "Registro Completado",
+          onClose: this.getAll() /* Cuando termine ejercutara esto*/,
+        })
+      );
+  };
+
+  handleSelectClient = (client_id) => {
+    this.setState({
+      client_id: client_id,
+      activeModal: true,
+    });
+  };
+
+  handleUpdate = (formState) => {
+    this.handleCancel();
+    this.showSpin();
+    message
+      .loading({
+        content: "Actualizacion en Proceso...",
+        onClose: updateClient(formState),
+      })
+      .then(() =>
+        message.success({
+          content: "Actualizacion Completada",
+          onClose: this.getAll(),
+        })
+      );
+  };
+
+  handleDelete = (client_d_id) => {
+    this.showSpin();
+    message
+      .loading({
+        content: "Eliminando Cliente",
+        onClose: deleteClient(client_d_id),
       })
       .then(() => {
-        message.warning("Cliente Eliminado Satisfactoriamente");
+        message.warning({
+          content: " Eliminacion Completada",
+          onClose: this.DeleteRowTable(client_d_id),
+        });
       });
+  };
+
+  DeleteRowTable = (id) => {
+    let data = [...this.state.clients];
+    data.filter((client, index) => {
+      if (client.id === id) {
+        data.splice(index, 1);
+      }
+      this.setState({
+        clients: [...data],
+      });
+      return true;
+    });
   };
 
   render() {
     return (
-      <Row gutter={[8, 8]}>
+      <Row
+        gutter={[8, 8]}
+        className="d-flex justify-content-center text-general"
+      >
+        {/**COMPONENTE PARA AGREGAR CLIENTES */}
         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-          <Card title="Registro de Clientes" id="card_client">
-            <Form
-              ref={this.formRef}
-              onFinish={this.onSubmit.bind(this)}
-              onFinishFailed={this.onFinishFail}
-            >
-              <Row>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                  <Item
-                    label="Nombre"
-                    name="name"
-                    rules={[
-                      { required: true, message: "Porfavor Llene el Campo" },
-                    ]}
-                    style={{ margin: 2 }}
-                  >
-                    <Input
-                      name="name"
-                      placeholder="Ingrese su Nombre/s"
-                      disabled={this.state.inputDisable}
-                      value={this.state.name || ""}
-                      onChange={this.onChange}
-                    />
-                  </Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                  <Item
-                    label="Apellido"
-                    name="last_name"
-                    rules={[
-                      { required: true, message: "Porfavor Llene el Campo" },
-                    ]}
-                    style={{ margin: 2 }}
-                  >
-                    <Input
-                      name="last_name"
-                      placeholder="Ingrese su Apellido/s"
-                      disabled={this.state.inputDisable}
-                      value={this.state.last_name || ""}
-                      onChange={this.onChange}
-                    />
-                  </Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Item
-                    label="Direccion"
-                    name="address"
-                    rules={[
-                      { required: true, message: "Porfavor Llene el Campo" },
-                    ]}
-                    style={{ marginTop: 10 }}
-                  >
-                    <Input
-                      name="address"
-                      placeholder="Ingrese su Direccion"
-                      disabled={this.state.inputDisable}
-                      value={this.state.address || " "}
-                      onChange={this.onChange}
-                    />
-                  </Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <Item
-                    name="phone"
-                    label="Numero de Telefono"
-                    rules={[
-                      { required: true, message: "Porfavor Llene el Campo" },
-                    ]}
-                  >
-                    <Input
-                      type="number"
-                      name="phone"
-                      placeholder="Ingrese su Numero de Telefono"
-                      disabled={this.state.inputDisable}
-                      value={this.state.phone || 0}
-                      onChange={this.onChange}
-                      addonBefore={"+035"}
-                      style={{ width: "100%" }}
-                    />
-                  </Item>
-                  <Item
-                    label="Numero de Celular"
-                    name="cellphone"
-                    rules={[
-                      { required: true, message: "Porfavor Llene el Campo" },
-                    ]}
-                  >
-                    <Input
-                      type="number"
-                      name="cellphone"
-                      placeholder="Ingrese su Numero de Celular"
-                      disabled={this.state.inputDisable}
-                      value={this.state.cellphone || 0}
-                      onChange={this.onChange}
-                      addonBefore={"+57"}
-                      style={{ width: "100%" }}
-                    />
-                  </Item>
-                </Col>
-              </Row>
-              <Item>
-                {!this.state.editDisable ? (
-                  <Button
-                    id="btn-submit"
-                    htmlType="submit"
-                    disabled={this.state.buttonDisable}
-                  >
-                    Registar Cliente
-                  </Button>
-                ) : (
-                  ""
-                )}
-                {this.state.editDisable ? (
-                  <div>
-                    <Button
-                      id="btn-edit"
-                      htmlType="submit"
-                      onClick={this.onUpdate.bind(this)}
-                    >
-                      Actualizar Cliente
-                    </Button>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </Item>
-            </Form>
+          <Card
+            title="Registro de Clientes"
+            id="card_client"
+            style={{ height: "72%" }}
+          >
+            <AddClientForm
+              onSubmit={this.handleSubmit}
+              disable={this.state.disable}
+            />
           </Card>
         </Col>
+
         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-          {this.state.clients.length <= 0 ? (
-            <Empty
-              image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-              imageStyle={{
-                height: 60,
-              }}
-              description={<span>No hay Clientes Registrados</span>}
-            ></Empty>
-          ) : (
-            <Table
-              dataSource={this.state.clients}
-              pagination={{ pageSize: 10 }}
-              scroll={{ y: 420 }}
-            >
-              <ColumnGroup title="Nombre Completo">
-                <Column title="Nombre/s" dataIndex="name" key="name" />
-                <Column
-                  title="Apellido/s"
-                  dataIndex="last_name"
-                  key="last_name"
-                />
-              </ColumnGroup>
-              <Column title="Direcion" dataIndex="address" key="address" />
-              <Column title="Telefono" dataIndex="phone" key="phone" />
-              <Column title="Celular" dataIndex="cellphone" key="cellphone" />
-              <Column
-                title="Acciones"
-                key="action"
-                render={(client, record) => (
-                  <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                      <Popover
-                        placement="topLeft"
-                        content="Editar Cliente"
-                        title="Opcion : Editar"
-                      >
-                        <Button
-                          type="link"
-                          id="btn-form-icon-link"
-                          htmlType="submit"
-                          disabled={this.state.buttonDisable}
-                          onClick={this.onEdit.bind(this, client.id)}
-                        >
-                          <EditOutlined style={{ fontSize: "24px" }} />
-                        </Button>
-                      </Popover>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                      <Popover
-                        placement="topLeft"
-                        content="Eliminar Cliente"
-                        title="Opcion : Eliminar"
-                      >
-                        <Button
-                          type="link"
-                          id="btn-delete-icon-link"
-                          disabled={this.state.buttonDisable}
-                          onClick={this.onDelete.bind(this, client.id)}
-                        >
-                          <DeleteOutlined style={{ fontSize: "24px" }} />
-                        </Button>
-                      </Popover>
-                    </Col>
-                  </Row>
-                )}
-              />
-            </Table>
-          )}
+          {/**COMPONENTE PARA LISTAR CLIENTES */}
+          <Spin spinning={this.state.loading} tip="Loading...">
+            <TableListClient
+              clients={this.state.clients}
+              onSelectClient={this.handleSelectClient}
+              handleDelete={this.handleDelete}
+            />
+          </Spin>
+
+          {/**COMPONENTE PARA EDITAR CLIENTES */}
+          <Modal
+            title="Update client"
+            visible={this.state.activeModal}
+            onCancel={this.handleCancel}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                Volver
+              </Button>,
+            ]}
+          >
+            <UpdateClientForm
+              onUpdate={this.handleUpdate}
+              ClientId={this.state.client_id}
+              disable={this.state.disable}
+            />
+          </Modal>
         </Col>
       </Row>
     );

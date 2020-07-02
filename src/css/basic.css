@@ -62,6 +62,7 @@
   width: 80%;
   max-width: 100%;
 }
+
 #btn-form:hover {
   background-color: #fff;
   color: #096dd9;
@@ -87,6 +88,7 @@
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
+
 .site-layout .site-layout-background {
   background: #fff;
 }
@@ -164,6 +166,11 @@
   background: #fff;
   color: #135200;
 }
+
 #menufold {
   color: #fff;
+}
+
+.text-general {
+  font-family: "Merienda", cursive;
 }
