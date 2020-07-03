@@ -15,9 +15,6 @@ export default class ListCloth extends Component {
           xxl: 4,
         }}
         pagination={{
-          onChange: (page) => {
-            console.log(page);
-          },
           pageSize: 8,
         }}
         dataSource={this.props.cloths}

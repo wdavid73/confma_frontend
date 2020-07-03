@@ -63,6 +63,11 @@
   max-width: 100%;
 }
 
+#btn-add-cloth {
+  background-color: red;
+  margin-bottom: 15px;
+}
+
 #btn-form:hover {
   background-color: #fff;
   color: #096dd9;

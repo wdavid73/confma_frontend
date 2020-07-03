@@ -1,6 +1,6 @@
 import React from "react";
 import DeleteClient from "./DeleteClient";
-import { Table, Empty, Button, Row, Col } from "antd";
+import { Table, Empty, Button, Row, Col, Tooltip } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
 export default class TableListClient extends React.Component {
@@ -42,22 +42,26 @@ export default class TableListClient extends React.Component {
               render={(client, index) => (
                 <Row key={index}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                    <Button
-                      type="link"
-                      id="btn-form-icon-link"
-                      htmlType="submit"
-                      onClick={() => this.props.onSelectClient(client.id)}
-                    >
-                      <EditOutlined style={{ fontSize: "24px" }} />
-                    </Button>
+                    <Tooltip title="Editar Cliente">
+                      <Button
+                        type="link"
+                        id="btn-form-icon-link"
+                        htmlType="submit"
+                        onClick={() => this.props.onSelectClient(client.id)}
+                      >
+                        <EditOutlined style={{ fontSize: "24px" }} />
+                      </Button>
+                    </Tooltip>
                   </Col>
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                    <Button type="link" id="btn-delete-icon-link">
-                      <DeleteClient
-                        ClientId={client.id}
-                        confirm={this.props.handleDelete}
-                      />
-                    </Button>
+                    <Tooltip title="Eliminar Cliente" placement="rightTop">
+                      <Button type="link" id="btn-delete-icon-link">
+                        <DeleteClient
+                          ClientId={client.id}
+                          confirm={this.props.handleDelete}
+                        />
+                      </Button>
+                    </Tooltip>
                   </Col>
                 </Row>
               )}

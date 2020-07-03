@@ -13,13 +13,13 @@ export const getCloth = () => {
     });
 };
 
-export const createCloth = (name, color, size, fashion, image) => {
+export const createCloth = (cloth) => {
   let data = new FormData();
-  data.append("name", name);
-  data.append("color", color);
-  data.append("size", size);
-  data.append("fashion", fashion);
-  data.append("image", image, image.name);
+  data.append("name", cloth.name);
+  data.append("color", cloth.color);
+  data.append("size", cloth.size);
+  data.append("fashion", cloth.fashion);
+  data.append("image", cloth.image, cloth.image.name);
 
   return axios
     .post(API_CONSTANT_MAP.cloth, data, {
