@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Form, Row, Col, Button, InputNumber, DatePicker } from "antd";
-import "../../css/basic.css";
+import "../../../css/basic.css";
 export default class AddRentalForm extends React.Component {
   state = {
     date_return: "",

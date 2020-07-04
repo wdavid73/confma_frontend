@@ -1,8 +1,8 @@
 import React from "react";
 import { message, Spin } from "antd";
-import AddRentalForm from "./AddRentalForm";
-import ListClients from "./ListClients";
-import SelectCloth from "./SelectCloth";
+import AddRentalForm from "./AddRental/AddRentalForm";
+import ListClients from "./AddRental/ListClients";
+import SelectCloth from "./AddRental/SelectCloth";
 import {
   getClients,
   getClothWithOutRental,

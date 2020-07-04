@@ -174,7 +174,8 @@
 #btn-refund {
   background: #52c41a;
   border-color: #135200;
-  color: #135200;
+  color: black;
+  width: 100%
 }
 
 #btn-refund:hover {
