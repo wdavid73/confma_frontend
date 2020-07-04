@@ -1,0 +1,100 @@
+import React from "react";
+import { Form, List, Row, Col, Card, Radio, Descriptions } from "antd";
+
+export default class SelectCloth extends React.Component {
+  state = {
+    cloth_id: "",
+  };
+
+  onChange = (e) => {
+    this.props.onChange(e.target.value);
+  };
+
+  render() {
+    return (
+      <Form.Item label="Prendas" name="cloth">
+        <List
+          grid={{
+            gutter: 16,
+            xs: 2,
+            sm: 3,
+            md: 3,
+            lg: 4,
+          }}
+          pagination={{
+            pageSize: 4,
+          }}
+          dataSource={this.props.cloths}
+          renderItem={(cloth) => (
+            <List.Item>
+              <Card
+                hoverable
+                actions={[
+                  <Form.Item
+                    rules={[
+                      {
+                        required: true,
+                        message: "Porfavor Seleccione una Prenda",
+                      },
+                    ]}
+                    name="cloth_id"
+                  >
+                    <Radio.Group
+                      name="cloth_id"
+                      onChange={this.onChange}
+                      //value={this.state.cloth_id}
+                      rules={[{ required: true }]}
+                    >
+                      <Radio value={cloth.id}>{cloth.name}</Radio>
+                    </Radio.Group>
+                  </Form.Item>,
+                ]}
+              >
+                <Row gutter={[8, 8]}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <img
+                      src={cloth.image}
+                      className="card-img-top"
+                      alt="moda de referencia"
+                    />
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <div>
+                      <Descriptions
+                        title="Detalles de la Prenda"
+                        bordered
+                        column={{
+                          xxl: 1,
+                          xl: 1,
+                          lg: 1,
+                          md: 1,
+                          sm: 1,
+                          xs: 1,
+                        }}
+                        style={{ width: "105%" }}
+                      >
+                        <Descriptions.Item label="Talla">
+                          {cloth.size}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Color">
+                          {cloth.color}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Moda">
+                          {cloth.fashion}
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </div>
+                  </Col>
+                </Row>
+                <Card.Meta
+                  title={<p>{cloth.name}</p>}
+                  description="www.confeccionesmaribel.com"
+                />
+              </Card>
+            </List.Item>
+          )}
+        />
+      </Form.Item>
+    );
+  }
+}

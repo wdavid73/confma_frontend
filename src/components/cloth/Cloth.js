@@ -4,6 +4,7 @@ import ListCloth from "./ListCloth";
 import AddClothForm from "./AddClothForm";
 import { FileAddOutlined } from "@ant-design/icons";
 import { getCloth, createCloth } from "./js/ClothFuntions";
+import "../../css/basic.css";
 
 message.config({
   top: 20,
@@ -83,7 +84,7 @@ export default class Cloth extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="text-general">
         <Row>
           <Button
             type="link"

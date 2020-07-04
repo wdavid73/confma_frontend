@@ -52,6 +52,16 @@
   max-width: 100%;
 }
 
+#btn-submit-rental {
+  background-color: #ffc53d;
+  border-color: #d48806;
+  color: #fff;
+  margin: 0 auto;
+  display: block;
+  width: 80%;
+  max-width: 100%;
+}
+
 #btn-form {
   background-color: #40a9ff;
   border-color: #096dd9;

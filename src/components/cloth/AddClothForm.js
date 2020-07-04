@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Select, Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import "../../css/basic.css";
 
 export default class AddClothForm extends React.Component {
   state = {
@@ -61,8 +62,7 @@ export default class AddClothForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>FORM</p>
+      <div className="text-general">
         <Form
           ref={this.formRef}
           onFinish={this.handleSubmit}
@@ -134,7 +134,7 @@ export default class AddClothForm extends React.Component {
             label="Subir Imagen"
             valuePropName="fileList"
             getValueFromEvent={this.fileSelectedHandler}
-            rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
+            rules={[{ required: true, message: "Porfavor Inserte una Imagen" }]}
           >
             <Upload name="image" beforeUpload={() => false} listType="picture">
               <Button>

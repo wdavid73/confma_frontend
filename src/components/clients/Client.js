@@ -135,11 +135,7 @@ export default class Clients extends React.Component {
       >
         {/**COMPONENTE PARA AGREGAR CLIENTES */}
         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-          <Card
-            title="Registro de Clientes"
-            id="card_client"
-            style={{ height: "72%" }}
-          >
+          <Card title="Registro de Clientes" id="card_client">
             <AddClientForm
               onSubmit={this.handleSubmit}
               disable={this.state.disable}
