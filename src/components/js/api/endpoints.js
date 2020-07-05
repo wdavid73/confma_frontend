@@ -8,9 +8,10 @@ export const API_CONSTANT_MAP = {
   refundRental: BASE_API + "/rentals/refund/",
   rental_cloth: BASE_API + "/rentals/cloths/",
   quotation: BASE_API + "/quotations/",
-  quotation_client: BASE_API + "/quotations_clients/",
+  quotation_client: BASE_API + "/quotations-clients/",
   quotation_cloth: BASE_API + "/quotations/quotations_cloth/",
   quotation_client_not_duplicated:
-    BASE_API + "/quotations_clients/clientnotduplicated/",
+    BASE_API + "/quotations-clients/clientnotduplicated/",
   isvalidcloth: BASE_API + "/isvalidcloth/",
+  get_one_quotation: BASE_API + "/quotations/get_one/",
 };
