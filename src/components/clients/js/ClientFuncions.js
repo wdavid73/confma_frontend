@@ -79,3 +79,15 @@ export const deleteClient = (id) => {
       console.log(err);
     });
 };
+
+export const findClient = (id) => {
+  return axios
+    .get(API_CONSTANT_MAP.client_find + id + "/", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};

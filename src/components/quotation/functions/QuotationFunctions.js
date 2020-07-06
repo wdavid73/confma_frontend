@@ -27,7 +27,7 @@ export const getQuotations = () => {
 
 export const getClientNotDuplicated = (quotationId) => {
   return axios
-    .get(API_CONSTANT_MAP.quotation_client_not_duplicated + quotationId + "/", {
+    .get(API_CONSTANT_MAP.quotation_client_valid + quotationId + "/", {
       headers: {
         "Content-Type": "application/json",
       },

@@ -5,7 +5,10 @@ import { Descriptions } from "antd";
 export default class DescriptionQuotation extends React.Component {
   description_quotation = () => {
     return (
-      <Descriptions title="Informacion de la Cotizacion">
+      <Descriptions
+        title="Informacion de la Cotizacion"
+        className="text-left p-2"
+      >
         <Descriptions.Item label="Valor de la Tela">
           $ {this.props.quotation.value_cloth}
         </Descriptions.Item>
