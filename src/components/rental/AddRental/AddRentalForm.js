@@ -31,7 +31,7 @@ export default class AddRentalForm extends React.Component {
       <Card title="Registro de Alquileres" className="text-general">
         <Form ref={this.formRef} onFinish={this.handleSubmit}>
           <Row gutter={[8, 8]}>
-            <Col span={12}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
               <Form.Item
                 label="Fecha de Devolucion"
                 name="date_return"
@@ -47,7 +47,7 @@ export default class AddRentalForm extends React.Component {
                 />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
               <Form.Item
                 label="Valor del Alquiler"
                 name="price"
@@ -71,6 +71,7 @@ export default class AddRentalForm extends React.Component {
             </Col>
           </Row>
           <div>{this.props.children}</div>
+
           <Button
             id="btn-submit-rental"
             style={{ color: "black" }}

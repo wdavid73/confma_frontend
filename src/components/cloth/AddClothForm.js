@@ -138,7 +138,7 @@ export default class AddClothForm extends React.Component {
           >
             <Upload name="image" beforeUpload={() => false} listType="picture">
               <Button>
-                <UploadOutlined /> Click to upload
+                <UploadOutlined /> Ingrese una imagen
               </Button>
             </Upload>
           </Form.Item>
@@ -147,6 +147,7 @@ export default class AddClothForm extends React.Component {
             id="btn-submit"
             htmlType="submit"
             //disabled={this.state.buttonDisable}
+            style={{ color: "black" }}
           >
             Registrar Prenda
           </Button>

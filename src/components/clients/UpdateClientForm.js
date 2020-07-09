@@ -80,102 +80,118 @@ export default class UpdateClientForm extends React.Component {
 
   render() {
     return (
-      <Spin spinning={this.state.loading}>
-        <Form
-          ref={this.formRef}
-          onFinish={this.handleUpdate}
-          onFinishFailed={this.onFinishFail}
-        >
-          <Row>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-              <Form.Item
-                label="Nombre"
-                name="name"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-                style={{ margin: 2 }}
-              >
-                <Input
+      <div className="text-general">
+        <Spin spinning={this.state.loading}>
+          <Form
+            ref={this.formRef}
+            onFinish={this.handleUpdate}
+            onFinishFailed={this.onFinishFail}
+          >
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                <Form.Item
+                  label="Nombre"
                   name="name"
-                  placeholder="Ingrese su Nombre/s"
-                  value={this.state.name || ""}
-                  onChange={this.onChange}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-              <Form.Item
-                label="Apellido"
-                name="last_name"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-                style={{ margin: 2 }}
-              >
-                <Input
+                  rules={[
+                    { required: true, message: "Porfavor Llene el Campo" },
+                  ]}
+                  style={{ margin: 2 }}
+                >
+                  <Input
+                    name="name"
+                    placeholder="Ingrese su Nombre/s"
+                    value={this.state.name || ""}
+                    onChange={this.onChange}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                <Form.Item
+                  label="Apellido"
                   name="last_name"
-                  placeholder="Ingrese su Apellido/s"
-                  value={this.state.last_name || ""}
-                  onChange={this.onChange}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-              <Form.Item
-                label="Direccion"
-                name="address"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-                style={{ marginTop: 10 }}
-              >
-                <Input
+                  rules={[
+                    { required: true, message: "Porfavor Llene el Campo" },
+                  ]}
+                  style={{ margin: 2 }}
+                >
+                  <Input
+                    name="last_name"
+                    placeholder="Ingrese su Apellido/s"
+                    value={this.state.last_name || ""}
+                    onChange={this.onChange}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Form.Item
+                  label="Direccion"
                   name="address"
-                  placeholder="Ingrese su Direccion"
-                  value={this.state.address || " "}
-                  onChange={this.onChange}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-              <Form.Item
-                name="phone"
-                label="Numero de Telefono"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-              >
-                <Input
-                  type="number"
+                  rules={[
+                    { required: true, message: "Porfavor Llene el Campo" },
+                  ]}
+                  style={{ marginTop: 10 }}
+                >
+                  <Input
+                    name="address"
+                    placeholder="Ingrese su Direccion"
+                    value={this.state.address || " "}
+                    onChange={this.onChange}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Form.Item
                   name="phone"
-                  placeholder="Ingrese su Numero de Telefono"
-                  value={this.state.phone || 0}
-                  onChange={this.onChange}
-                  addonBefore={"+035"}
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Numero de Celular"
-                name="cellphone"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-              >
-                <Input
-                  type="number"
+                  label="Numero de Telefono"
+                  rules={[
+                    { required: true, message: "Porfavor Llene el Campo" },
+                  ]}
+                >
+                  <Input
+                    type="number"
+                    name="phone"
+                    placeholder="Ingrese su Numero de Telefono"
+                    value={this.state.phone || 0}
+                    onChange={this.onChange}
+                    addonBefore={"+035"}
+                    style={{ width: "100%" }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Numero de Celular"
                   name="cellphone"
-                  placeholder="Ingrese su Numero de Celular"
-                  value={this.state.cellphone || 0}
-                  onChange={this.onChange}
-                  addonBefore={"+57"}
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item>
-            <Button id="btn-submit" htmlType="submit">
-              Update Client
-            </Button>
-          </Form.Item>
-        </Form>
-      </Spin>
+                  rules={[
+                    { required: true, message: "Porfavor Llene el Campo" },
+                  ]}
+                >
+                  <Input
+                    type="number"
+                    name="cellphone"
+                    placeholder="Ingrese su Numero de Celular"
+                    value={this.state.cellphone || 0}
+                    onChange={this.onChange}
+                    addonBefore={"+57"}
+                    style={{ width: "100%" }}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item>
+              <Button
+                id="btn-submit"
+                htmlType="submit"
+                style={{ color: "black" }}
+              >
+                Update Client
+              </Button>
+            </Form.Item>
+          </Form>
+        </Spin>
+      </div>
     );
   }
 }

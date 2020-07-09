@@ -15,7 +15,7 @@ import {
   createQuotationClient,
   deleteQuotation,
   updateQuotation,
-} from "./functions/QuotationFunctions.js";
+} from "./js/QuotationFunctions.js";
 import "../../css/basic.css";
 
 message.config({
@@ -107,6 +107,7 @@ export default class Quotation extends Component {
 
   handleOkModal = (client_id, quotation_id) => {
     this.handleCancel();
+    this.showSpin();
     message
       .loading({
         content: "Guardando Cliente",
@@ -213,7 +214,7 @@ export default class Quotation extends Component {
                   type="link"
                   id="btn-form-icon-link"
                   onClick={this.showDrawerSubmit}
-                  style={{ marginBottom: "20px" }}
+                  style={{ marginBottom: "20px", color: "#ffc53d" }}
                   disabled={this.state.disable}
                 >
                   <FileAddOutlined style={{ fontSize: "24px" }} />

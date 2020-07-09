@@ -19,7 +19,7 @@ export default class DescriptionCloths extends React.Component {
 
         <Descriptions size="small" bordered>
           <Descriptions.Item label="Price">
-            {this.props.rental.price}
+            $ {this.props.rental.price}
           </Descriptions.Item>
         </Descriptions>
       </div>

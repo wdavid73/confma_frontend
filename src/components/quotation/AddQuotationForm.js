@@ -35,7 +35,6 @@ export default class AddQuotationForm extends React.Component {
   render() {
     return (
       <div>
-        <p> ADD </p>
         <Form
           //labelCol={{ span: 12 }}
           //wrapperCol={{ span: 22 }}
@@ -177,7 +176,7 @@ export default class AddQuotationForm extends React.Component {
             </Col>
           </Row>
           <div>{this.props.children}</div>
-          <Button id="btn-submit" htmlType="submit">
+          <Button id="btn-submit" htmlType="submit" style={{ color: "black" }}>
             Registrar
           </Button>
         </Form>

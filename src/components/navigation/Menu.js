@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import "../../css/basic.css";
 import { Layout, Menu } from "antd";
 import {
   UserOutlined,
@@ -11,13 +9,8 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
-import {
-  crud_client,
-  find_client,
-  crud_cloth,
-  crud_rental,
-  list_rental,
-} from "../common/messages";
+
+import "../../css/basic.css";
 
 const { Content, Sider, Footer, Header } = Layout;
 const { SubMenu } = Menu;
@@ -72,19 +65,19 @@ export default class MenuCustom extends React.Component {
               }
             >
               <Menu.Item key="3">
-                <Link to="/clients" onClick={crud_client}>
+                <Link to="/clients">
                   <span> Registro y Listado </span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4">
-                <Link to="/clients/find" onClick={find_client}>
+                <Link to="/clients/find">
                   <span> Buscar </span>
                 </Link>
               </Menu.Item>
             </SubMenu>
             <Menu.Item key="5">
               <SkinOutlined />
-              <Link to="/cloth" onClick={crud_cloth}>
+              <Link to="/cloth">
                 <span> Prendas </span>
               </Link>
             </Menu.Item>
@@ -99,12 +92,12 @@ export default class MenuCustom extends React.Component {
               }
             >
               <Menu.Item key="6">
-                <Link to="/rental" onClick={crud_rental}>
+                <Link to="/rental">
                   <span> Registro de Alquileres </span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="7">
-                <Link to="/rental/list" onClick={list_rental}>
+                <Link to="/rental/list">
                   <span> Listado de Alquileres </span>
                 </Link>
               </Menu.Item>
@@ -121,11 +114,6 @@ export default class MenuCustom extends React.Component {
               <Menu.Item key="8">
                 <Link to="/quotation">
                   <span> Registar Cotizaciones </span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="9">
-                <Link to="/quotation/list">
-                  <span> Lista de Cotizaciones </span>
                 </Link>
               </Menu.Item>
             </SubMenu>

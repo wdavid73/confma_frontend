@@ -1,15 +1,11 @@
 import React from "react";
-import { Row, Col, Table, Button } from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  UserAddOutlined,
-} from "@ant-design/icons";
+import { Row, Col, Table, Button, Tooltip } from "antd";
+import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
+import DeleteQuotation from "../quotation/DeleteQuotation";
 export default class TableQuotation extends React.Component {
   render() {
     return (
       <div className="mt-3">
-        <p>New Component</p>
         <Table
           dataSource={this.props.quotations}
           pagination={{ pageSize: 10 }}
@@ -26,7 +22,12 @@ export default class TableQuotation extends React.Component {
               render={(id) => <p>{id}</p>}
             />
 
-            <Table.Column title="Total" dataIndex="total" key="total" />
+            <Table.Column
+              title="Total"
+              dataIndex="total"
+              key="total"
+              render={(total) => <p>${total}</p>}
+            />
           </Table.ColumnGroup>
           <Table.ColumnGroup title="Prenda" key="cloth">
             <Table.Column
@@ -59,7 +60,7 @@ export default class TableQuotation extends React.Component {
             key="action"
             render={(quotation) => (
               <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                   <Button
                     type="link"
                     id="btn-edit-icon-link"
@@ -69,18 +70,21 @@ export default class TableQuotation extends React.Component {
                     <EditOutlined style={{ fontSize: "24px" }} />
                   </Button>
 
-                  <Col xs={24} sm={24} md={24} lg={24} xl={8}></Col>
-
-                  <Button
-                    type="link"
-                    id="btn-delete-icon-link"
-                    htmlType="submit"
-                    onClick={() => this.props.onDelete(quotation.id)}
-                  >
-                    <DeleteOutlined style={{ fontSize: "24px" }} />
-                  </Button>
+                  <Col xs={24} sm={24} md={24} lg={8} xl={8}></Col>
+                  <Tooltip title="Eliminar Cliente" placement="rightTop">
+                    <Button
+                      type="link"
+                      id="btn-delete-icon-link"
+                      //onClick={() => this.props.onDelete(quotation.id)}
+                    >
+                      <DeleteQuotation
+                        quotationId={quotation.id}
+                        confirm={this.props.onDelete}
+                      />
+                    </Button>
+                  </Tooltip>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                   <Button
                     type="link"
                     id="btn-submit-icon-link"

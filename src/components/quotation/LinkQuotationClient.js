@@ -5,7 +5,7 @@ import DescriptionQuotation from "./DescriptionQuotation";
 import {
   getOneQuotation,
   getClientNotDuplicated,
-} from "./functions/QuotationFunctions";
+} from "./js/QuotationFunctions";
 
 export default class LinkQuotationClient extends React.Component {
   state = {

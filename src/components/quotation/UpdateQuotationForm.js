@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Form, InputNumber, Button, Spin } from "antd";
-import { getOneQuotation } from "./functions/QuotationFunctions";
+import { getOneQuotation } from "./js/QuotationFunctions";
 export default class UpdateQuotationForm extends React.Component {
   state = {
     id: "",
@@ -132,7 +132,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor del Trabajo"
-                    value={this.state.value_work || ""}
+                    value={this.state.value_work || 0}
                     max={100000}
                     onChange={this.onChange("value_work")}
                     style={{ width: "100%" }}
@@ -153,7 +153,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor de la Tela"
-                    value={this.state.value_cloth || ""}
+                    value={this.state.value_cloth || 0}
                     max={100000}
                     onChange={this.onChange("value_cloth")}
                     style={{ width: "100%" }}
@@ -176,7 +176,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor de los Botones"
-                    value={this.state.value_buttons || ""}
+                    value={this.state.value_buttons || 0}
                     max={100000}
                     onChange={this.onChange("value_buttons")}
                     style={{ width: "100%" }}
@@ -197,7 +197,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor de los Cuellos"
-                    value={this.state.value_necks || ""}
+                    value={this.state.value_necks || 0}
                     max={100000}
                     onChange={this.onChange("value_necks")}
                     style={{ width: "100%" }}
@@ -220,7 +220,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor de los Hilos"
-                    value={this.state.value_threads || ""}
+                    value={this.state.value_threads || 0}
                     max={100000}
                     onChange={this.onChange("value_threads")}
                     style={{ width: "100%" }}
@@ -241,7 +241,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor del Bordado"
-                    value={this.state.value_embroidery || ""}
+                    value={this.state.value_embroidery || 0}
                     max={100000}
                     onChange={this.onChange("value_embroidery")}
                     style={{ width: "100%" }}
@@ -262,7 +262,7 @@ export default class UpdateQuotationForm extends React.Component {
                     }
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     placeholder="Ingrese el Valor del Estampado"
-                    value={this.state.value_prints || ""}
+                    value={this.state.value_prints || 0}
                     max={100000}
                     onChange={this.onChange("value_prints")}
                     style={{ width: "100%" }}
@@ -280,9 +280,7 @@ export default class UpdateQuotationForm extends React.Component {
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                placeholder="Ingrese el Valor de la Tela"
-                value={this.state.total || ""}
-                max={100000}
+                value={this.state.total || 0}
                 style={{ width: "100%" }}
                 disabled={true}
               />

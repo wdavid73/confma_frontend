@@ -1,5 +1,5 @@
 import React from "react";
-import { message, Spin } from "antd";
+import { message, Spin, ConfigProvider, Empty } from "antd";
 import AddRentalForm from "./AddRental/AddRentalForm";
 import ListClients from "./AddRental/ListClients";
 import SelectCloth from "./AddRental/SelectCloth";
@@ -8,6 +8,7 @@ import {
   getClothWithOutRental,
   createRental,
 } from "./js/RentalFunctions";
+import { customRenderEmpty } from "../common/customRenderEmpty";
 
 export default class Rental extends React.Component {
   state = {
@@ -81,18 +82,39 @@ export default class Rental extends React.Component {
   render() {
     return (
       <AddRentalForm onSubmit={this.handleSubmit} disable={this.state.disable}>
-        <ListClients
-          onChange={this.handleChange}
-          clients={this.state.clients}
-          disable={this.state.disable}
-        />
-
-        <Spin spinning={this.state.loading} tip="Loading...">
-          <SelectCloth
-            cloths={this.state.cloths}
-            onChange={this.handleSelectCloth}
-          />
-        </Spin>
+        <ConfigProvider renderEmpty={customRenderEmpty}>
+          <div className="config-provider">
+            <ListClients
+              onChange={this.handleChange}
+              clients={this.state.clients}
+              disable={this.state.disable}
+            />
+          </div>
+        </ConfigProvider>
+        <div className="mb-2">
+          <Spin spinning={this.state.loading} tip="Loading...">
+            {this.state.cloths.length === 0 ? (
+              <Empty
+                image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                imageStyle={{
+                  height: 60,
+                }}
+                description={
+                  <span>
+                    No hay Prendas Registrar. <br />
+                    si los desea puede registrar una en el apartado de{" "}
+                    <a href="/cloth">Prendas</a>
+                  </span>
+                }
+              ></Empty>
+            ) : (
+              <SelectCloth
+                cloths={this.state.cloths}
+                onChange={this.handleSelectCloth}
+              />
+            )}
+          </Spin>
+        </div>
       </AddRentalForm>
     );
   }

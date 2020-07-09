@@ -91,7 +91,7 @@ export default class Cloth extends React.Component {
             id="btn-form-icon-link"
             onClick={this.showDrawer}
             disabled={this.state.disable}
-            style={{ marginBottom: "20px" }}
+            style={{ marginBottom: "20px", color: "#ffc53d" }}
           >
             <FileAddOutlined style={{ fontSize: "24px" }} />
             Agregar Prenda
@@ -100,7 +100,7 @@ export default class Cloth extends React.Component {
         <Row>
           <Drawer
             title="Registar Prenda"
-            width={"50%"}
+            width={"75%"}
             onClose={this.onClose}
             visible={this.state.visible}
             bodyStyle={{ paddingBottom: 80 }}

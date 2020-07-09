@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { message, Empty, Button, Spin } from "antd";
 import { getRental, refundRental } from "./js/RentalFunctions";
-import { crud_client } from "../common/messages";
 import DetailsRental from "./DetailsRental/DetailsRental";
 import "../../css/basic.css";
 
@@ -74,7 +73,7 @@ export default class Rental extends React.Component {
               }}
               description={<span>No hay Alquileres Registrados</span>}
             >
-              <Link to="/rental" onClick={crud_client}>
+              <Link to="/rental">
                 <Button id="btn-form" type="primary">
                   Registre un Alquiler Ahora
                 </Button>

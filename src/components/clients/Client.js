@@ -163,6 +163,7 @@ export default class Clients extends React.Component {
                 Volver
               </Button>,
             ]}
+            className="text-general"
           >
             <UpdateClientForm
               onUpdate={this.handleUpdate}
