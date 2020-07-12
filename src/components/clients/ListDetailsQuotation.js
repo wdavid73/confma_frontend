@@ -36,7 +36,7 @@ export default class ListDetailsQuotation extends React.Component {
               xxl: 1,
             }}
             pagination={{
-              pageSize: 3,
+              pageSize: 2,
             }}
             dataSource={this.props.quotations}
             renderItem={(quotation) => (
@@ -68,7 +68,7 @@ export default class ListDetailsQuotation extends React.Component {
                             {quotation.cloth.size}
                           </Descriptions.Item>
                           <Descriptions.Item label="fashion">
-                            {quotation.cloth.fashion}
+                            $ {quotation.cloth.fashion}
                           </Descriptions.Item>
                         </Descriptions>
                       </div>

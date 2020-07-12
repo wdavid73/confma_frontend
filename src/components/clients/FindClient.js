@@ -14,6 +14,7 @@ export default class FindClient extends React.Component {
     clients: [],
     quotations: [],
     rentals: [],
+    totalQuotation: [],
     loading: false,
   };
 
@@ -41,6 +42,7 @@ export default class FindClient extends React.Component {
     findClient(value).then((data) => {
       this.setState({
         rentals: [...data.rental],
+        totalQuotation: [...data.totalQuotations],
         quotations: [...data.quotation],
         client_select: data.client,
       });
@@ -102,7 +104,10 @@ export default class FindClient extends React.Component {
                   <ListDetailsQuotation quotations={this.state.quotations} />
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                  <ListDetailsRental rentals={this.state.rentals} />
+                  <ListDetailsRental
+                    rentals={this.state.rentals}
+                    totalQuotation={this.state.totalQuotation}
+                  />
                 </Col>
               </Row>
             </Spin>
