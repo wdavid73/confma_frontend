@@ -81,9 +81,9 @@ export default class Cloth extends React.Component {
     });
   };
 
-  handleClose = (formState) => {
+  handleClose = () => {
     this.getAll();
-    this.setState({ visibleModal: true, cloth: formState });
+    this.setState({ visibleModal: true });
   };
 
   handleSubmit = (formState) => {
@@ -92,12 +92,14 @@ export default class Cloth extends React.Component {
     message
       .loading({
         content: "Registro en Proceso",
-        onClose: createCloth(formState),
+        onClose: createCloth(formState).then((data) => {
+          this.setState({ visibleModal: true, cloth: data });
+        }),
       })
       .then(() =>
         message.success({
           content: "Registro Completado",
-          onClose: this.handleClose(formState),
+          onClose: this.handleClose(),
         })
       );
   };

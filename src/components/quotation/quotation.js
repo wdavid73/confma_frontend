@@ -8,6 +8,7 @@ import DrawerQuotation from "./DrawerQuotation";
 import QuotationClient from "./QuotationClient";
 import LinkQuotationClient from "./LinkQuotationClient";
 import SelectCloth from "../rental/AddRental/SelectCloth";
+import OneCloth from "../cloth/OneCloth";
 import {
   getClothWithOutQuotation,
   getQuotations,
@@ -41,6 +42,7 @@ export default class Quotation extends Component {
       visibleModal: false,
       loading: false,
       disable: false,
+      cloth_selected: "",
     };
   }
   onChange = (name) => (value) => {
@@ -51,6 +53,7 @@ export default class Quotation extends Component {
   componentDidMount() {
     this.getAll();
     this.showSpin();
+    this.handleClothSelect();
   }
 
   formRef = React.createRef();
@@ -202,6 +205,13 @@ export default class Quotation extends Component {
     this.setState({ cloth_id: cloth_id });
   };
 
+  handleClothSelect = () => {
+    if (this.props.location.state !== undefined) {
+      this.setState({ cloth_selected: this.props.location.state.detail });
+      this.showDrawerSubmit();
+    }
+  };
+
   render() {
     return (
       <div className="text-general">
@@ -259,10 +269,17 @@ export default class Quotation extends Component {
           >
             <AddQuotationForm onSubmit={this.handleSubmit}>
               <Spin spinning={this.state.loading} tip="Loading">
-                <SelectCloth
-                  cloths={this.state.cloth}
-                  onChange={this.handleSelectCloth}
-                />
+                {this.state.cloth_selected === "" ? (
+                  <SelectCloth
+                    cloths={this.state.cloth}
+                    onChange={this.handleSelectCloth}
+                  />
+                ) : (
+                  <OneCloth
+                    cloth={this.state.cloth_selected}
+                    onChange={this.handleSelectCloth}
+                  />
+                )}
               </Spin>
             </AddQuotationForm>
           </DrawerQuotation>
