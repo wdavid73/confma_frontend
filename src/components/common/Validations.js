@@ -63,3 +63,10 @@ export const isValidCloth = (cloth_id) => {
       }
     });
 };
+
+export const equals = (str1, str2) => {
+  if (str1 === str2) {
+    return true;
+  }
+  return false;
+};

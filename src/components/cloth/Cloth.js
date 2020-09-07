@@ -2,9 +2,12 @@ import React from "react";
 import { Drawer, Button, message, Empty, Spin, Row } from "antd";
 import ListCloth from "./ListCloth";
 import AddClothForm from "./AddClothForm";
+import OptionsModal from "../common/OptionsModal";
+import Options from "../common/Options";
 import { FileAddOutlined } from "@ant-design/icons";
 import { getCloth, createCloth } from "./js/ClothFuntions";
 import "../../css/basic.css";
+import { equals } from "../common/Validations";
 
 message.config({
   top: 20,
@@ -23,6 +26,8 @@ export default class Cloth extends React.Component {
       maxValue: 1,
       visible: false,
       disable: false,
+      visibleModal: false,
+      cloth: "",
     };
   }
   numEachPage = 4;
@@ -46,6 +51,11 @@ export default class Cloth extends React.Component {
       });
     });
   };
+  showModal = () => {
+    this.setState({
+      visibleModal: true,
+    });
+  };
 
   showSpin = () => {
     this.setState({ loading: true, disable: true });
@@ -65,6 +75,16 @@ export default class Cloth extends React.Component {
       visible: false,
     });
   };
+  handleCancel = () => {
+    this.setState({
+      visibleModal: false,
+    });
+  };
+
+  handleClose = (formState) => {
+    this.getAll();
+    this.setState({ visibleModal: true, cloth: formState });
+  };
 
   handleSubmit = (formState) => {
     this.onClose();
@@ -77,12 +97,35 @@ export default class Cloth extends React.Component {
       .then(() =>
         message.success({
           content: "Registro Completado",
-          onClose: this.getAll(),
+          onClose: this.handleClose(formState),
         })
       );
   };
 
+  selectOption = (option) => {
+    if (equals(option, "quotation")) {
+      this.setState({ visibleModal: false });
+      this.RedirectTo("/quotation");
+    }
+    if (equals(option, "rental")) {
+      this.setState({ visibleModal: false });
+      this.RedirectTo("/rental");
+    }
+  };
+
+  RedirectTo = (path) => {
+    this.props.history.push({
+      pathname: path,
+      state: { detail: this.state.cloth },
+    });
+    this.setState({ cloth: "" });
+  };
+
   render() {
+    const options = [
+      { option: "quotation", title: "Cotizacion" },
+      { option: "rental", title: "Alquiler" },
+    ];
     return (
       <div className="text-general">
         <Row>
@@ -132,6 +175,16 @@ export default class Cloth extends React.Component {
             <ListCloth cloths={this.state.cloths} />
           </Spin>
         )}
+
+        <div>
+          <OptionsModal
+            visible={this.state.visibleModal}
+            title={"¿Desea agregar una cotizacion o alquiler a la prenda?"}
+            onCancel={this.handleCancel}
+          >
+            <Options options={options} selectOption={this.selectOption} />
+          </OptionsModal>
+        </div>
       </div>
     );
   }
