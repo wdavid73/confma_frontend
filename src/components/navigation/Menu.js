@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import {
-  UserOutlined,
-  ProfileOutlined,
-  SkinOutlined,
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from "@ant-design/icons";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import homepage from "../../assets/homepage.png";
 import user from "../../assets/man.png";
 import cloth from "../../assets/fashion.png";
