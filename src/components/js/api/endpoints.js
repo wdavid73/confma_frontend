@@ -1,4 +1,5 @@
-const BASE_API = "http://127.0.0.1:8000/api";
+import axios from "axios";
+const BASE_API = "http://localhost:8000/api";
 const clients = "/clients/";
 const cloths = "/cloths/";
 const rentals = "/rentals/";
@@ -19,4 +20,14 @@ export const API_CONSTANT_MAP = {
   quotation_client: BASE_API + quotation_client,
   is_valid_cloth: BASE_API + "/is_valid_cloth/",
   quotation_client_valid: BASE_API + quotation_client + "client_valid/",
+  list_endpoints: BASE_API + "/",
+};
+
+export const getEndpoints = async () => {
+  const res = await axios.get(BASE_API + "/", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
 };

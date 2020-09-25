@@ -1,19 +1,8 @@
 import React from "react";
 import "../css/welcome.css";
+import logo from "../resources/logo_blanco_confma.png";
 const Welcome = () => {
-  return (
-    <div className="logo">
-      <div className="text-center">
-        <p className="logo_p1 display-1">
-          mar<span id="color_i">i</span>bel
-        </p>
-        <hr />
-        <p className="logo_p2 display-4">
-          <span className="logo_p2">CONFECCIONES</span>
-        </p>
-      </div>
-    </div>
-  );
+  return <img src={logo} alt="logo" width="100%" />;
 };
 
 export default Welcome;

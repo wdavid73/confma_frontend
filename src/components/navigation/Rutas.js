@@ -9,6 +9,10 @@ import Cloth from "../cloth/Cloth";
 import Rental from "../rental/Rental";
 import RentalList from "../rental/RentalList";
 import Quotation from "../quotation/quotation";
+import UniformMale from "../uniforms/dairy_male/UniformMale";
+import UniformFemale from "../uniforms/dairy_female/UniformFemale";
+import UniformSport from "../uniforms/sport/UniformSport";
+import Endpoints from "../common/Endpoints";
 
 const Rutas = () => {
   return (
@@ -21,6 +25,10 @@ const Rutas = () => {
         <Route exact path="/rental" component={Rental} />{" "}
         <Route exact path="/rental/list" component={RentalList} />{" "}
         <Route exact path="/quotation" component={Quotation} />
+        <Route exact path="/uniform_male" component={UniformMale} />
+        <Route exact path="/uniform_female" component={UniformFemale} />
+        <Route exact path="/uniform_sport" component={UniformSport} />
+        <Route exact path="/endpoints" component={Endpoints} />
       </div>
     </Menu>
   );
