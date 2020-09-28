@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, message, Avatar, Spin } from "antd";
+import { List, message, Avatar } from "antd";
 import { getEndpoints } from "../js/api/endpoints.js";
 import logo from "../../resources/logo_size_invert.jpg";
 export default class Endpoints extends Component {

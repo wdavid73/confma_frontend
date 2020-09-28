@@ -1,0 +1,28 @@
+.cards-uniforms-dairy-male {
+  /**/
+}
+#card-dairy-male {
+  width: 300;
+  height: 200;
+  margin: "0 auto";
+}
+
+#img_shirt {
+  width: 100px;
+  margin-bottom: 10%;
+}
+
+#img_pants {
+  width: 100px;
+  margin-bottom: 10%;
+}
+
+#img_list_uniforms {
+  width: 100px;
+  margin-bottom: 10%;
+}
+
+#img_find_college {
+  width: 100px;
+  margin-bottom: 10%;
+}
