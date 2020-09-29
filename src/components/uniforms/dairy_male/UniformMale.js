@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { Card, Col, Row, PageHeader } from "antd";
+import { Card, Col, Row, PageHeader, message } from "antd";
 import OptionsModal from "../OptionsModal";
 import CreatePants from "../dairy_male/CreatePants";
 import CreateShirt from "../dairy_male/CreateShirt";
 import ListUniforms from "../dairy_male/ListUniforms";
 import FindCollege from "../dairy_male/FindCollege";
 
-import { getListUniforms } from "../dairy_male/js/CallEndpoints";
+import {
+  getListUniforms,
+  createShirtMale,
+  createPantsMale,
+} from "../dairy_male/js/CallEndpoints";
 
 import "../css/dairy-male.css";
 import "../../../css/basic.css";
@@ -91,6 +95,34 @@ export default class UniformMale extends Component {
     });
   };
 
+  handleSubmit = (formState) => {
+    this.handleCancel();
+    if (formState.type === "shirt") {
+      message
+        .loading({
+          content: "Registro en Proceso",
+          onClose: createShirtMale(formState),
+        })
+        .then(() =>
+          message.success({
+            content: "Registro Completado",
+          })
+        );
+    } else if (formState.type === "pants") {
+      message
+        .loading({
+          content: "Registro en Proceso",
+          onClose: createPantsMale(formState),
+        })
+        .then(() =>
+          message.success({
+            content: "Registro Completado",
+          })
+        );
+    } else if (formState.type === "uniform") {
+      console.log("uniform register");
+    }
+  };
   render() {
     return (
       <div>
@@ -205,11 +237,21 @@ export default class UniformMale extends Component {
           onOk={this.handleOK}
           onCancel={this.handleCancel}
         >
-          <p>OPTIONS</p>
-          {this.state.modalShirt ? <CreateShirt /> : ""}
-          {this.state.modalPants ? <CreatePants /> : ""}
+          {this.state.modalShirt ? (
+            <CreateShirt onSubmit={this.handleSubmit} />
+          ) : (
+            ""
+          )}
+          {this.state.modalPants ? (
+            <CreatePants onSubmit={this.handleSubmit} />
+          ) : (
+            ""
+          )}
           {this.state.modalListUniforms ? (
-            <ListUniforms uniforms={this.state.listUnifoms} />
+            <ListUniforms
+              uniforms={this.state.listUnifoms}
+              onSubmit={this.handleSubmit}
+            />
           ) : (
             ""
           )}

@@ -1,9 +1,16 @@
 import React from "react";
-import { Table, Empty, Row, Col, Spin } from "antd";
+import { Table, Empty, Spin, Button } from "antd";
+import OptionsModal from "../OptionsModal";
+import CreateUniformMale from "../dairy_male/CreateUniformMale";
+import "../../../css/basic.css";
+import { getPantsMale, getShirtsMale } from "../dairy_male/js/CallEndpoints";
 
 export default class ListUniforms extends React.Component {
   state = {
     loading: false,
+    visible: false,
+    shirts: [],
+    pants: [],
   };
 
   componentDidMount() {
@@ -17,9 +24,34 @@ export default class ListUniforms extends React.Component {
     }, 5000);
   };
 
+  getComplements = () => {
+    getShirtsMale().then((data) => {
+      this.setState({ shirts: [...data.shirts_male] });
+    });
+    getPantsMale().then((data) => {
+      this.setState({ pants: [...data.pants_male] });
+    });
+  };
+
+  showModal = () => {
+    this.setState({ visible: true });
+    this.getComplements();
+  };
+
+  handleClose = () => {
+    this.setState({ visible: false, pants: [], shirt: [] });
+  };
+
+  handleSubmit = (formState) => {
+    this.props.onSubmit(formState);
+  };
+
   render() {
     return (
       <div>
+        <Button className="mb-2" id="btn-form" onClick={() => this.showModal()}>
+          Registrar Uniforme
+        </Button>
         <Spin spinning={this.state.loading} tip="Loading...">
           {this.props.uniforms.length <= 0 ? (
             <Empty
@@ -58,6 +90,18 @@ export default class ListUniforms extends React.Component {
             </Table>
           )}
         </Spin>
+        <OptionsModal
+          visible={this.state.visible}
+          title="Registrar Uniforme Masculino"
+          onCancel={this.handleClose}
+          width="80%"
+        >
+          <CreateUniformMale
+            onSubmit={this.handleSubmit}
+            pants={this.state.pants}
+            shirts={this.state.shirts}
+          />
+        </OptionsModal>
       </div>
     );
   }

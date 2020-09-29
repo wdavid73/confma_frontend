@@ -9,7 +9,7 @@ export default class OptionsModal extends React.Component {
         visible={this.props.visible}
         onOk={this.props.onOk}
         onCancel={this.props.onCancel}
-        width={"50%"}
+        width={this.props.width ? this.props.width : "50%"}
         footer={[
           <Button key="back" onClick={this.props.onCancel}>
             Back
