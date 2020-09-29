@@ -6,6 +6,8 @@ import CreateShirt from "../dairy_male/CreateShirt";
 import ListUniforms from "../dairy_male/ListUniforms";
 import FindCollege from "../dairy_male/FindCollege";
 
+import { getListUniforms } from "../dairy_male/js/CallEndpoints";
+
 import "../css/dairy-male.css";
 import "../../../css/basic.css";
 
@@ -21,6 +23,21 @@ export default class UniformMale extends Component {
     modalListUniforms: false,
     modalFindCollege: false,
     titleModal: "",
+    listUnifoms: [],
+  };
+
+  componentDidMount() {
+    //this.getUniforms();
+  }
+
+  testMethode = () => {
+    console.log("test petition");
+  };
+
+  getUniforms = () => {
+    getListUniforms().then((data) => {
+      this.setState({ listUnifoms: [...data.uniforms_male] });
+    });
   };
 
   handleShowModal = (type) => {
@@ -30,7 +47,7 @@ export default class UniformMale extends Component {
         modalPants: false,
         modalFindCollege: false,
         modalListUniforms: false,
-        titleModal: "Shirts",
+        titleModal: "Registrar Camisa de Uniforme de Diario Masculino",
       });
     }
     if (type === "pants") {
@@ -39,7 +56,7 @@ export default class UniformMale extends Component {
         modalPants: true,
         modalFindCollege: false,
         modalListUniforms: false,
-        titleModal: "Pants",
+        titleModal: "Registrar Pantalones de Uniforme de Diario Masculino",
       });
     }
     if (type === "find_college") {
@@ -48,7 +65,7 @@ export default class UniformMale extends Component {
         modalPants: false,
         modalFindCollege: true,
         modalListUniforms: false,
-        titleModal: "FindCollege",
+        titleModal: "Buscar por Colegio",
       });
     }
     if (type === "list_uniforms") {
@@ -57,8 +74,9 @@ export default class UniformMale extends Component {
         modalPants: false,
         modalFindCollege: false,
         modalListUniforms: true,
-        titleModal: "ListUniforms",
+        titleModal: "Lista de Uniformes Confeccionados",
       });
+      this.getUniforms();
     }
   };
 
@@ -69,6 +87,7 @@ export default class UniformMale extends Component {
       modalFindCollege: false,
       modalListUniforms: false,
       titleModal: "",
+      listUnifoms: [],
     });
   };
 
@@ -189,7 +208,11 @@ export default class UniformMale extends Component {
           <p>OPTIONS</p>
           {this.state.modalShirt ? <CreateShirt /> : ""}
           {this.state.modalPants ? <CreatePants /> : ""}
-          {this.state.modalListUniforms ? <ListUniforms /> : ""}
+          {this.state.modalListUniforms ? (
+            <ListUniforms uniforms={this.state.listUnifoms} />
+          ) : (
+            ""
+          )}
           {this.state.modalFindCollege ? <FindCollege /> : ""}
         </OptionsModal>
       </div>
