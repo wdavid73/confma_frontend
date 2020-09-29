@@ -3,26 +3,27 @@
 }
 #card-dairy-male {
   width: 300;
-  height: 200;
-  margin: "0 auto";
+  height: 250;
+  margin: 0 auto;
 }
 
 #img_shirt {
-  width: 100px;
-  margin-bottom: 10%;
+  width: 50%;
+  margin: 0 auto;
 }
 
 #img_pants {
-  width: 100px;
-  margin-bottom: 10%;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 10px;
 }
 
 #img_list_uniforms {
-  width: 100px;
-  margin-bottom: 10%;
+  width: 50%;
+  margin: 0 auto;
 }
 
 #img_find_college {
-  width: 100px;
-  margin-bottom: 10%;
+  width: 50%;
+  margin: 0 auto;
 }
