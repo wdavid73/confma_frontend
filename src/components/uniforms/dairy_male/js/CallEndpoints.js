@@ -54,4 +54,24 @@ export const getPantsMale = async () => {
   return res.data;
 };
 
-export const CreateUniformeMale = async () => {};
+export const createUniformMale = async (uniform) => {
+  let data = new FormData();
+  data.append("pants_id", uniform.pants_id);
+  data.append("shirt_id", uniform.shirt_id);
+  data.append("name_college", uniform.name_college);
+  data.append("price", uniform.price);
+  const res = await axios.post(API_CONSTANT_MAP.uniforms_dairy_male, data, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return console.log(res.data);
+};
+
+export const findByCollege = async (name) => {
+  const res = await axios
+    .get(API_CONSTANT_MAP.uniforms_dairy_male_find + name + "/", {
+      headers: { "Content-Type": "application/" },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};

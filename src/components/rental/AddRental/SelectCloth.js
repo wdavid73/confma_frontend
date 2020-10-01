@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { Form, List, Row, Col, Card, Radio, Empty } from "antd";
 import DescriptionCloth from "../Descriptions/DescriptionCloth";
+import empty from "../../../assets/box.png";
 
 export default class SelectCloth extends React.Component {
   state = {
@@ -18,7 +18,7 @@ export default class SelectCloth extends React.Component {
       <div>
         {this.props.cloths.length === 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            image={empty}
             imageStyle={{
               height: 60,
             }}

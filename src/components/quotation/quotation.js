@@ -18,6 +18,7 @@ import {
   updateQuotation,
 } from "./js/QuotationFunctions.js";
 import "../../css/basic.css";
+import empty from "../../assets/box.png";
 
 message.config({
   top: 20,
@@ -240,7 +241,7 @@ export default class Quotation extends Component {
               </div>
             ) : (
               <Empty
-                image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                image={empty}
                 imageStyle={{
                   height: 60,
                 }}

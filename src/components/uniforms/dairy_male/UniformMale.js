@@ -10,6 +10,7 @@ import {
   getListUniforms,
   createShirtMale,
   createPantsMale,
+  createUniformMale,
 } from "../dairy_male/js/CallEndpoints";
 
 import "../css/dairy-male.css";
@@ -120,7 +121,17 @@ export default class UniformMale extends Component {
           })
         );
     } else if (formState.type === "uniform") {
-      console.log("uniform register");
+      console.log("uniform register ", formState);
+      message
+        .loading({
+          content: "Registro en Proceso",
+          onClose: createUniformMale(formState),
+        })
+        .then(() => {
+          message.success({
+            content: "Registro Completado",
+          });
+        });
     }
   };
   render() {

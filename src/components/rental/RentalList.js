@@ -4,6 +4,7 @@ import { message, Empty, Button, Spin } from "antd";
 import { getRental, refundRental } from "./js/RentalFunctions";
 import DetailsRental from "./DetailsRental/DetailsRental";
 import "../../css/basic.css";
+import empty from "../../assets/box.png";
 
 export default class Rental extends React.Component {
   constructor(props) {
@@ -67,7 +68,7 @@ export default class Rental extends React.Component {
         <Spin spinning={this.state.loading} tip="Loading..">
           {this.state.rentals.length <= 0 ? (
             <Empty
-              image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+              image={empty}
               imageStyle={{
                 height: 60,
               }}

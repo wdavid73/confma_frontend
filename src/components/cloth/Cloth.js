@@ -8,6 +8,7 @@ import { FileAddOutlined } from "@ant-design/icons";
 import { getCloth, createCloth } from "./js/ClothFuntions";
 import "../../css/basic.css";
 import { equals } from "../common/Validations";
+import empty from "../../assets/box.png";
 
 message.config({
   top: 20,
@@ -166,7 +167,7 @@ export default class Cloth extends React.Component {
         </Row>
         {this.state.cloths.length <= 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            image={empty}
             imageStyle={{
               height: 60,
             }}

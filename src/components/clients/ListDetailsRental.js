@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { List, Card, Row, Col, Descriptions, Empty } from "antd";
 import DescriptionRental from "../rental/Descriptions/DescriptionRental";
+import empty from "../../assets/box.png";
 
 export default class ListDetailsRental extends React.Component {
   render() {
@@ -9,7 +10,7 @@ export default class ListDetailsRental extends React.Component {
       <div>
         {this.props.rentals.length === 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            image={empty}
             imageStyle={{
               height: 60,
             }}

@@ -1,5 +1,14 @@
 import React from "react";
-import { Form, Row, Col, InputNumber, Input, Button, Collapse } from "antd";
+import {
+  Form,
+  Row,
+  Col,
+  InputNumber,
+  Input,
+  Button,
+  Collapse,
+  Spin,
+} from "antd";
 import SelectShirts from "../SelectShirts";
 import SelectPants from "../SelectPants";
 
@@ -9,9 +18,10 @@ export default class CreateUniformsMale extends React.Component {
   state = {
     pants_id: "",
     shirt_id: "",
-    price: "",
+    price: 0,
     name_college: "",
     type: "uniform",
+    loading: false,
   };
 
   formRef = React.createRef();
@@ -44,33 +54,19 @@ export default class CreateUniformsMale extends React.Component {
     this.props.onSubmit(this.state);
   };
 
+  showSpin = () => {
+    this.setState({ loading: true, disable: true });
+    setTimeout(() => {
+      this.setState({ loading: false, disable: false });
+    }, 5000);
+  };
+
   render() {
     return (
       <div className="text-general">
         <Form ref={this.formRef} onFinish={this.handleSubmit}>
           <Row gutter={[8, 8]}>
-            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-              <Form.Item
-                label="Valor del Uniforme"
-                name="price"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-              >
-                <InputNumber
-                  formatter={(value) =>
-                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                  parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                  placeholder="Ingrese el valor del uniforme"
-                  name="price"
-                  value={this.state.price || 0}
-                  onChange={this.handleChangeNumber("price")}
-                  style={{ width: "100%" }}
-                  max={1000000}
-                  min={5000}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Form.Item
                 label="Nombre del Colegio"
                 name="name_college"
@@ -88,16 +84,20 @@ export default class CreateUniformsMale extends React.Component {
 
           <Collapse>
             <Collapse.Panel header="Camisas" key="1">
-              <SelectShirts
-                shirts={this.props.shirts}
-                onChange={this.handleSelectShirt}
-              />
+              <Spin spinning={this.state.loading} tip="Loading...">
+                <SelectShirts
+                  shirts={this.props.shirts}
+                  onChange={this.handleSelectShirt}
+                />
+              </Spin>
             </Collapse.Panel>
             <Collapse.Panel header="Pantalones" key="2">
-              <SelectPants
-                pants={this.props.pants}
-                onChange={this.handleSelectPant}
-              />
+              <Spin spinning={this.state.loading} tip="Loading...">
+                <SelectPants
+                  pants={this.props.pants}
+                  onChange={this.handleSelectPant}
+                />
+              </Spin>
             </Collapse.Panel>
           </Collapse>
           <Button

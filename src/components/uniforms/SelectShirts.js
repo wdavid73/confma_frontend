@@ -1,6 +1,8 @@
 import React from "react";
 import { Form, List, Row, Col, Card, Radio, Empty } from "antd";
 import DescriptionShirt from "../uniforms/DescriptionShirt.js";
+import empty from "../../assets/box.png";
+
 export default class SelectShirt extends React.Component {
   state = {
     shirt_id: "",
@@ -15,7 +17,7 @@ export default class SelectShirt extends React.Component {
       <div>
         {this.props.shirts.length === 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            image={empty}
             imageStyle={{
               height: 60,
             }}

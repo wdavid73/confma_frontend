@@ -2,6 +2,7 @@ import React from "react";
 import DeleteClient from "./DeleteClient";
 import { Table, Empty, Button, Row, Col, Tooltip } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import empty from "../../assets/box.png";
 
 export default class TableListClient extends React.Component {
   render() {
@@ -9,7 +10,7 @@ export default class TableListClient extends React.Component {
       <div>
         {this.props.clients.length <= 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            image={empty}
             imageStyle={{
               height: 60,
             }}

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { List, Row, Card, Col, Descriptions, Empty } from "antd";
 import DescriptionQuotation from "../quotation/DescriptionQuotation";
+import empty from "../../assets/box.png";
 
 export default class ListDetailsQuotation extends React.Component {
   render() {
@@ -9,7 +10,7 @@ export default class ListDetailsQuotation extends React.Component {
       <div>
         {this.props.quotations.length === 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            image={empty}
             imageStyle={{
               height: 60,
             }}
