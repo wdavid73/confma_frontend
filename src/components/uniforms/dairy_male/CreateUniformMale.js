@@ -1,26 +1,16 @@
 import React from "react";
-import {
-  Form,
-  Row,
-  Col,
-  InputNumber,
-  Input,
-  Button,
-  Collapse,
-  Spin,
-} from "antd";
+import { Form, Row, Col, Input, Button, Collapse, Spin } from "antd";
 import SelectShirts from "../SelectShirts";
 import SelectPants from "../SelectPants";
-
+import SelectInstitution from "../SelectInstitution";
 import "../../../css/basic.css";
 
 export default class CreateUniformsMale extends React.Component {
   state = {
     pants_id: "",
     shirt_id: "",
+    institution_id: "",
     price: 0,
-    name_college: "",
-    type: "uniform",
     loading: false,
   };
 
@@ -35,6 +25,10 @@ export default class CreateUniformsMale extends React.Component {
     this.setState({
       pants_id: value,
     });
+  };
+
+  handleSelectInstitution = (value) => {
+    this.setState({ institution_id: value });
   };
 
   handleChangeNumber = (name) => (value) => {
@@ -68,16 +62,11 @@ export default class CreateUniformsMale extends React.Component {
           <Row gutter={[8, 8]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Form.Item
-                label="Nombre del Colegio"
-                name="name_college"
+                label="Instituto"
+                name="institution_id"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
-                <Input
-                  name="name_college"
-                  placeholder="Ingrese el nombre del colegio"
-                  value={this.state.name_college || ""}
-                  onChange={this.onChange}
-                />
+                <SelectInstitution onChange={this.handleSelectInstitution} />
               </Form.Item>
             </Col>
           </Row>

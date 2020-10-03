@@ -3,8 +3,6 @@ import { Table, Empty, Spin, Button } from "antd";
 import OptionsModal from "../OptionsModal";
 import CreateUniformMale from "../dairy_male/CreateUniformMale";
 import DrawerDetails from "../DrawerDetails";
-import DesrcriptionPants from "../DescriptionPants";
-import DesrcriptionShirt from "../DescriptionShirt";
 import Description from "../DescriptionShirtAndPants";
 import { getPantsMale, getShirtsMale } from "../dairy_male/js/CallEndpoints";
 import "../../../css/basic.css";
@@ -17,7 +15,7 @@ export default class ListUniforms extends React.Component {
     visibleDrawer: false,
     shirts: [],
     pants: [],
-    item: null,
+    obj: null,
   };
 
   componentDidMount() {
@@ -81,8 +79,8 @@ export default class ListUniforms extends React.Component {
             >
               <Table.Column
                 title="Nombre del Colegio"
-                dataIndex="name_college"
-                key="name_college"
+                render={(item) => item.institution.name}
+                key="institution_name"
               />
               <Table.Column
                 title="Precio Total"
@@ -91,11 +89,10 @@ export default class ListUniforms extends React.Component {
               />
               <Table.Column
                 title="Camisa"
-                /* render={(item) => "Talla : " + item.pants.size} */
                 render={(item) => (
                   <Button
                     onClick={() =>
-                      this.setState({ item: item.shirt, visibleDrawer: true })
+                      this.setState({ obj: item.shirt, visibleDrawer: true })
                     }
                   >
                     {" "}
@@ -109,7 +106,7 @@ export default class ListUniforms extends React.Component {
                 render={(item) => (
                   <Button
                     onClick={() =>
-                      this.setState({ item: item.pants, visibleDrawer: true })
+                      this.setState({ obj: item.pants, visibleDrawer: true })
                     }
                   >
                     {" "}

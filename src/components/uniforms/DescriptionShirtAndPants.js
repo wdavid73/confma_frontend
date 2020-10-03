@@ -18,7 +18,6 @@ export default class Description extends React.Component {
         ) : (
           ""
         )}
-
         <Descriptions size="small" bordered>
           <Descriptions.Item label="Ref">
             {this.props.item.ref}

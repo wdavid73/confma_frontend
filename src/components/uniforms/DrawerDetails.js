@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Drawer } from "antd";
 
 export default class DrawerDetails extends React.Component {

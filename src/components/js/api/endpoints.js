@@ -6,14 +6,11 @@ const rentals = "/rentals/";
 const quotations = "/quotations/";
 const quotation_client = "/quotations-clients/";
 const uniforms_dairy_male = "/uniforms/dairy_male/";
-const uniforms_dairy_male_shirts = "/uniforms/dairy_male/shirts/";
-const uniforms_dairy_male_pants = "/uniforms/dairy_male/pants/";
 const uniforms_dairy_female = "/uniforms/dairy_female/";
-const uniforms_dairy_female_shirts = "/uniforms/dairy_female/shirts/";
-const uniforms_dairy_female_dresses = "/uniforms/dairy_female/dresses/";
 const uniforms_sport = "/uniforms/sports/";
-const uniforms_sport_shirts = "/uniforms/sports/shirts/";
-const uniforms_sport_sweatshirt = "/uniforms/sports/sweat_shirt/";
+const uniforms_shirts = "/uniforms/shirts/";
+const uniforms_pants = "/uniforms/pants/";
+const institutions = "/institutions/";
 
 export const API_CONSTANT_MAP = {
   client: BASE_API + clients,
@@ -31,15 +28,12 @@ export const API_CONSTANT_MAP = {
   quotation_client_valid: BASE_API + quotation_client + "client_valid/",
   list_endpoints: BASE_API + "/",
   uniforms_dairy_male: BASE_API + uniforms_dairy_male,
-  uniforms_dairy_male_shirts: BASE_API + uniforms_dairy_male_shirts,
-  uniforms_dairy_male_pants: BASE_API + uniforms_dairy_male_pants,
   uniforms_dairy_male_find: BASE_API + uniforms_dairy_male + "find/",
   uniforms_dairy_female: BASE_API + uniforms_dairy_female,
-  uniforms_dairy_female_shirts: BASE_API + uniforms_dairy_female_shirts,
-  uniforms_dairy_female_dresses: BASE_API + uniforms_dairy_female_dresses,
   uniforms_sport: BASE_API + uniforms_sport,
-  uniforms_sport_shirts: BASE_API + uniforms_sport_shirts,
-  uniforms_sport_sweatshirt: BASE_API + uniforms_sport_sweatshirt,
+  uniforms_shirts: BASE_API + uniforms_shirts,
+  uniforms_pants: BASE_API + uniforms_pants,
+  institutions: BASE_API + institutions,
 };
 
 export const getEndpoints = async () => {

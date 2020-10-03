@@ -1,16 +1,17 @@
 import React from "react";
-import { Select, Spin, Row, Col, ConfigProvider } from "antd";
-import { customRenderEmpty } from "../../common/customRenderEmpty";
-import { getListUniforms, findByCollege } from "../dairy_male/js/CallEndpoints";
+import { Row, Col, Card, List } from "antd";
+import SelectInstitution from "../SelectInstitution";
+import Description from "../DescriptionShirtAndPants";
+import { getInstitutions, findByCollege } from "../dairy_male/js/CallEndpoints";
 
 export default class FindCollege extends React.Component {
   state = {
     loading: false,
-    uniforms: [],
+    uniforms_male: [],
   };
 
   componentDidMount() {
-    this.getAllUniforms();
+    this.getAllInstitutions();
     this.showSpin();
   }
 
@@ -21,25 +22,16 @@ export default class FindCollege extends React.Component {
     }, 3000);
   };
 
-  getAllUniforms = () => {
-    getListUniforms().then((data) => {
-      this.setState({ uniforms: [...data.uniforms_male] });
+  getAllInstitutions = () => {
+    getInstitutions().then((data) => {
+      this.setState({ institutions: [...data.institutions] });
     });
   };
 
   onChange = (value) => {
-    console.log(value);
-    /* findByCollege(value).then((data) => {
-      console.log(data);
-    }); */
-    /* findClient(value).then((data) => {
-      this.setState({
-        rentals: [...data.rental],
-        totalQuotation: [...data.totalQuotations],
-        quotations: [...data.quotation],
-        client_select: data.client,
-      });
-    }); */
+    findByCollege(value).then((data) => {
+      this.setState({ uniforms_male: [...data.uniform_male] });
+    });
     this.showSpin();
   };
 
@@ -58,34 +50,49 @@ export default class FindCollege extends React.Component {
   render() {
     return (
       <div className="text-general">
-        <ConfigProvider renderEmpty={customRenderEmpty}>
-          <div className="config-provider">
-            <Spin spinning={this.state.loading} tip="Loading...">
-              <Select
-                showSearch
-                style={{ width: "100%" }}
-                placeholder="Seleccione un Colegio"
-                optionFilterProp="children"
-                onChange={this.onChange}
-                onFocus={this.onFocus}
-                onBlur={this.onBlur}
-                onSearch={this.onSearch}
-                filterOption={(input, option) =>
-                  option.children[0]
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-                size="large"
-              >
-                {this.state.uniforms.map((uniform) => (
-                  <Select.Option value={uniform.name_college}>
-                    {uniform.name_college}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Spin>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <SelectInstitution onChange={this.onChange} />
+          </Col>
+        </Row>
+        {Object.keys(this.state.uniforms_male).length === 0 ? (
+          ""
+        ) : (
+          <div>
+            <List
+              pagination={{
+                pageSize: 4,
+              }}
+              grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 1,
+                xl: 2,
+                xxl: 2,
+              }}
+              dataSource={this.state.uniforms_male}
+              renderItem={(uniform) => (
+                <List.Item>
+                  <Card title={`Uniform ${uniform.id}`}>
+                    <Row gutter={[16, 16]}>
+                      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                        <Description item={uniform.shirt} img={true} />
+                      </Col>
+                      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                        <Description item={uniform.pants} img={true} />
+                      </Col>
+                    </Row>
+                    <div clasName="text-center">
+                      VALOR TOTAl : $ {uniform.price}
+                    </div>
+                  </Card>
+                </List.Item>
+              )}
+            />
           </div>
-        </ConfigProvider>
+        )}
       </div>
     );
   }

@@ -8,16 +8,20 @@ import {
   message,
   Select,
   Upload,
+  Tooltip,
+  Input,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "../../../css/basic.css";
+import help from "../../../assets/help_white.png";
 
 export default class CreatePants extends React.Component {
   state = {
     size: "",
     price: 0,
     image: null,
-    type: "pants",
+    type: "",
+    ref: "",
   };
   formRef = React.createRef();
 
@@ -25,12 +29,21 @@ export default class CreatePants extends React.Component {
     this.setState({ size: value });
   };
 
-  handleChange = (name) => (value) => {
+  handleChangeSelectType = (value) => {
+    this.setState({ type: value });
+  };
+
+  handleChangeNumber = (name) => (value) => {
     this.setState({
       [name]: value,
     });
   };
 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
   fileSelectedHandler = (e) => {
     this.setState({
       image: e.file,
@@ -64,6 +77,29 @@ export default class CreatePants extends React.Component {
           onFinish={this.handleSubmit}
           onFinishFail={this.onFinishFail}
         >
+          <Form.Item
+            label="Referencia"
+            name="ref"
+            rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
+          >
+            <Input
+              maxLength={49}
+              placeholder="Ingrese un referencia para identificar la camisa"
+              value={this.state.ref || ""}
+              onChange={this.handleChange}
+              style={{ width: "100%" }}
+              name="ref"
+              addonAfter={
+                <Tooltip
+                  placement="topRight"
+                  title="La cantidad maxima de caracteres es 50"
+                  color="#d48806"
+                >
+                  <img src={help} alt="help" width="25px" />
+                </Tooltip>
+              }
+            />
+          </Form.Item>
           <Row gutter={[16, 8]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
@@ -80,14 +116,14 @@ export default class CreatePants extends React.Component {
                   placeholder="Ingrese el Valor"
                   value={this.state.price || ""}
                   max={100000}
-                  onChange={this.handleChange("price")}
+                  onChange={this.handleChangeNumber("price")}
                   style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
-                label="Talla de la Prenda"
+                label="Talla"
                 name="size"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
@@ -105,19 +141,45 @@ export default class CreatePants extends React.Component {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item
-            name="image"
-            label="Subir Imagen"
-            valuePropName="fileList"
-            getValueFromEvent={this.fileSelectedHandler}
-            rules={[{ required: true, message: "Porfavor Inserte una Imagen" }]}
-          >
-            <Upload name="image" beforeUpload={() => false} listType="picture">
-              <Button>
-                <UploadOutlined /> Ingrese una imagen
-              </Button>
-            </Upload>
-          </Form.Item>
+          <Row gutter={[16, 8]}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="Tipo"
+                name="type"
+                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
+              >
+                <Select
+                  value={this.state.type || ""}
+                  onChange={this.handleChangeSelectType}
+                  placeholder="Seleccione el Tipo"
+                >
+                  <Select.Option value="Male">Male</Select.Option>
+                  <Select.Option value="Female">Female</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                name="image"
+                label="Subir Imagen"
+                valuePropName="fileList"
+                getValueFromEvent={this.fileSelectedHandler}
+                rules={[
+                  { required: true, message: "Porfavor Inserte una Imagen" },
+                ]}
+              >
+                <Upload
+                  name="image"
+                  beforeUpload={() => false}
+                  listType="picture"
+                >
+                  <Button>
+                    <UploadOutlined /> Ingrese una imagen
+                  </Button>
+                </Upload>
+              </Form.Item>
+            </Col>
+          </Row>
           <Button
             id="btn-submit"
             htmlType="submit"

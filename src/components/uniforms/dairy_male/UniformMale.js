@@ -8,8 +8,8 @@ import FindCollege from "../dairy_male/FindCollege";
 
 import {
   getListUniforms,
-  createShirtMale,
-  createPantsMale,
+  createShirt,
+  createPants,
   createUniformMale,
 } from "../dairy_male/js/CallEndpoints";
 
@@ -34,10 +34,6 @@ export default class UniformMale extends Component {
   componentDidMount() {
     //this.getUniforms();
   }
-
-  testMethode = () => {
-    console.log("test petition");
-  };
 
   getUniforms = () => {
     getListUniforms().then((data) => {
@@ -96,44 +92,49 @@ export default class UniformMale extends Component {
     });
   };
 
-  handleSubmit = (formState) => {
+  handleSubmitShirt = (formState) => {
     this.handleCancel();
-    if (formState.type === "shirt") {
-      message
-        .loading({
-          content: "Registro en Proceso",
-          onClose: createShirtMale(formState),
+    message
+      .loading({
+        content: "Registro en Proceso",
+        onClose: createShirt(formState),
+      })
+      .then(() =>
+        message.success({
+          content: "Registro Completado",
         })
-        .then(() =>
-          message.success({
-            content: "Registro Completado",
-          })
-        );
-    } else if (formState.type === "pants") {
-      message
-        .loading({
-          content: "Registro en Proceso",
-          onClose: createPantsMale(formState),
-        })
-        .then(() =>
-          message.success({
-            content: "Registro Completado",
-          })
-        );
-    } else if (formState.type === "uniform") {
-      console.log("uniform register ", formState);
-      message
-        .loading({
-          content: "Registro en Proceso",
-          onClose: createUniformMale(formState),
-        })
-        .then(() => {
-          message.success({
-            content: "Registro Completado",
-          });
-        });
-    }
+      );
   };
+
+  handleSubmitPants = (formState) => {
+    this.handleCancel();
+    message
+      .loading({
+        content: "Registro en Proceso",
+        onClose: createPants(formState),
+      })
+      .then(() =>
+        message.success({
+          content: "Registro Completado",
+        })
+      );
+  };
+
+  handleSubmitUniform = (formState) => {
+    this.handleCancel();
+    console.log("uniform register ", formState);
+    message
+      .loading({
+        content: "Registro en Proceso",
+        onClose: createUniformMale(formState),
+      })
+      .then(() => {
+        message.success({
+          content: "Registro Completado",
+        });
+      });
+  };
+
   render() {
     return (
       <div>
@@ -249,19 +250,19 @@ export default class UniformMale extends Component {
           onCancel={this.handleCancel}
         >
           {this.state.modalShirt ? (
-            <CreateShirt onSubmit={this.handleSubmit} />
+            <CreateShirt onSubmit={this.handleSubmitShirt} />
           ) : (
             ""
           )}
           {this.state.modalPants ? (
-            <CreatePants onSubmit={this.handleSubmit} />
+            <CreatePants onSubmit={this.handleSubmitPants} />
           ) : (
             ""
           )}
           {this.state.modalListUniforms ? (
             <ListUniforms
               uniforms={this.state.listUnifoms}
-              onSubmit={this.handleSubmit}
+              onSubmit={this.handleSubmitUniform}
             />
           ) : (
             ""
