@@ -83,13 +83,18 @@ export default class ListUniforms extends React.Component {
               />
               <Table.Column
                 title="Precio Total"
-                render={(item) => "$" + item.price}
+                render={(item) => (
+                  <>
+                    <span style={{ color: "green" }}>$</span> {item.price}
+                  </>
+                )}
                 key="price"
               />
               <Table.Column
                 title="Camisa"
                 render={(item) => (
                   <Button
+                    id="btn-details"
                     onClick={() =>
                       this.setState({ obj: item.shirt, visibleDrawer: true })
                     }
@@ -104,6 +109,7 @@ export default class ListUniforms extends React.Component {
                 title="Pantalones"
                 render={(item) => (
                   <Button
+                    id="btn-details"
                     onClick={() =>
                       this.setState({ obj: item.pants, visibleDrawer: true })
                     }
