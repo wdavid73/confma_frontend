@@ -10,6 +10,7 @@ const uniforms_dairy_female = "/uniforms/dairy_female/";
 const uniforms_sport = "/uniforms/sports/";
 const uniforms_shirts = "/uniforms/shirts/";
 const uniforms_pants = "/uniforms/pants/";
+const uniforms_dress = "/uniforms/dresses/";
 const institutions = "/institutions/";
 
 export const API_CONSTANT_MAP = {
@@ -30,9 +31,11 @@ export const API_CONSTANT_MAP = {
   uniforms_dairy_male: BASE_API + uniforms_dairy_male,
   uniforms_dairy_male_find: BASE_API + uniforms_dairy_male + "find/",
   uniforms_dairy_female: BASE_API + uniforms_dairy_female,
+  uniforms_dairy_female_find: BASE_API + uniforms_dairy_female + "find/",
   uniforms_sport: BASE_API + uniforms_sport,
   uniforms_shirts: BASE_API + uniforms_shirts,
   uniforms_pants: BASE_API + uniforms_pants,
+  uniforms_dress: BASE_API + uniforms_dress,
   institutions: BASE_API + institutions,
 };
 

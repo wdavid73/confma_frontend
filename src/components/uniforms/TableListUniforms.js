@@ -3,7 +3,6 @@ import { Table, Empty, Spin, Button } from "antd";
 import OptionsModal from "./OptionsModal";
 import DrawerDetails from "./DrawerDetails";
 import Description from "./DescriptionShirtAndPants";
-import { getPantsMale, getShirtsMale } from "./js/gets";
 import "../../css/basic.css";
 import empty from "../../assets/box.png";
 
@@ -14,6 +13,7 @@ export default class ListUniforms extends React.Component {
     visibleDrawer: false,
     shirts: [],
     pants: [],
+    dress: [],
     obj: null,
   };
 
@@ -28,22 +28,31 @@ export default class ListUniforms extends React.Component {
     }, 5000);
   };
 
-  getComplements = () => {
-    getShirtsMale().then((data) => {
-      this.setState({ shirts: [...data.shirts_male] });
-    });
-    getPantsMale().then((data) => {
-      this.setState({ pants: [...data.pants_male] });
-    });
-  };
+  /* getComplements = () => {
+    if (this.props.male === true) {
+      getShirtsMale().then((data) => {
+        this.setState({ shirts: [...data.shirts_male] });
+      });
+      getPantsMale().then((data) => {
+        this.setState({ pants: [...data.pants_male] });
+      });
+    } else {
+      getShirtsFemale().then((data) => {
+        this.setState({ shirts: [...data.shirts_female] });
+      });
+      getDress().then((data) => {
+        this.setState({ dress: [...data.dress] });
+      });
+    }
+  }; */
 
   showModal = () => {
     this.setState({ visible: true });
-    this.getComplements();
+    /* this.getComplements(); */
   };
 
   handleClose = () => {
-    this.setState({ visible: false, pants: [], shirt: [] });
+    this.setState({ visible: false, pants: [], shirt: [], dress: [] });
   };
 
   /* handleSubmit = (formState) => {

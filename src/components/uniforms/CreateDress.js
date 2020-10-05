@@ -8,14 +8,14 @@ import {
   message,
   Select,
   Upload,
-  Input,
   Tooltip,
+  Input,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "../../css/basic.css";
 import help from "../../assets/help_white.png";
 
-export default class CreateShirts extends React.Component {
+export default class CreateDress extends React.Component {
   state = {
     size: "",
     price: 0,
@@ -44,7 +44,6 @@ export default class CreateShirts extends React.Component {
       [e.target.name]: e.target.value,
     });
   };
-
   fileSelectedHandler = (e) => {
     this.setState({
       image: e.file,
@@ -56,16 +55,12 @@ export default class CreateShirts extends React.Component {
   };
 
   handleSubmit = () => {
-    let gender = this.props.gender;
-    this.setState({ type: gender });
     this.props.onSubmit(this.state);
     this.formRef.current.resetFields();
     this.setState({
       size: "",
       price: 0,
       image: null,
-      type: "",
-      ref: "",
     });
   };
 
@@ -170,14 +165,13 @@ export default class CreateShirts extends React.Component {
               </Form.Item>
             </Col>
           </Row>
-
           <Button
             id="btn-submit"
             htmlType="submit"
             //disabled={this.state.buttonDisable}
             style={{ color: "black" }}
           >
-            Registrar Camisa
+            Registrar Pantalones
           </Button>
         </Form>
       </div>

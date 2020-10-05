@@ -10,7 +10,7 @@ import CreateUniformMale from "./CreateUniformMale";
 import { getListUniforms } from "../js/gets";
 import { createShirt, createPants, createUniformMale } from "../js/posts";
 
-import "../css/dairy-male.css";
+import "../css/index.css";
 import "../../../css/basic.css";
 
 import pants from "../../../assets/pants_normal.png";
@@ -262,6 +262,7 @@ export default class UniformMale extends Component {
             <ListUniforms
               title="Registrar Uniforme Masculino"
               uniforms={this.state.listUnifoms}
+              /* male={true} */
               /*onSubmit={this.handleSubmitUniform}*/
             >
               <CreateUniformMale
@@ -273,7 +274,7 @@ export default class UniformMale extends Component {
           ) : (
             ""
           )}
-          {this.state.modalFindCollege ? <FindCollege /> : ""}
+          {this.state.modalFindCollege ? <FindCollege gender="male" /> : ""}
         </OptionsModal>
       </div>
     );

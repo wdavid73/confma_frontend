@@ -8,6 +8,13 @@ export const getListUniforms = async () => {
   return res.data;
 };
 
+export const getListUniformsFemale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_dairy_female, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
 export const getInstitutions = async () => {
   const res = await axios.get(API_CONSTANT_MAP.institutions, {
     headers: { "Content-Type": "application/json" },
@@ -27,4 +34,21 @@ export const getPantsMale = async () => {
     headers: { "Content-Type": "application/json" },
   });
   return res.data;
+};
+
+export const getShirtsFemale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_shirts + "female/", {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
+export const getDress = () => {
+  return axios
+    .get(API_CONSTANT_MAP.uniforms_dress, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      return res.data;
+    });
 };
