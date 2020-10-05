@@ -27,3 +27,15 @@
   width: 50%;
   margin: 0 auto;
 }
+
+#btn-details {
+  background-color: #ffc53d;
+  border-color: #d48806;
+  color: black;
+}
+
+#btn-details:hover {
+  background-color: #d48806;
+  border-color: #ffc53d;
+  color: black;
+}
