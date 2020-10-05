@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, List, Row, Col, Card, Radio, Empty } from "antd";
-import DescriptionPants from "../uniforms/DescriptionPants.js";
+import Description from "./DescriptionShirtAndPants.js";
 import empty from "../../assets/box.png";
 
 export default class Selectpants extends React.Component {
@@ -21,7 +21,7 @@ export default class Selectpants extends React.Component {
             imageStyle={{
               height: 60,
             }}
-            description={<span>No hay Camisas Registradas.</span>}
+            description={<span>No hay Pantalones Registradas.</span>}
           ></Empty>
         ) : (
           <Form.Item name="pants">
@@ -76,7 +76,7 @@ export default class Selectpants extends React.Component {
                       </Col>
                       <Col xs={24} sm={24} md={24} lg={24} xl={16}>
                         <div>
-                          <DescriptionPants pants={pants} />
+                          <Description item={pants} img={false} />
                         </div>
                       </Col>
                     </Row>

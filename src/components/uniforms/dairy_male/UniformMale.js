@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { Card, Col, Row, PageHeader, message } from "antd";
 import OptionsModal from "../OptionsModal";
-import CreatePants from "../dairy_male/CreatePants";
-import CreateShirt from "../dairy_male/CreateShirt";
-import ListUniforms from "../dairy_male/ListUniforms";
-import FindCollege from "../dairy_male/FindCollege";
+import CreatePants from "../CreatePants";
+import CreateShirt from "../CreateShirt";
+import ListUniforms from "../TableListUniforms";
+import FindCollege from "../FindCollege";
+import CreateUniformMale from "./CreateUniformMale";
 
-import {
-  getListUniforms,
-  createShirt,
-  createPants,
-  createUniformMale,
-} from "../dairy_male/js/CallEndpoints";
+import { getListUniforms } from "../js/gets";
+import { createShirt, createPants, createUniformMale } from "../js/posts";
 
 import "../css/dairy-male.css";
 import "../../../css/basic.css";
@@ -29,6 +26,8 @@ export default class UniformMale extends Component {
     modalFindCollege: false,
     titleModal: "",
     listUnifoms: [],
+    shirts: [],
+    pants: [],
   };
 
   componentDidMount() {
@@ -250,20 +249,27 @@ export default class UniformMale extends Component {
           onCancel={this.handleCancel}
         >
           {this.state.modalShirt ? (
-            <CreateShirt onSubmit={this.handleSubmitShirt} />
+            <CreateShirt onSubmit={this.handleSubmitShirt} gender="Male" />
           ) : (
             ""
           )}
           {this.state.modalPants ? (
-            <CreatePants onSubmit={this.handleSubmitPants} />
+            <CreatePants onSubmit={this.handleSubmitPants} gender="Male" />
           ) : (
             ""
           )}
           {this.state.modalListUniforms ? (
             <ListUniforms
+              title="Registrar Uniforme Masculino"
               uniforms={this.state.listUnifoms}
-              onSubmit={this.handleSubmitUniform}
-            />
+              /*onSubmit={this.handleSubmitUniform}*/
+            >
+              <CreateUniformMale
+                onSubmit={this.handleSubmitUniform}
+                /* pants={this.state.pants}
+                shirts={this.state.shirts} */
+              />
+            </ListUniforms>
           ) : (
             ""
           )}

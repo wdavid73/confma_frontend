@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, List, Row, Col, Card, Radio, Empty } from "antd";
-import DescriptionShirt from "../uniforms/DescriptionShirt.js";
+import Description from "./DescriptionShirtAndPants.js";
 import empty from "../../assets/box.png";
 
 export default class SelectShirt extends React.Component {
@@ -75,7 +75,7 @@ export default class SelectShirt extends React.Component {
                       </Col>
                       <Col xs={24} sm={24} md={24} lg={24} xl={16}>
                         <div>
-                          <DescriptionShirt shirt={shirt} />
+                          <Description item={shirt} />
                         </div>
                       </Col>
                     </Row>

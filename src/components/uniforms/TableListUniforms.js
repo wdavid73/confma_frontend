@@ -1,12 +1,11 @@
 import React from "react";
 import { Table, Empty, Spin, Button } from "antd";
-import OptionsModal from "../OptionsModal";
-import CreateUniformMale from "../dairy_male/CreateUniformMale";
-import DrawerDetails from "../DrawerDetails";
-import Description from "../DescriptionShirtAndPants";
-import { getPantsMale, getShirtsMale } from "../dairy_male/js/CallEndpoints";
-import "../../../css/basic.css";
-import empty from "../../../assets/box.png";
+import OptionsModal from "./OptionsModal";
+import DrawerDetails from "./DrawerDetails";
+import Description from "./DescriptionShirtAndPants";
+import { getPantsMale, getShirtsMale } from "./js/gets";
+import "../../css/basic.css";
+import empty from "../../assets/box.png";
 
 export default class ListUniforms extends React.Component {
   state = {
@@ -47,10 +46,10 @@ export default class ListUniforms extends React.Component {
     this.setState({ visible: false, pants: [], shirt: [] });
   };
 
-  handleSubmit = (formState) => {
+  /* handleSubmit = (formState) => {
     this.props.onSubmit(formState);
     this.handleClose();
-  };
+  }; */
 
   onCloseDrawer = () => {
     this.setState({ visibleDrawer: false });
@@ -74,7 +73,7 @@ export default class ListUniforms extends React.Component {
           ) : (
             <Table
               dataSource={this.props.uniforms}
-              pagination={{ pageSize: 10 }}
+              pagination={{ pageSize: 6 }}
               scroll={{ y: 460 }}
             >
               <Table.Column
@@ -120,15 +119,11 @@ export default class ListUniforms extends React.Component {
         </Spin>
         <OptionsModal
           visible={this.state.visible}
-          title="Registrar Uniforme Masculino"
+          title={this.props.title}
           onCancel={this.handleClose}
           width="80%"
         >
-          <CreateUniformMale
-            onSubmit={this.handleSubmit}
-            pants={this.state.pants}
-            shirts={this.state.shirts}
-          />
+          {this.props.children}
         </OptionsModal>
 
         <DrawerDetails
@@ -137,7 +132,7 @@ export default class ListUniforms extends React.Component {
           visible={this.state.visibleDrawer}
         >
           <div>
-            <Description item={this.state.item} img={true} />
+            <Description item={this.state.obj} img={true} />
           </div>
         </DrawerDetails>
       </div>

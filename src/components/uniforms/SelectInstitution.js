@@ -1,7 +1,7 @@
 import React from "react";
 import { Select, ConfigProvider, Spin, Row, Col } from "antd";
 import { customRenderEmpty } from "../common/customRenderEmpty";
-import { getInstitutions } from "../uniforms/dairy_male/js/CallEndpoints";
+import { getInstitutions } from "./js/gets";
 
 const { Option } = Select;
 
@@ -45,7 +45,7 @@ export default class ListInstitutions extends React.Component {
                   <Select
                     showSearch
                     style={{ width: "100%" }}
-                    placeholder="Seleccione un Instituto"
+                    placeholder="Seleccione una Institucion"
                     optionFilterProp="children"
                     onChange={this.onChange}
                     filterOption={(input, option) =>

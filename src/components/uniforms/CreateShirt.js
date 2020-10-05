@@ -12,8 +12,8 @@ import {
   Tooltip,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import "../../../css/basic.css";
-import help from "../../../assets/help_white.png";
+import "../../css/basic.css";
+import help from "../../assets/help_white.png";
 
 export default class CreateShirts extends React.Component {
   state = {
@@ -156,9 +156,12 @@ export default class CreateShirts extends React.Component {
                   value={this.state.type || ""}
                   onChange={this.handleChangeSelectType}
                   placeholder="Seleccione el Tipo"
+                  defaultValue={this.props.gender}
+                  disabled
+                  allowClear
                 >
-                  <Select.Option value="Male">Male</Select.Option>
-                  <Select.Option value="Female">Female</Select.Option>
+                  <Select.Option value="Male">Masculino</Select.Option>
+                  <Select.Option value="Female">Femenino</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
