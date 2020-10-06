@@ -94,18 +94,23 @@ export default class CreateUniformsMale extends React.Component {
           <Collapse>
             <Collapse.Panel header="Camisas" key="1">
               <Spin spinning={this.state.loading} tip="Loading...">
-                <SelectShirts
-                  shirts={this.state.shirts}
-                  onChange={this.handleSelectShirt}
-                />
+                <Form.Item name="shirt">
+                  <SelectShirts
+                    shirts={this.state.shirts}
+                    onChange={this.handleSelectShirt}
+                  />
+                </Form.Item>
               </Spin>
             </Collapse.Panel>
+
             <Collapse.Panel header="Pantalones" key="2">
               <Spin spinning={this.state.loading} tip="Loading...">
-                <SelectPants
-                  pants={this.state.pants}
-                  onChange={this.handleSelectPant}
-                />
+                <Form.Item name="pants">
+                  <SelectPants
+                    pants={this.state.pants}
+                    onChange={this.handleSelectPant}
+                  />
+                </Form.Item>
               </Spin>
             </Collapse.Panel>
           </Collapse>

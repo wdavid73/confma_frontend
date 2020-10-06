@@ -63,7 +63,6 @@ export const createUniformFemale = async (uniform) => {
   data.append("shirt_id", uniform.shirt_id);
   data.append("price", uniform.price);
   data.append("institution_id", uniform.institution_id);
-  console.log(uniform);
   const res = await axios.post(API_CONSTANT_MAP.uniforms_dairy_female, data, {
     header: { "Content-Type": "application/json" },
   });

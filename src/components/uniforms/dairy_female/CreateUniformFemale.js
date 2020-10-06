@@ -8,7 +8,7 @@ import "../../../css/basic.css";
 
 export default class CreateUniformFemale extends React.Component {
   state = {
-    dress_id: "",
+    dress_id: null,
     shirt_id: "",
     institution_id: "",
     price: 0,
@@ -37,9 +37,16 @@ export default class CreateUniformFemale extends React.Component {
       shirt_id: value,
     });
   };
+
   handleSelectDress = (value) => {
     this.setState({
       dress_id: value,
+    });
+  };
+
+  handleSelectPants = (value) => {
+    this.setState({
+      pants_id: value,
     });
   };
 
