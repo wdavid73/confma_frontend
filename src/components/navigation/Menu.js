@@ -28,7 +28,7 @@ export default class MenuCustom extends React.Component {
     super(props);
     this.state = {
       collapsed: false,
-      mode: "development",
+      mode: "production",
     };
   }
 
