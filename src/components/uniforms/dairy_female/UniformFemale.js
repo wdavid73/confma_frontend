@@ -3,11 +3,16 @@ import { Card, Col, Row, PageHeader, message } from "antd";
 import OptionsModal from "../OptionsModal";
 import CreateShirt from "../CreateShirt";
 import CreateDress from "../CreateDress";
-import ListUniforms from "../TableListUniforms";
+import ListUniformsFemale from "../TableListUniformsFemale";
 import FindCollege from "../FindCollege";
 import CreateUniformFemale from "./CreateUniformFemale";
 import { getListUniformsFemale } from "../js/gets";
-import { createShirt, createDress, createUniformFemale } from "../js/posts";
+import {
+  createShirt,
+  createDress,
+  createPants,
+  createUniformFemale,
+} from "../js/posts";
 
 import "../../../css/basic.css";
 import "../css/index.css";
@@ -23,10 +28,12 @@ export default class UniformFemale extends Component {
     modalShirt: false,
     modalListUniforms: false,
     modalFindCollege: false,
+    modalPants: false,
     titleModal: "",
     listUnifoms: [],
     shirts: [],
     dresses: [],
+    pants: [],
   };
 
   getUniforms = () => {
@@ -54,6 +61,16 @@ export default class UniformFemale extends Component {
         titleModal: "Registrar Vestido de Uniforme de Diario Masculino",
       });
     }
+    if (type === "pants") {
+      this.setState({
+        modalShirt: false,
+        modalPants: true,
+        modalDress: false,
+        modalFindCollege: false,
+        modalListUniforms: false,
+        titleModal: "Registrar Pantalones de Uniforme de Diario Masculino",
+      });
+    }
     if (type === "find_college") {
       this.setState({
         modalShirt: false,
@@ -79,6 +96,7 @@ export default class UniformFemale extends Component {
     this.setState({
       modalShirt: false,
       modalDress: false,
+      modalPants: false,
       modalFindCollege: false,
       modalListUniforms: false,
       titleModal: "",
@@ -88,6 +106,20 @@ export default class UniformFemale extends Component {
 
   handleOk = () => {
     console.log("handle ok");
+  };
+
+  handleSubmitPants = (formState) => {
+    this.handleCancel();
+    message
+      .loading({
+        content: "Registro en Proceso",
+        onClose: createPants(formState),
+      })
+      .then(() =>
+        message.success({
+          content: "Registro Completado",
+        })
+      );
   };
 
   handleSubmitShirt = (formState) => {
@@ -251,13 +283,13 @@ export default class UniformFemale extends Component {
             ""
           )}
           {this.state.modalListUniforms ? (
-            <ListUniforms
+            <ListUniformsFemale
               title="Registrar Unifrome Femenino"
               uniforms={this.state.listUnifoms}
               /* male={false} */
             >
               <CreateUniformFemale onSubmit={this.handleSubmitUniform} />
-            </ListUniforms>
+            </ListUniformsFemale>
           ) : (
             ""
           )}

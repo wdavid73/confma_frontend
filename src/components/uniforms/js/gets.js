@@ -36,6 +36,13 @@ export const getPantsMale = async () => {
   return res.data;
 };
 
+export const getPantsFemale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_pants + "female/", {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
 export const getShirtsFemale = async () => {
   const res = await axios.get(API_CONSTANT_MAP.uniforms_shirts + "female/", {
     headers: { "Content-Type": "application/json" },

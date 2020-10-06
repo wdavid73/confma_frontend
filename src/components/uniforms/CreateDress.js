@@ -10,8 +10,10 @@ import {
   Upload,
   Tooltip,
   Input,
+  Modal,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { getBase64 } from "./js/functions";
 import "../../css/basic.css";
 import help from "../../assets/help_white.png";
 
@@ -22,6 +24,9 @@ export default class CreateDress extends React.Component {
     image: null,
     type: "",
     ref: "",
+    previewVisible: false,
+    previewImage: "",
+    previewTitle: "",
   };
   formRef = React.createRef();
 
@@ -68,6 +73,23 @@ export default class CreateDress extends React.Component {
     values.errorFields.forEach((error, index) =>
       message.warning("Porfavor " + error.errors, 2.5)
     );
+  };
+
+  handleCancel = () => {
+    this.setState({ previewVisible: false });
+  };
+
+  handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+      previewTitle:
+        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    });
   };
 
   render() {
@@ -157,9 +179,11 @@ export default class CreateDress extends React.Component {
                   name="image"
                   beforeUpload={() => false}
                   listType="picture"
+                  onPreview={this.handlePreview}
+                  //onChange={this.handleChangeImage}
                 >
                   <Button>
-                    <UploadOutlined /> Ingrese una imagen
+                    <UploadOutlined /> Inserte una Imagen
                   </Button>
                 </Upload>
               </Form.Item>
@@ -174,6 +198,18 @@ export default class CreateDress extends React.Component {
             Registrar Pantalones
           </Button>
         </Form>
+        <Modal
+          visible={this.state.previewVisible}
+          title={this.state.previewTitle}
+          footer={null}
+          onCancel={this.handleCancel}
+        >
+          <img
+            alt="example"
+            style={{ width: "100%" }}
+            src={this.state.previewImage}
+          />
+        </Modal>
       </div>
     );
   }

@@ -119,13 +119,13 @@ export default class ListUniforms extends React.Component {
               />
 
               <Table.Column
-                title="Pantalones"
+                title="Vestidos"
                 render={(item) => (
                   <Button
                     id="btn-details"
                     onClick={() => {
                       this.setState({
-                        obj: item.pants,
+                        obj: item.dress,
                         visibleDrawer: true,
                       });
                     }}
