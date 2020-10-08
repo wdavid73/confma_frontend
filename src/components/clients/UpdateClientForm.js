@@ -1,6 +1,14 @@
 import React from "react";
 import { Form, Row, Col, Input, Button, message, Spin } from "antd";
 import { detailsOneClient } from "./js/ClientFuncions";
+import { isEmptyOrBlank } from "../common/Validations";
+import {
+  fieldName,
+  fieldAddress,
+  fieldPhone,
+  fieldLastname,
+  fieldCellphone,
+} from "../common/referencesFields";
 
 export default class UpdateClientForm extends React.Component {
   state = {
@@ -61,15 +69,46 @@ export default class UpdateClientForm extends React.Component {
   };
 
   handleUpdate = () => {
-    this.props.onUpdate(this.state);
-    this.setState({
-      name: "",
-      last_name: "",
-      address: "",
-      phone: "",
-      cellphone: "",
-    });
-    this.formRef.current.resetFields();
+    let field;
+    for (const state in this.state) {
+      if (!isEmptyOrBlank(this.state[state]) && state === "name") {
+        fieldName.current.focus();
+        field = state;
+        console.log(state);
+        console.log(this.state[state]);
+        break;
+      }
+      if (!isEmptyOrBlank(this.state[state]) && state === "last_name") {
+        fieldLastname.current.focus();
+        field = state;
+        console.log(state);
+        console.log(this.state[state]);
+        break;
+      }
+      if (!isEmptyOrBlank(this.state[state]) && state === "address") {
+        fieldAddress.current.focus();
+        field = state;
+        console.log(state);
+        console.log(this.state[state]);
+        break;
+      }
+    }
+    if (!field) {
+      this.props.onUpdate(this.state);
+      this.setState({
+        name: "",
+        last_name: "",
+        address: "",
+        phone: "",
+        cellphone: "",
+      });
+      this.formRef.current.resetFields();
+    } else {
+      message.info({
+        content: "El campo " + field + " no puede estar vacio",
+        duration: 2.5,
+      });
+    }
   };
 
   onFinishFail = (values) => {
@@ -98,6 +137,7 @@ export default class UpdateClientForm extends React.Component {
                   style={{ margin: 2 }}
                 >
                   <Input
+                    ref={fieldName}
                     name="name"
                     placeholder="Ingrese su Nombre/s"
                     value={this.state.name || ""}
@@ -115,6 +155,7 @@ export default class UpdateClientForm extends React.Component {
                   style={{ margin: 2 }}
                 >
                   <Input
+                    ref={fieldLastname}
                     name="last_name"
                     placeholder="Ingrese su Apellido/s"
                     value={this.state.last_name || ""}
@@ -134,6 +175,7 @@ export default class UpdateClientForm extends React.Component {
                   style={{ marginTop: 10 }}
                 >
                   <Input
+                    ref={fieldAddress}
                     name="address"
                     placeholder="Ingrese su Direccion"
                     value={this.state.address || " "}
@@ -152,6 +194,7 @@ export default class UpdateClientForm extends React.Component {
                   ]}
                 >
                   <Input
+                    ref={fieldPhone}
                     type="number"
                     name="phone"
                     placeholder="Ingrese su Numero de Telefono"
@@ -169,6 +212,7 @@ export default class UpdateClientForm extends React.Component {
                   ]}
                 >
                   <Input
+                    ref={fieldCellphone}
                     type="number"
                     name="cellphone"
                     placeholder="Ingrese su Numero de Celular"

@@ -70,26 +70,25 @@ export const createRental2 = (rental) => {
   }
 };
 
-export const createRental = (rental, cloth, client) => {
+export const createRental = async (rental, cloth, client) => {
   let return_date = new Date(rental.date_return);
+  let data = new FormData();
+  data.append("date_return", rental.date_return);
+  data.append("price", rental.price);
+  data.append("cloth_id", cloth);
+  data.append("client_id", client);
   if (date_now < return_date && parseInt(rental.price) >= 5000) {
-    return axios
-      .post(
-        API_CONSTANT_MAP.rental,
-        {
-          date_return: rental.date_return,
-          price: rental.price,
-          clothId: cloth,
-          clientId: client,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-      .then((res) => {
-        console.log(res);
+    try {
+      const res = await axios.post(API_CONSTANT_MAP.rental, data, {
+        headers: { "Content-Type": "application/json" },
       });
+      /* console.log(res); */
+      return res;
+    } catch (error) {
+      return error;
+    }
   } else {
-    console.log("Fecha mal ingresada o precio menor a 5000");
+    let obj = { msg: "Fecha mal ingresada o precio menor a 5000" };
+    return obj;
   }
 };

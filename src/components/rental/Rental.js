@@ -18,6 +18,7 @@ export default class Rental extends React.Component {
     client_id: "",
     cloth_id: "",
     disable: false,
+    clearSelect: false,
   };
 
   componentDidMount() {
@@ -61,6 +62,8 @@ export default class Rental extends React.Component {
   };
 
   handleSubmit = (formState) => {
+    let errors;
+    let msg;
     this.showSpin();
     message
       .loading({
@@ -69,14 +72,37 @@ export default class Rental extends React.Component {
           formState,
           this.state.cloth_id,
           this.state.client_id
-        ),
+        ).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+          if (res.msg !== undefined && res.msg) {
+            msg = res.msg;
+          }
+        }),
       })
-      .then(() =>
-        message.success({
-          content: "Registro Completado",
-          onClose: this.getAll(),
-        })
-      );
+      .then(() => {
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else if (msg) {
+          message.warning({ content: msg, duration: 2.5 });
+        } else {
+          message.success({
+            content: "Registro Completado",
+            onClose: this.getAll(),
+          });
+          this.setState({ clearSelect: true });
+        }
+      });
   };
 
   render() {
@@ -111,6 +137,7 @@ export default class Rental extends React.Component {
               <SelectCloth
                 cloths={this.state.cloths}
                 onChange={this.handleSelectCloth}
+                clear={this.state.clearSelect}
               />
             )}
           </Spin>

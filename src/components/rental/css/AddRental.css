@@ -1,0 +1,10 @@
+.card-cloth-select-actived {
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+  border-image-source: linear-gradient(to left, #d48806, #d46b08);
+}
+
+.card-cloth-select-deactived {
+  border-color: none;
+}

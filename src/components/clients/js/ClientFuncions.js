@@ -16,9 +16,9 @@ export const getClients = async () => {
 
 export const createClient = async (client) => {
   let data = new FormData();
-  data.append("name", client.name);
-  data.append("last_name", client.last_name);
-  data.append("address", client.address);
+  data.append("name", client.name.trim());
+  data.append("last_name", client.last_name.trim());
+  data.append("address", client.address.trim());
   data.append("phone", client.phone);
   data.append("cellphone", client.cellphone);
 
@@ -49,9 +49,9 @@ export const detailsOneClient = async (id) => {
 
 export const updateClient = async (client) => {
   let data = new FormData();
-  data.append("name", client.name);
-  data.append("last_name", client.last_name);
-  data.append("address", client.address);
+  data.append("name", client.name.trim());
+  data.append("last_name", client.last_name.trim());
+  data.append("address", client.address.trim());
   data.append("phone", client.phone);
   data.append("cellphone", client.cellphone);
   try {

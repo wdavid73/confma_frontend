@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col, Image } from "antd";
+import { Button, Row, Col } from "antd";
 import quotationIcon from "../../assets/quotation.png";
 import rentalIcon from "../../assets/alquilar.png";
 import "../../css/basic.css";
@@ -10,13 +10,13 @@ export default class Options extends React.Component {
       <div className="text-general">
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           {this.props.options.map((option) => (
-            <Col className="gutter-row" span={12}>
+            <Col className="gutter-row" xs={24} sm={24} md={24} lg={12}>
               <Button
                 block
                 id="btn-options"
                 onClick={() => this.props.selectOption(option.option)}
               >
-                <Image
+                <img
                   src={
                     option.option === "quotation" ? quotationIcon : rentalIcon
                   }

@@ -95,7 +95,7 @@ export default class Cloth extends React.Component {
       .loading({
         content: "Registro en Proceso",
         onClose: createCloth(formState).then((data) => {
-          if (data.response.status >= 400) {
+          if (data.response !== undefined && data.response.status >= 400) {
             errors = data.response.data;
           } else {
             this.setState({ visibleModal: true, cloth: data });

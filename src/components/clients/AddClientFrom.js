@@ -1,5 +1,13 @@
 import React from "react";
 import { Form, Row, Col, Input, Button, message } from "antd";
+import { isEmptyOrBlank } from "../common/Validations";
+import {
+  fieldName,
+  fieldAddress,
+  fieldPhone,
+  fieldLastname,
+  fieldCellphone,
+} from "../common/referencesFields";
 
 export default class AddClientFrom extends React.Component {
   state = {
@@ -16,15 +24,46 @@ export default class AddClientFrom extends React.Component {
   };
 
   handleSubmit = () => {
-    this.props.onSubmit(this.state);
-    this.formRef.current.resetFields();
-    this.setState({
-      name: "",
-      last_name: "",
-      address: "",
-      cellphone: "",
-      phone: "",
-    });
+    let field;
+    for (const state in this.state) {
+      if (!isEmptyOrBlank(this.state[state]) && state === "name") {
+        fieldName.current.focus();
+        field = state;
+        console.log(state);
+        console.log(this.state[state]);
+        break;
+      }
+      if (!isEmptyOrBlank(this.state[state]) && state === "last_name") {
+        fieldLastname.current.focus();
+        field = state;
+        console.log(state);
+        console.log(this.state[state]);
+        break;
+      }
+      if (!isEmptyOrBlank(this.state[state]) && state === "address") {
+        fieldAddress.current.focus();
+        field = state;
+        console.log(state);
+        console.log(this.state[state]);
+        break;
+      }
+    }
+    if (!field) {
+      this.props.onSubmit(this.state);
+      this.formRef.current.resetFields();
+      this.setState({
+        name: "",
+        last_name: "",
+        address: "",
+        cellphone: "",
+        phone: "",
+      });
+    } else {
+      message.info({
+        content: "El campo " + field + " no puede estar vacio",
+        duration: 2.5,
+      });
+    }
   };
 
   onFinishFail = (values) => {
@@ -49,6 +88,7 @@ export default class AddClientFrom extends React.Component {
               style={{ margin: 12 }}
             >
               <Input
+                ref={fieldName}
                 name="name"
                 placeholder="Ingrese su Nombre/s"
                 disabled={this.props.disable}
@@ -66,6 +106,7 @@ export default class AddClientFrom extends React.Component {
               style={{ margin: 12 }}
             >
               <Input
+                ref={fieldLastname}
                 name="last_name"
                 placeholder="Ingrese su Apellido/s"
                 disabled={this.props.disable}
@@ -85,6 +126,7 @@ export default class AddClientFrom extends React.Component {
               style={{ margin: 12 }}
             >
               <Input
+                ref={fieldAddress}
                 name="address"
                 placeholder="Ingrese su Direccion"
                 disabled={this.props.disable}
@@ -104,6 +146,7 @@ export default class AddClientFrom extends React.Component {
               style={{ margin: 12 }}
             >
               <Input
+                ref={fieldPhone}
                 type="number"
                 name="phone"
                 placeholder="Ingrese su Numero de Telefono"
@@ -124,6 +167,7 @@ export default class AddClientFrom extends React.Component {
               style={{ margin: 12 }}
             >
               <Input
+                ref={fieldCellphone}
                 type="number"
                 name="cellphone"
                 placeholder="Ingrese su Numero de Celular"

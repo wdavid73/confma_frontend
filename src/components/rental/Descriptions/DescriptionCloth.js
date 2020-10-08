@@ -5,25 +5,25 @@ export default class DescriptionCloths extends React.Component {
   description_cloth = () => {
     return (
       <div>
-        <Descriptions size="small" bordered>
+        <Descriptions size="small">
           <Descriptions.Item label="Name">
             {this.props.cloth.name}
           </Descriptions.Item>
         </Descriptions>
 
-        <Descriptions size="small" bordered>
+        <Descriptions size="small">
           <Descriptions.Item label="Color">
             {this.props.cloth.color}
           </Descriptions.Item>
         </Descriptions>
 
-        <Descriptions size="small" bordered>
+        <Descriptions size="small">
           <Descriptions.Item label="Size">
             {this.props.cloth.size}
           </Descriptions.Item>
         </Descriptions>
 
-        <Descriptions size="small" bordered>
+        <Descriptions size="small">
           <Descriptions.Item label="Fashion">
             {this.props.cloth.fashion}
           </Descriptions.Item>

@@ -68,7 +68,7 @@ export default class Clients extends React.Component {
       .loading({
         content: "Registro en Proceso...",
         onClose: createClient(formState).then((res) => {
-          if (res.response.status >= 400) {
+          if (res.response !== undefined && res.response.status >= 400) {
             errors = res.response.data;
           }
         }),
@@ -102,33 +102,67 @@ export default class Clients extends React.Component {
   };
 
   handleUpdate = (formState) => {
+    let errors;
     this.handleCancel();
     this.showSpin();
     message
       .loading({
         content: "Actualizacion en Proceso...",
-        onClose: updateClient(formState),
+        onClose: updateClient(formState).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
-      .then(() =>
-        message.success({
-          content: "Actualizacion Completada",
-          onClose: this.getAll(),
-        })
-      );
+      .then(() => {
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Actualizacion Completada",
+            onClose: this.getAll(),
+          });
+        }
+      });
   };
 
   handleDelete = (client_d_id) => {
+    let errors;
     this.showSpin();
     message
       .loading({
         content: "Eliminando Cliente",
-        onClose: deleteClient(client_d_id),
+        onClose: deleteClient(client_d_id).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.warning({
-          content: " Eliminacion Completada",
-          onClose: this.DeleteRowTable(client_d_id),
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.warning({
+            content: " Eliminacion Completada",
+            onClose: this.DeleteRowTable(client_d_id),
+          });
+        }
       });
   };
 

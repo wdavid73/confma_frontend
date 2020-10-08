@@ -1,7 +1,16 @@
 import React from "react";
-import { Form, Input, Select, Upload, Button, message } from "antd";
+import { Form, Input, Select, Upload, Button, message, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "../../css/basic.css";
+import { isEmptyOrBlank } from "../common/Validations";
+import {
+  fieldName,
+  fieldColor,
+  fieldSize,
+  fieldFashion,
+  fieldUploadImage,
+} from "../common/referencesFields";
+import { getBase64 } from "./js/ClothFuntions";
 
 export default class AddClothForm extends React.Component {
   state = {
@@ -43,21 +52,58 @@ export default class AddClothForm extends React.Component {
   };
 
   handleSubmit = () => {
-    this.props.onSubmit(this.state);
-    this.formRef.current.resetFields();
-    this.setState({
-      name: "",
-      color: "",
-      size: "",
-      fashion: "",
-      image: null,
-    });
+    let field;
+    for (const state in this.state) {
+      if (!isEmptyOrBlank(this.state[state]) && state === "name") {
+        fieldName.current.focus();
+        field = state;
+        break;
+      }
+      if (!isEmptyOrBlank(this.state[state]) && state === "color") {
+        fieldColor.current.focus();
+        field = state;
+        break;
+      }
+    }
+    if (!field) {
+      this.props.onSubmit(this.state);
+      this.formRef.current.resetFields();
+      this.setState({
+        name: "",
+        color: "",
+        size: "",
+        fashion: "",
+        image: null,
+      });
+    } else {
+      message.info({
+        content: "El campo " + field + " no puede estar vacio",
+        duration: 2.5,
+      });
+    }
   };
 
   onFinishFail = (values) => {
     values.errorFields.forEach((error, index) =>
       message.warning("Porfavor " + error.errors, 2.5)
     );
+  };
+
+  handleCancel = () => {
+    this.setState({ previewVisible: false });
+  };
+
+  handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+      previewTitle:
+        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    });
   };
 
   render() {
@@ -74,6 +120,7 @@ export default class AddClothForm extends React.Component {
             rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
           >
             <Input
+              ref={fieldName}
               name="name"
               placeholder="Ingrese un Nombre para la Prenda"
               //disable={this.state.inputDisable}
@@ -88,6 +135,7 @@ export default class AddClothForm extends React.Component {
             rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
           >
             <Input
+              ref={fieldColor}
               name="color"
               placeholder="Ingrese el color de la Prenda"
               //disable={this.state.inputDisable}
@@ -105,6 +153,7 @@ export default class AddClothForm extends React.Component {
               value={this.state.size || ""}
               onChange={this.handlerChangeSelectSize}
               placeholder="Seleccione una Talla"
+              ref={fieldSize}
             >
               <Select.Option value="XS">XS</Select.Option>
               <Select.Option value="S">S</Select.Option>
@@ -123,6 +172,7 @@ export default class AddClothForm extends React.Component {
               value={this.state.fashion || ""}
               onChange={this.handlerChangeSelectFashion}
               placeholder="Seleccione un estilo de Moda"
+              ref={fieldFashion}
             >
               <Select.Option value="General">General</Select.Option>
               <Select.Option value="A Medida">A Medida</Select.Option>
@@ -136,7 +186,13 @@ export default class AddClothForm extends React.Component {
             getValueFromEvent={this.fileSelectedHandler}
             rules={[{ required: true, message: "Porfavor Inserte una Imagen" }]}
           >
-            <Upload name="image" beforeUpload={() => false} listType="picture">
+            <Upload
+              name="image"
+              beforeUpload={() => false}
+              listType="picture"
+              ref={fieldUploadImage}
+              onPreview={this.handlePreview}
+            >
               <Button>
                 <UploadOutlined /> Ingrese una imagen
               </Button>
@@ -152,6 +208,18 @@ export default class AddClothForm extends React.Component {
             Registrar Prenda
           </Button>
         </Form>
+        <Modal
+          visible={this.state.previewVisible}
+          title={this.state.previewTitle}
+          footer={null}
+          onCancel={this.handleCancel}
+        >
+          <img
+            alt="example"
+            style={{ width: "100%" }}
+            src={this.state.previewImage}
+          />
+        </Modal>
       </div>
     );
   }
