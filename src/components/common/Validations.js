@@ -9,6 +9,10 @@ export const isNumber = (number) => {
   return isNaN(number) ? false : true;
 };
 
+export const NumberHighZero = (number) => {
+  return number > 0 ? true : false;
+};
+
 export const isValidDate = (str) => {
   // STRING FORMAT yyyy-mm-dd
   if (str === "" || str === null) {

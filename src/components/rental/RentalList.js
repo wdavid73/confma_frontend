@@ -35,17 +35,35 @@ export default class Rental extends React.Component {
   };
 
   handleRefundRental = (rental_id) => {
+    let errors;
     this.showSpin();
     message
       .loading({
         content: "Refund Rental",
-        onClose: refundRental(rental_id),
+        onClose: refundRental(rental_id).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.warning({
-          content: "Refund Complete",
-          onClose: this.DeleteDetailsRental(rental_id),
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.warning({
+            content: "Refund Complete",
+            onClose: this.DeleteDetailsRental(rental_id),
+          });
+        }
       });
   };
 

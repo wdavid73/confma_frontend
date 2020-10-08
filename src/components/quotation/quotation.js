@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, message, Empty, Spin } from "antd";
+
 import { FileAddOutlined } from "@ant-design/icons";
+
 import AddQuotationForm from "./AddQuotationForm";
 import UpdateQuotationForm from "./UpdateQuotationForm";
 import TableQuotation from "./TableQuotation";
@@ -46,6 +48,7 @@ export default class Quotation extends Component {
       cloth_selected: "",
     };
   }
+
   onChange = (name) => (value) => {
     this.setState({
       [name]: value,
@@ -129,34 +132,71 @@ export default class Quotation extends Component {
   };
 
   handleSubmit = (formState) => {
+    let errors;
     this.onCloseSubmit();
     this.showSpin();
     message
       .loading({
         content: "Registro en Proceso",
-        onClose: createQuotation(formState, this.state.cloth_id),
+        onClose: createQuotation(formState, this.state.cloth_id).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.success({
-          content: "Registro Completado",
-          onClose: this.getAll(),
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Registro Completado",
+            onClose: this.getAll(),
+          });
+        }
       });
   };
 
   handleUpdate = (formState) => {
+    let errors;
+
     this.onCloseUpdate();
     this.showSpin();
     message
       .loading({
         content: "Actualizacion en Proceso",
-        onCLose: updateQuotation(formState),
+        onCLose: updateQuotation(formState).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.success({
-          content: "Actualizacion Completada",
-          onClose: this.getAll(),
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Actualizacion Completada",
+            onClose: this.getAll(),
+          });
+        }
       });
   };
 
@@ -168,17 +208,36 @@ export default class Quotation extends Component {
   };
 
   handleDeleteQuotation = (quotation_id) => {
+    let errors;
+
     this.showSpin();
     message
       .loading({
         content: "Eliminado Cotizacion",
-        onClose: deleteQuotation(quotation_id),
+        onClose: deleteQuotation(quotation_id).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.warning({
-          content: "Eliminacion Completada",
-          onClose: this.DeleteRowTable(quotation_id),
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.warning({
+            content: "Eliminacion Completada",
+            onClose: this.DeleteRowTable(quotation_id),
+          });
+        }
       });
   };
 
