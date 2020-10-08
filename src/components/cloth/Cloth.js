@@ -88,21 +88,39 @@ export default class Cloth extends React.Component {
   };
 
   handleSubmit = (formState) => {
+    let errors;
     this.onClose();
     this.showSpin();
     message
       .loading({
         content: "Registro en Proceso",
         onClose: createCloth(formState).then((data) => {
-          this.setState({ visibleModal: true, cloth: data });
+          if (data.response.status >= 400) {
+            errors = data.response.data;
+          } else {
+            this.setState({ visibleModal: true, cloth: data });
+          }
         }),
       })
-      .then(() =>
-        message.success({
-          content: "Registro Completado",
-          onClose: this.handleClose(),
-        })
-      );
+      .then(() => {
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Registro Completado",
+            onClose: this.handleClose(),
+          });
+        }
+      });
   };
 
   selectOption = (option) => {

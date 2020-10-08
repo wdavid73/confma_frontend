@@ -1,93 +1,96 @@
 import axios from "axios";
 import { API_CONSTANT_MAP } from "../../js/api/endpoints";
 
-export const getClients = () => {
-  return axios
-    .get(API_CONSTANT_MAP.client, {
+export const getClients = async () => {
+  try {
+    const res = await axios.get(API_CONSTANT_MAP.client, {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-    .then((res) => {
-      return res.data;
     });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
 };
 
-export const createClient = (client) => {
-  return axios
-    .post(
-      API_CONSTANT_MAP.client,
-      {
-        name: client.name,
-        last_name: client.last_name,
-        address: client.address,
-        phone: client.phone,
-        cellphone: client.cellphone,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-    .then((res) => {
-      console.log(res.data);
+export const createClient = async (client) => {
+  let data = new FormData();
+  data.append("name", client.name);
+  data.append("last_name", client.last_name);
+  data.append("address", client.address);
+  data.append("phone", client.phone);
+  data.append("cellphone", client.cellphone);
+
+  try {
+    const res = await axios.post(API_CONSTANT_MAP.client, data, {
+      headers: { "Content-Type": "application/json" },
     });
+    return res;
+  } catch (error) {
+    return error;
+  }
 };
 
-export const detailsOneClient = (id) => {
+export const detailsOneClient = async (id) => {
   let _id = id.toString();
-  return axios
-    .get(API_CONSTANT_MAP.detail_one_client + _id + "/", {
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      return res.data;
-    });
-};
-
-export const updateClient = (client) => {
-  return axios
-    .put(
-      API_CONSTANT_MAP.client + client.id.toString() + "/",
-      {
-        name: client.name,
-        last_name: client.last_name,
-        address: client.address,
-        phone: client.phone,
-        cellphone: client.cellphone,
-      },
+  try {
+    const res = await axios.get(
+      API_CONSTANT_MAP.detail_one_client + _id + "/",
       {
         headers: { "Content-Type": "application/json" },
       }
-    )
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
 };
 
-export const deleteClient = (id) => {
-  return axios
-    .post(API_CONSTANT_MAP.client + "delete/" + id + "/", {
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const updateClient = async (client) => {
+  let data = new FormData();
+  data.append("name", client.name);
+  data.append("last_name", client.last_name);
+  data.append("address", client.address);
+  data.append("phone", client.phone);
+  data.append("cellphone", client.cellphone);
+  try {
+    const res = await axios.put(
+      API_CONSTANT_MAP.client + client.id.toString() + "/",
+      data,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return res;
+  } catch (err) {
+    return err;
+  }
 };
 
-export const findClient = (id) => {
-  return axios
-    .get(API_CONSTANT_MAP.client_find + id + "/", {
+export const deleteClient = async (id) => {
+  try {
+    const res = await axios.post(
+      API_CONSTANT_MAP.client + "delete/" + id + "/",
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const findClient = async (id) => {
+  try {
+    const res = await axios.get(API_CONSTANT_MAP.client_find + id + "/", {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-    .then((res) => {
-      return res.data;
     });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
 };

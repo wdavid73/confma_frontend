@@ -62,18 +62,36 @@ export default class Clients extends React.Component {
   };
 
   handleSubmit = (formState) => {
+    let errors;
     this.showSpin();
     message
       .loading({
         content: "Registro en Proceso...",
-        onClose: createClient(formState) /* Cuando termine ejercutara esto*/,
+        onClose: createClient(formState).then((res) => {
+          if (res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
-      .then(() =>
-        message.success({
-          content: "Registro Completado",
-          onClose: this.getAll() /* Cuando termine ejercutara esto*/,
-        })
-      );
+      .then(() => {
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Registro Completado",
+            onClose: this.getAll() /* Cuando termine ejercutara esto*/,
+          });
+        }
+      });
   };
 
   handleSelectClient = (client_id) => {

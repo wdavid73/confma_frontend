@@ -15,20 +15,40 @@ export const createShirt = async (shirt) => {
   return console.log(res.data);
 };
 
-export const createDress = (dress) => {
+export const createDress = async (dress) => {
   let data = new FormData();
   data.append("ref", dress.ref);
   data.append("size", dress.size);
   data.append("price", dress.price);
   data.append("image", dress.image, dress.image.name);
-
-  return axios
-    .post(API_CONSTANT_MAP.uniforms_dress, data, {
+  try {
+    const res = await axios.post(API_CONSTANT_MAP.uniforms_dress, data, {
       headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      return res;
     });
+    return res;
+  } catch (error) {
+    console.log("error 1");
+    // Error
+    /* if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      return error.response.data;
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the
+      // browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log("Error", error.message);
+    }
+    console.log(error.config); */
+    return error;
+  }
 };
 
 export const createPants = async (pants) => {

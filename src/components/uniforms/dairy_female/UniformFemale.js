@@ -7,12 +7,7 @@ import ListUniformsFemale from "../TableListUniformsFemale";
 import FindCollege from "../FindCollege";
 import CreateUniformFemale from "./CreateUniformFemale";
 import { getListUniformsFemale } from "../js/gets";
-import {
-  createShirt,
-  createDress,
-  createPants,
-  createUniformFemale,
-} from "../js/posts";
+import { createShirt, createDress, createUniformFemale } from "../js/posts";
 
 import "../../../css/basic.css";
 import "../css/index.css";
@@ -28,12 +23,10 @@ export default class UniformFemale extends Component {
     modalShirt: false,
     modalListUniforms: false,
     modalFindCollege: false,
-    modalPants: false,
     titleModal: "",
     listUnifoms: [],
     shirts: [],
     dresses: [],
-    pants: [],
   };
 
   getUniforms = () => {
@@ -59,16 +52,6 @@ export default class UniformFemale extends Component {
         modalFindCollege: false,
         modalListUniforms: false,
         titleModal: "Registrar Vestido de Uniforme de Diario Masculino",
-      });
-    }
-    if (type === "pants") {
-      this.setState({
-        modalShirt: false,
-        modalPants: true,
-        modalDress: false,
-        modalFindCollege: false,
-        modalListUniforms: false,
-        titleModal: "Registrar Pantalones de Uniforme de Diario Masculino",
       });
     }
     if (type === "find_college") {
@@ -108,20 +91,6 @@ export default class UniformFemale extends Component {
     console.log("handle ok");
   };
 
-  handleSubmitPants = (formState) => {
-    this.handleCancel();
-    message
-      .loading({
-        content: "Registro en Proceso",
-        onClose: createPants(formState),
-      })
-      .then(() =>
-        message.success({
-          content: "Registro Completado",
-        })
-      );
-  };
-
   handleSubmitShirt = (formState) => {
     this.handleCancel();
     message
@@ -137,16 +106,37 @@ export default class UniformFemale extends Component {
   };
 
   handleSubmitDress = (formState) => {
-    this.handleCancel();
+    let errors;
     message
       .loading({
         content: "Registro en Proceso",
-        onClose: createDress(formState),
+        onClose: createDress(formState).then((res) => {
+          if (res.response.status >= 400) {
+            /* console.log("res");
+            console.log(res.response.data);
+            console.log(res.response.status); */
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.success({
-          content: "Registro Completo",
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Registro Completo",
+            onClose: this.handleCancel(),
+          });
+        }
       });
   };
 
