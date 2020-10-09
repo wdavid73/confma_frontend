@@ -31,41 +31,57 @@ export default class AddQuotationForm extends React.Component {
 
   onSubmit = () => {
     let field;
+    console.log(this.state);
     for (const state in this.state) {
       if (NumberHighZero(this.state[state]) && state === "value_work") {
         fieldvalue_work.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
         break;
       }
       if (NumberHighZero(this.state[state]) && state === "value_cloth") {
         fieldvalue_cloth.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
         break;
       }
 
       if (NumberHighZero(this.state[state]) && state === "value_threads") {
         fieldvalue_threads.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
         break;
       }
       if (NumberHighZero(this.state[state]) && state === "value_buttons") {
         fieldvalue_buttons.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
         break;
       }
       if (NumberHighZero(this.state[state]) && state === "value_necks") {
         fieldvalue_necks.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
         break;
       }
       if (NumberHighZero(this.state[state]) && state === "value_embroidery") {
         fieldvalue_embroidery.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
         break;
       }
       if (NumberHighZero(this.state[state]) && state === "value_prints") {
         fieldvalue_prints.current.focus();
         field = state;
+        console.log(state);
+        console.log(this.state[state]);
+
         break;
       }
     }
@@ -83,7 +99,7 @@ export default class AddQuotationForm extends React.Component {
       });
     } else {
       message.info({
-        content: "El campo " + field + " no puede estar vacio",
+        content: "El campo " + field + " no puede estar vacio o menor a cero",
         duration: 2.5,
       });
     }
@@ -102,9 +118,11 @@ export default class AddQuotationForm extends React.Component {
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="Valor del Trabajo"
+                name="value_work"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <InputNumber
+                  ref={fieldvalue_work}
                   id="inputNumber"
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -112,6 +130,7 @@ export default class AddQuotationForm extends React.Component {
                   parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                   placeholder="Ingrese el Valor del Trabajo"
                   value={this.state.value_work || ""}
+                  name="value_work"
                   max={100000}
                   min={0}
                   onChange={this.onChange("value_work")}
@@ -119,12 +138,15 @@ export default class AddQuotationForm extends React.Component {
                 />
               </Form.Item>
             </Col>
+
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="Valor de la Tela"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
+                name="value_cloth"
               >
                 <InputNumber
+                  ref={fieldvalue_cloth}
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -134,18 +156,22 @@ export default class AddQuotationForm extends React.Component {
                   max={100000}
                   min={0}
                   onChange={this.onChange("value_cloth")}
+                  name="value_cloth"
                   style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>
           </Row>
+
           <Row gutter={[16, 8]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="Valor de los Botones"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
+                name="value_buttons"
               >
                 <InputNumber
+                  ref={fieldvalue_buttons}
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -156,15 +182,19 @@ export default class AddQuotationForm extends React.Component {
                   min={0}
                   onChange={this.onChange("value_buttons")}
                   style={{ width: "100%" }}
+                  name="value_buttons"
                 />
               </Form.Item>
             </Col>
+
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="Valor de los Cuellos"
+                name="value_necks"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <InputNumber
+                  ref={fieldvalue_necks}
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -175,17 +205,21 @@ export default class AddQuotationForm extends React.Component {
                   min={0}
                   onChange={this.onChange("value_necks")}
                   style={{ width: "100%" }}
+                  name="value_necks"
                 />
               </Form.Item>
             </Col>
           </Row>
+
           <Row gutter={[16, 8]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={8}>
               <Form.Item
+                name="value_threads"
                 label="Valor de los Hilos"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <InputNumber
+                  ref={fieldvalue_threads}
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -196,15 +230,19 @@ export default class AddQuotationForm extends React.Component {
                   min={0}
                   onChange={this.onChange("value_threads")}
                   style={{ width: "100%" }}
+                  name="value_threads"
                 />
               </Form.Item>
             </Col>
+
             <Col xs={24} sm={24} md={24} lg={24} xl={8}>
               <Form.Item
                 label="Valor del Bordado"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
+                name="value_embroidery"
               >
                 <InputNumber
+                  ref={fieldvalue_embroidery}
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -215,15 +253,19 @@ export default class AddQuotationForm extends React.Component {
                   min={0}
                   onChange={this.onChange("value_embroidery")}
                   style={{ width: "100%" }}
+                  name="value_embroidery"
                 />
               </Form.Item>
             </Col>
+
             <Col xs={24} sm={24} md={24} lg={24} xl={8}>
               <Form.Item
                 label="Valor del Estampado"
+                name="value_prints"
                 rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
               >
                 <InputNumber
+                  ref={fieldvalue_prints}
                   formatter={(value) =>
                     `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -234,6 +276,7 @@ export default class AddQuotationForm extends React.Component {
                   min={0}
                   onChange={this.onChange("value_prints")}
                   style={{ width: "100%" }}
+                  name="value_prints"
                 />
               </Form.Item>
             </Col>

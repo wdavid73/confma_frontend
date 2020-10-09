@@ -10,7 +10,7 @@ export const isNumber = (number) => {
 };
 
 export const NumberHighZero = (number) => {
-  return number > 0 ? true : false;
+  return number <= 0 ? true : false;
 };
 
 export const isValidDate = (str) => {

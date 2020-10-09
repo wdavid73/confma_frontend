@@ -30,24 +30,22 @@ message.config({
 });
 
 export default class Quotation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quotation_id: "",
-      cloth_id: "",
-      client_id: "",
-      quotation_client_id: "",
-      quotations: [],
-      cloth: [],
-      clients: [],
-      visibleDrawerSubmit: false,
-      visibleDrawerUpdate: false,
-      visibleModal: false,
-      loading: false,
-      disable: false,
-      cloth_selected: "",
-    };
-  }
+  state = {
+    quotation_id: null,
+    cloth_id: null,
+    client_id: null,
+    quotation_client_id: null,
+    quotations: [],
+    cloth: [],
+    clients: [],
+    visibleDrawerSubmit: false,
+    visibleDrawerUpdate: false,
+    visibleModal: false,
+    loading: false,
+    disable: false,
+    cloth_selected: "",
+    clearSelect: false,
+  };
 
   onChange = (name) => (value) => {
     this.setState({
@@ -113,17 +111,35 @@ export default class Quotation extends Component {
   };
 
   handleOkModal = (client_id, quotation_id) => {
+    let errors;
     this.handleCancel();
     this.showSpin();
     message
       .loading({
         content: "Guardando Cliente",
-        onClose: createQuotationClient(quotation_id, client_id),
+        onClose: createQuotationClient(quotation_id, client_id).then((res) => {
+          if (res.response !== undefined && res.response.status >= 400) {
+            errors = res.response.data;
+          }
+        }),
       })
       .then(() => {
-        message.success({
-          content: "Cliente Guardado Correctamente",
-        });
+        if (errors) {
+          for (const err in errors) {
+            message.error({
+              content: err + " : " + errors[err][0],
+              className: "msg-error",
+              style: {
+                float: "right",
+              },
+              duration: 3,
+            });
+          }
+        } else {
+          message.success({
+            content: "Cliente Guardado Correctamente",
+          });
+        }
       });
   };
 
@@ -161,8 +177,19 @@ export default class Quotation extends Component {
             content: "Registro Completado",
             onClose: this.getAll(),
           });
+          this.setState({ clearSelect: true });
+          this.clearState();
         }
       });
+  };
+
+  clearState = () => {
+    this.setState({
+      quotation_id: null,
+      cloth_id: null,
+      cloth_selected: "",
+      clearSelect: false,
+    });
   };
 
   handleUpdate = (formState) => {
@@ -196,6 +223,7 @@ export default class Quotation extends Component {
             content: "Actualizacion Completada",
             onClose: this.getAll(),
           });
+          this.setState({ clearSelect: true });
         }
       });
   };
@@ -333,6 +361,7 @@ export default class Quotation extends Component {
                   <SelectCloth
                     cloths={this.state.cloth}
                     onChange={this.handleSelectCloth}
+                    clear={this.state.clearSelect}
                   />
                 ) : (
                   <OneCloth
