@@ -36,6 +36,10 @@ export const API_CONSTANT_MAP = {
   uniforms_shirts: BASE_API + uniforms_shirts,
   uniforms_pants: BASE_API + uniforms_pants,
   uniforms_dress: BASE_API + uniforms_dress,
+  uniforms_shirts_sport_male: BASE_API + uniforms_shirts + "male/sport/",
+  uniforms_shirts_sport_female: BASE_API + uniforms_shirts + "female/sport/",
+  uniforms_pants_sport_male: BASE_API + uniforms_pants + "male/sport/",
+  uniforms_pants_sport_female: BASE_API + uniforms_pants + "female/sport/",
   institutions: BASE_API + institutions,
 };
 

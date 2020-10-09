@@ -8,6 +8,27 @@ export const getListUniforms = async () => {
   return res.data;
 };
 
+export const getListUniformsSport = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_sport, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
+export const getListUniformsSportMale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_sport + "male/", {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
+export const getListUniformsSportFemale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_sport + "female/", {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
 export const getListUniformsFemale = async () => {
   const res = await axios.get(API_CONSTANT_MAP.uniforms_dairy_female, {
     headers: { "Content-Type": "application/json" },
@@ -58,4 +79,32 @@ export const getDress = () => {
     .then((res) => {
       return res.data;
     });
+};
+
+export const getShirtsSportMale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_shirts_sport_male, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
+export const getPantsSportMale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_pants_sport_male, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
+export const getPantsSportFemale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_shirts_sport_female, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
+};
+
+export const getShirtsSportFemale = async () => {
+  const res = await axios.get(API_CONSTANT_MAP.uniforms_pants_sport_female, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
 };

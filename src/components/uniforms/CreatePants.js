@@ -60,12 +60,18 @@ export default class CreatePants extends React.Component {
   };
 
   handleSubmit = () => {
+    if (this.props.selectType === false) {
+      let type = this.props.type;
+      this.setState({ type: type });
+    }
     this.props.onSubmit(this.state);
     this.formRef.current.resetFields();
     this.setState({
       size: "",
       price: 0,
       image: null,
+      type: "",
+      ref: "",
     });
   };
 
@@ -165,26 +171,34 @@ export default class CreatePants extends React.Component {
             </Col>
           </Row>
           <Row gutter={[16, 8]}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="Tipo"
-                name="type"
-                rules={[{ required: true, message: "Porfavor Llene el Campo" }]}
-              >
-                <Select
-                  value={this.state.type || ""}
-                  onChange={this.handleChangeSelectType}
-                  placeholder="Seleccione el Tipo"
-                  defaultValue={this.props.gender}
-                  disabled
-                  allowClear
+            {this.props.selectType === true ? (
+              <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                <Form.Item
+                  label="Tipo"
+                  name="type"
+                  rules={[
+                    { required: true, message: "Porfavor Llene el Campo" },
+                  ]}
                 >
-                  <Select.Option value="Male">Male</Select.Option>
-                  <Select.Option value="Female">Female</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                  <Select
+                    value={this.state.type || ""}
+                    onChange={this.handleChangeSelectType}
+                    placeholder="Seleccione el Tipo"
+                    allowClear
+                  >
+                    <Select.Option value="SportMale">Masculino</Select.Option>
+                    <Select.Option value="SportFemale">Femenino</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            ) : null}
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={24}
+              xl={this.props.selectType ? 12 : 24}
+            >
               <Form.Item
                 name="image"
                 label="Subir Imagen"

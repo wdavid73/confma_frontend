@@ -111,7 +111,7 @@ export default class UniformFemale extends Component {
       .loading({
         content: "Registro en Proceso",
         onClose: createDress(formState).then((res) => {
-          if (res.response.status >= 400) {
+          if (res.response !== undefined && res.response.status >= 400) {
             /* console.log("res");
             console.log(res.response.data);
             console.log(res.response.status); */
@@ -263,7 +263,7 @@ export default class UniformFemale extends Component {
           onCancel={this.handleCancel}
         >
           {this.state.modalShirt ? (
-            <CreateShirt onSubmit={this.handleSubmitShirt} gender="Female" />
+            <CreateShirt onSubmit={this.handleSubmitShirt} type="Female" />
           ) : (
             ""
           )}

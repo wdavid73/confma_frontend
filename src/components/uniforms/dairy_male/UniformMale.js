@@ -249,12 +249,12 @@ export default class UniformMale extends Component {
           onCancel={this.handleCancel}
         >
           {this.state.modalShirt ? (
-            <CreateShirt onSubmit={this.handleSubmitShirt} gender="Male" />
+            <CreateShirt onSubmit={this.handleSubmitShirt} type="Male" />
           ) : (
             ""
           )}
           {this.state.modalPants ? (
-            <CreatePants onSubmit={this.handleSubmitPants} gender="Male" />
+            <CreatePants onSubmit={this.handleSubmitPants} type="Male" />
           ) : (
             ""
           )}

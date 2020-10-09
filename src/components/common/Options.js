@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Row, Col } from "antd";
 import quotationIcon from "../../assets/quotation.png";
 import rentalIcon from "../../assets/alquilar.png";
+import male from "../../assets/male.png";
+import female from "../../assets/female.png";
 import "../../css/basic.css";
 
 export default class Options extends React.Component {
@@ -18,7 +20,13 @@ export default class Options extends React.Component {
               >
                 <img
                   src={
-                    option.option === "quotation" ? quotationIcon : rentalIcon
+                    option.option === "quotation"
+                      ? quotationIcon
+                      : option.option === "rental"
+                      ? rentalIcon
+                      : option.option === "SportMale"
+                      ? male
+                      : female
                   }
                   width="50"
                   style={{ marginRight: 15 }}
