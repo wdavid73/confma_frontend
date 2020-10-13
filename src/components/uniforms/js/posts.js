@@ -88,3 +88,20 @@ export const createUniformFemale = async (uniform) => {
   });
   return console.log(res.data);
 };
+
+export const createUniformSport = async (uniform) => {
+  let data = new FormData();
+  data.append("shirt_id", uniform.shirt_id);
+  data.append("pants_id", uniform.pants_id);
+  data.append("institution_id", uniform.institution_id);
+  data.append("price", uniform.price);
+  data.append("type_uniform", uniform.gender);
+  try {
+    const res = await axios.post(API_CONSTANT_MAP.uniforms_sport, data, {
+      headers: { "Content-Type": "application" },
+    });
+    return res;
+  } catch (error) {
+    return error;
+  }
+};

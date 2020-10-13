@@ -4,13 +4,14 @@ import quotationIcon from "../../assets/quotation.png";
 import rentalIcon from "../../assets/alquilar.png";
 import male from "../../assets/male.png";
 import female from "../../assets/female.png";
+import box from "../../assets/box.png";
 import "../../css/basic.css";
 
 export default class Options extends React.Component {
   render() {
     return (
       <div className="text-general">
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        <Row gutter={[16, 8]}>
           {this.props.options.map((option) => (
             <Col className="gutter-row" xs={24} sm={24} md={24} lg={12}>
               <Button
@@ -26,7 +27,9 @@ export default class Options extends React.Component {
                       ? rentalIcon
                       : option.option === "SportMale"
                       ? male
-                      : female
+                      : option.option === "SportFemale"
+                      ? female
+                      : box
                   }
                   width="50"
                   style={{ marginRight: 15 }}

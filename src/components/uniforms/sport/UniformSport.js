@@ -3,7 +3,7 @@ import { Card, Col, Row, PageHeader, message } from "antd";
 import OptionsModal from "../OptionsModal";
 import CreateShirt from "../CreateShirt";
 import CreatePants from "../CreatePants";
-import ListUniforms from "../TableListUniforms";
+import TableListUniforms from "../TableListUniforms";
 import FindCollege from "../FindCollege";
 import CreateUniformSport from "./CreateUniformSport";
 import Options from "../../common/Options";
@@ -12,7 +12,7 @@ import {
   getListUniformsSportMale,
   getListUniformsSportFemale,
 } from "../js/gets.js";
-import { createShirt, createPants } from "../js/posts";
+import { createShirt, createPants, createUniformSport } from "../js/posts";
 import { equals } from "../../common/Validations";
 
 import "../css/index.css";
@@ -27,11 +27,11 @@ export default class UniformSport extends Component {
   state = {
     modalShirt: false,
     modalPants: false,
-    modalListUniformsMale: false,
-    modalListUniformsFemale: false,
+    modalListUniforms: false,
     modalFindCollege: false,
     visibleModalType: false,
     titleModal: "",
+    genderSubmit: "",
     listUnifoms: [],
     shirts: [],
     pants: [],
@@ -55,7 +55,6 @@ export default class UniformSport extends Component {
         modalShirt: true,
         modalPants: false,
         modalFindCollege: false,
-        modalListUniforms: false,
         titleModal: "Registrar Camisa de Uniforme de Deportes",
       });
     }
@@ -64,7 +63,6 @@ export default class UniformSport extends Component {
         modalShirt: false,
         modalPants: true,
         modalFindCollege: false,
-        modalListUniforms: false,
         titleModal: "Registrar Pantalones de Uniforme de Deportes",
       });
     }
@@ -73,7 +71,6 @@ export default class UniformSport extends Component {
         modalShirt: false,
         modalPants: false,
         modalFindCollege: true,
-        modalListUniforms: false,
         titleModal: "Buscar por Colegio",
       });
     }
@@ -83,8 +80,6 @@ export default class UniformSport extends Component {
         modalPants: false,
         modalFindCollege: false,
         visibleModalType: true,
-        /* modalListUniforms: true, */
-        /* titleModal: "Lista de Uniformes Confeccionados", */
       });
     }
   };
@@ -98,6 +93,10 @@ export default class UniformSport extends Component {
       titleModal: "",
       listUnifoms: [],
     });
+  };
+
+  handleCancelOptions = () => {
+    this.setState({ visibleModalType: false });
   };
 
   handleSubmitShirt = (formState) => {
@@ -132,15 +131,35 @@ export default class UniformSport extends Component {
     if (equals(option, "SportMale")) {
       console.log(option);
       this.getUniformsMale();
+      this.setState({
+        modalListUniforms: true,
+        titleModal: "Registrar Uniforme de Deportes Masculino",
+        genderSubmit: "SportMale",
+      });
     }
     if (equals(option, "SportFemale")) {
       console.log(option);
       this.getUniformsFemale();
+      this.setState({
+        modalListUniforms: true,
+        titleModal: "Registrar Uniforme de Deportes Femenino",
+        genderSubmit: "SportFemale",
+      });
     }
   };
 
   handleSubmitUniform = (formState) => {
-    console.log(formState);
+    this.handleCancel();
+    message
+      .loading({
+        content: "Registro en Proceso",
+        onClose: createUniformSport(formState),
+      })
+      .then(() => {
+        message.success({
+          content: "Registro Completado",
+        });
+      });
   };
 
   render() {
@@ -213,7 +232,7 @@ export default class UniformSport extends Component {
                     <Card.Meta
                       description={
                         <p className="text-general text-white">
-                          Lista de Uniformes Confeccionados
+                          Registro y Listado de Uniformes Confeccionados
                         </p>
                       }
                     />
@@ -253,7 +272,7 @@ export default class UniformSport extends Component {
           <OptionsModal
             visible={this.state.visibleModalType}
             title={"Para que genero desea registar el uniforme"}
-            onCancel={this.handleCancel}
+            onCancel={this.handleCancelOptions}
           >
             <Options options={options} selectOption={this.selectOption} />
           </OptionsModal>
@@ -263,7 +282,7 @@ export default class UniformSport extends Component {
           visible={
             this.state.modalShirt ||
             this.state.modalPants ||
-            /* this.state.modalListUniforms || */
+            this.state.modalListUniforms ||
             this.state.modalFindCollege
           }
           title={this.state.titleModal}
@@ -278,6 +297,15 @@ export default class UniformSport extends Component {
           ) : (
             ""
           )}
+
+          {this.state.modalListUniforms ? (
+            <TableListUniforms uniforms={this.state.listUnifoms}>
+              <CreateUniformSport
+                onSubmit={this.handleSubmitUniform}
+                gender={this.state.genderSubmit}
+              />
+            </TableListUniforms>
+          ) : null}
           {this.state.modalPants ? (
             <CreatePants
               onSubmit={this.handleSubmitPants}
@@ -286,21 +314,7 @@ export default class UniformSport extends Component {
           ) : (
             ""
           )}
-          {/* {this.state.modalListUniforms ? (
-              <ListUniforms
-                title="Registrar Uniforme Masculino"
-                uniforms={this.state.listUnifoms}
-                /* male={true}
-                /*onSubmit={this.handleSubmitUniform              >
-                <CreateUniformSport
-                  onSubmit={this.handleSubmitUniform}
-                  pants={this.state.pants}
-                  shirts={this.state.shirts}
-                />
-              </ListUniforms>
-            ) : (
-              ""
-            )} */}
+
           {this.state.modalFindCollege ? (
             <FindCollege /* gender="male" */ />
           ) : (
