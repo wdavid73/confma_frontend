@@ -247,6 +247,7 @@ export default class UniformMale extends Component {
           title={this.state.titleModal}
           onOk={this.handleOK}
           onCancel={this.handleCancel}
+          width={"85%"}
         >
           {this.state.modalShirt ? (
             <CreateShirt onSubmit={this.handleSubmitShirt} type="Male" />

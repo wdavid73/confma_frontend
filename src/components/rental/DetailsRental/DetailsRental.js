@@ -4,6 +4,9 @@ import { RedoOutlined } from "@ant-design/icons";
 import DescriptionClient from "../Descriptions/DescriptionClient";
 import DescriptionCloths from "../Descriptions/DescriptionCloth";
 import DescriptionRental from "../Descriptions/DescriptionRental";
+
+import "../../../css/basic.css";
+
 export default class DetailsRental extends React.Component {
   render() {
     return (
@@ -24,7 +27,7 @@ export default class DetailsRental extends React.Component {
                   //disable={this.state.editDisable}
                   onClick={() => this.props.refundRental(rental.id)}
                 >
-                  <RedoOutlined /> Refund Rental
+                  <RedoOutlined /> Devolver Alquiler
                 </Button>,
               ]}
             >
@@ -41,13 +44,13 @@ export default class DetailsRental extends React.Component {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                   <Tabs defaultActiveKey="1" onChange={this.callback}>
-                    <Tabs.TabPane tab="Rental" key="1">
+                    <Tabs.TabPane tab="Alquiler" key="1">
                       <DescriptionRental rental={rental} />
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab="Client" key="2">
+                    <Tabs.TabPane tab="Cliente" key="2">
                       <DescriptionClient client={rental.client} />
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab="Cloth" key="3">
+                    <Tabs.TabPane tab="Prenda" key="3">
                       <DescriptionCloths cloth={rental.cloth} />
                     </Tabs.TabPane>
                   </Tabs>

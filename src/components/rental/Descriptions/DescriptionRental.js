@@ -6,19 +6,19 @@ export default class DescriptionCloths extends React.Component {
     return (
       <div>
         <Descriptions size="small" bordered>
-          <Descriptions.Item label="Date Add">
+          <Descriptions.Item label="Fecha Alquilada">
             {this.props.rental.date_now}
           </Descriptions.Item>
         </Descriptions>
 
         <Descriptions size="small" bordered>
-          <Descriptions.Item label="Date Return">
+          <Descriptions.Item label="Fecha de Devolucion">
             {this.props.rental.date_return}
           </Descriptions.Item>
         </Descriptions>
 
         <Descriptions size="small" bordered>
-          <Descriptions.Item label="Price">
+          <Descriptions.Item label="Precio">
             $ {this.props.rental.price}
           </Descriptions.Item>
         </Descriptions>

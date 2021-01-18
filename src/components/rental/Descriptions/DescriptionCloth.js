@@ -6,7 +6,7 @@ export default class DescriptionCloths extends React.Component {
     return (
       <div>
         <Descriptions size="small">
-          <Descriptions.Item label="Name">
+          <Descriptions.Item label="Ref">
             {this.props.cloth.name}
           </Descriptions.Item>
         </Descriptions>
@@ -18,13 +18,13 @@ export default class DescriptionCloths extends React.Component {
         </Descriptions>
 
         <Descriptions size="small">
-          <Descriptions.Item label="Size">
+          <Descriptions.Item label="Talla">
             {this.props.cloth.size}
           </Descriptions.Item>
         </Descriptions>
 
         <Descriptions size="small">
-          <Descriptions.Item label="Fashion">
+          <Descriptions.Item label="Moda">
             {this.props.cloth.fashion}
           </Descriptions.Item>
         </Descriptions>

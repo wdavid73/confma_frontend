@@ -172,15 +172,15 @@
 }
 
 #btn-refund {
-  background: #52c41a;
-  border-color: #135200;
+  background: #ffc53d;
+  border-color: #d48806;
   color: black;
   width: 100%;
 }
 
 #btn-refund:hover {
   background: #fff;
-  color: #135200;
+  color: #d48806;
 }
 
 #menufold {
@@ -210,4 +210,72 @@
 
 .text-general {
   font-family: "Merienda", cursive;
+}
+
+.ant-tabs-ink-bar {
+  height: 5px;
+  background: transparent;
+}
+
+.ant-tabs-ink-bar::after {
+  content: " ";
+  position: absolute;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  height: 2.5px;
+  background: #ffc53d;
+  width: 100%;
+  transform: translateX(-50%);
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #d48806;
+  font-weight: 500;
+}
+.ant-tabs-tab:hover {
+  color: #ffc53d;
+}
+
+.ant-tabs-tab-btn:hover {
+  color: rgb(255, 197, 61);
+}
+
+.ant-input:focus {
+  border-color: #ffc53d;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(255, 197, 61, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 197, 61, 0.5);
+}
+
+.ant-input:hover {
+  border-color: #ffc53d;
+  outline: 0;
+}
+
+.ant-input-number-input:focus {
+  border-color: #f3b21a;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(255, 197, 61, 1);
+  box-shadow: 0 0 0 2px rgba(255, 197, 61, 1);
+}
+
+.ant-input-number-input:hover {
+  border-color: white;
+  outline: 0;
+}
+
+.ant-select-selector:focus {
+  border-color: #ffc53d;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(255, 197, 61, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 197, 61, 0.5);
+}
+
+.anticon .anticon-upload {
+  color: #ffc53d;
+}
+
+.ant-select-selection {
+  background-color: green;
 }
