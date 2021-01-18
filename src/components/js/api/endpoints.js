@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_API = "http://localhost:8000/api";
+const BASE_API = "https://confmapi.herokuapp.com/api";
 const clients = "/clients/";
 const cloths = "/cloths/";
 const rentals = "/rentals/";
