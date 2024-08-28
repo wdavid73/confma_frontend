@@ -11,3 +11,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+### BACKEND
+
+[https://github.com/wdavid73/confma_api]
+
+### MOBILE VERSION
+
+[https://github.com/wdavid73/Project_Movil_ComfaAPP]
